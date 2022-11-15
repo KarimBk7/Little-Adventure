@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import surrounding.TileManager;
 import unit.Player;
 
 public class GameLoop extends JPanel implements Runnable {
@@ -16,15 +17,16 @@ public class GameLoop extends JPanel implements Runnable {
 	private int scale = 3;
 	public int unitsize = standartunitsize * scale;  //48x48
 	
-	private int maxScreenCol = 16;
-	private int maxScreenrow = 12;
+	public int maxScreenCol = 16;
+	public int maxScreenrow = 12;
 	
-	private int screenweite = unitsize * maxScreenCol;
-	private int screenhoehe = unitsize * maxScreenrow;
+	public int screenweite = unitsize * maxScreenCol;
+	public int screenhoehe = unitsize * maxScreenrow;
 	
 	//FPS
 	int fps = 60;
 
+	TileManager tileM = new TileManager(this);
 	KeyInput keyI = new KeyInput();
 	Thread gameThread;
 	Player player = new Player(this,keyI);
@@ -93,6 +95,7 @@ public class GameLoop extends JPanel implements Runnable {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D)g;
+		tileM.draw(g2);
 		player.draw(g2);
 		g2.dispose();
 		
