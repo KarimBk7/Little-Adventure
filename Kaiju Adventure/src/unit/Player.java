@@ -123,7 +123,7 @@ public class Player extends Unit{
 		
 		}
 		
-		g2.drawImage(image, posX, posX, gl.unitsize, gl.unitsize, null);
+		g2.drawImage(image, posX, posY, gl.unitsize, gl.unitsize, null);
 		
 	}
 	
