@@ -14,7 +14,7 @@ public class GameLoop extends JPanel implements Runnable {
 	//BILDSCHIRM SCALIERUNG
 	private int standartunitsize = 16;
 	private int scale = 3;
-	private int unitsize = standartunitsize * scale;  //48x48
+	public int unitsize = standartunitsize * scale;  //48x48
 	
 	private int maxScreenCol = 16;
 	private int maxScreenrow = 12;
@@ -84,18 +84,7 @@ public class GameLoop extends JPanel implements Runnable {
 	
 	public void update() {
 		
-		if (keyI.upPressed == true) {
-			playerY -= playerSpeed;
-		}
-		else if (keyI.downPressed == true) {
-			playerY += playerSpeed;
-		}
-		else if (keyI.leftPressed == true) {
-			playerX -= playerSpeed;
-		}
-		else if (keyI.rightPressed == true) {
-			playerX += playerSpeed;
-		}
+		player.update();
 		
 	}
 	
@@ -104,6 +93,8 @@ public class GameLoop extends JPanel implements Runnable {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D)g;
+		player.draw(g2);
+		g2.dispose();
 		
 		
 	}
