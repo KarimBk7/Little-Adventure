@@ -37,6 +37,7 @@ public class GameLoop extends JPanel implements Runnable {
 	TileManager tileM = new TileManager(this);
 	KeyInput keyI = new KeyInput();
 	Thread gameThread;
+	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
 	
 	//Default-Position

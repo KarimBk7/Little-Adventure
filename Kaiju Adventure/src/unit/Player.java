@@ -1,6 +1,7 @@
 package unit;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -22,8 +23,11 @@ public class Player extends Unit{
 		camX = (gl.screenweite / 2) - (gl.unitsize / 2);
 		camY = (gl.screenhoehe / 2) - (gl.unitsize / 2);	
 		
+		hitbox = new Rectangle(8, 8, 32, 32);
+		
 		setTest();
 		getPlayerpng();
+		
 	}
 	
 	public void setTest() {
@@ -31,7 +35,7 @@ public class Player extends Unit{
 		posX = 100;
 		posY = 100; 
 		speed = 4;
-		diagonalspeed = 2; 
+		diagonalspeed = speed / 2; 
 		richtung = "down";
 		animationspeed = 16;
 	}
@@ -117,6 +121,9 @@ public class Player extends Unit{
 				}
 
 			}
+			
+			iscollision = false;
+			gl.cc.checkTile(this);
 			
 			spriteCounter++;
 			if (spriteCounter > animationspeed) {								//geschwindigkeit der animation. je höher dest langsamer

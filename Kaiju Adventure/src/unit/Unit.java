@@ -1,5 +1,6 @@
 package unit;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Unit {
@@ -12,4 +13,7 @@ public class Unit {
 	public String richtung;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
+	
+	public Rectangle hitbox;
+	public boolean iscollision = false;
 }
