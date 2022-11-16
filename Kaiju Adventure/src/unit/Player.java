@@ -13,9 +13,14 @@ public class Player extends Unit{
 	GameLoop gl;
 	KeyInput keyI;
 	
+	public int camX, camY;
+	
 	public Player(GameLoop gl, KeyInput keyI) {
 		this.gl = gl;
 		this.keyI = keyI;
+		
+		camX = (gl.screenweite / 2) - (gl.unitsize / 2);
+		camY = (gl.screenhoehe / 2) - (gl.unitsize / 2);	
 		
 		setTest();
 		getPlayerpng();
@@ -123,7 +128,7 @@ public class Player extends Unit{
 		
 		}
 		
-		g2.drawImage(image, posX, posY, gl.unitsize, gl.unitsize, null);
+		g2.drawImage(image, camX, camY, gl.unitsize, gl.unitsize, null);
 		
 	}
 	

@@ -19,7 +19,7 @@ public class TileManager {
 	public TileManager(GameLoop gl) {
 		this.gl = gl;
 		tile = new Tile[10];
-		mapTile = new int [gl.maxScreenCol][gl.maxScreenrow];
+		mapTile = new int [gl.maxWeltCol][gl.maxWeltRow];
 		ladeWeltkarte("/weltkarte/map1.txt");
 		getTilepng();
 		
@@ -59,11 +59,11 @@ public class TileManager {
 			int col = 0;
 			int row = 0;
 			
-			while (col < gl.maxScreenCol && row < gl.maxScreenrow) {
+			while (col < gl.maxWeltCol && row < gl.maxWeltRow) {
 				
 				String line = br.readLine();	
 				
-				while(col < gl.maxScreenCol) {
+				while(col < gl.maxWeltCol) {
 				
 					String number[] = line.split(" ");
 					int num = Integer.parseInt(number[col]);
@@ -72,7 +72,7 @@ public class TileManager {
 					col++;
 				}
 				
-				if (col == gl.maxScreenCol) {
+				if (col == gl.maxWeltRow) {
 					col = 0;
 					row++;
 				}
@@ -91,25 +91,28 @@ public class TileManager {
 		
 		int col = 0;
 		int row = 0;
-		int x = 0;
-		int y = 0;
 		
-		while (col < gl.maxScreenCol && row < gl.maxScreenrow) {
+		
+		while (col < gl.maxWeltCol && row < gl.maxWeltRow) {
 			
 			int tileNum = mapTile[col][row];
 			
-			g2.drawImage(tile[tileNum].image, x, y,gl.unitsize, gl.unitsize, null);
-			col++;
-			x += gl.unitsize;
+			int x = col * gl.unitsize;
+			int y = row * gl.unitsize;
 			
-			if (col == gl.maxScreenCol) {
+			int scX = x - gl.player.posX + gl.player.camX;
+			int scY = y - gl.player.posY + gl.player.camY;
+			
+			g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
+			col++;
+			
+			
+			if (col == gl.maxWeltCol) {
 				col = 0;
-				x = 0;
 				row++;
-				y += gl.unitsize;
 			}
 			
 		}
-		g2.drawImage(tile[4].image, 100, 100, gl.baumsize, gl.baumsize , null);
+		//g2.drawImage(tile[4].image, 100, 100, gl.baumsize, gl.baumsize , null);
 	}
 }

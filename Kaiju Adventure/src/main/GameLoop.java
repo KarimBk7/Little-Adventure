@@ -24,13 +24,20 @@ public class GameLoop extends JPanel implements Runnable {
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
 	
+	//Weltkarten Scalierung
+	public int maxWeltCol = 20;
+	public int maxWeltRow = 20;
+	public int weltweite = maxWeltCol + unitsize;
+	public int welthoehe = maxWeltRow + unitsize;
+	
+	
 	//FPS
 	int fps = 60;
 
 	TileManager tileM = new TileManager(this);
 	KeyInput keyI = new KeyInput();
 	Thread gameThread;
-	Player player = new Player(this,keyI);
+	public Player player = new Player(this,keyI);
 	
 	//Default-Position
 	int playerX = 100;
