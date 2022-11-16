@@ -16,6 +16,7 @@ public class GameLoop extends JPanel implements Runnable {
 	private int standartunitsize = 16;
 	private int scale = 3;
 	public int unitsize = standartunitsize * scale;  //48x48
+	public int baumsize = unitsize * 2;
 	
 	public int maxScreenCol = 16;
 	public int maxScreenrow = 12;
@@ -97,6 +98,7 @@ public class GameLoop extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D)g;
 		tileM.draw(g2);
 		player.draw(g2);
+		//tileM.ladeWeltkarte();
 		g2.dispose();
 		
 		

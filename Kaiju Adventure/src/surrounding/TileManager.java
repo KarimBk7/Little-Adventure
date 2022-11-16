@@ -1,6 +1,9 @@
 package surrounding;
 
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -10,12 +13,16 @@ public class TileManager {
 
 	GameLoop gl;
 	Tile[] tile;
+	int mapTile[][];
 	
 	//Kosntruktor
 	public TileManager(GameLoop gl) {
 		this.gl = gl;
 		tile = new Tile[10];
+		mapTile = new int [gl.maxScreenCol][gl.maxScreenrow];
+		ladeWeltkarte("/weltkarte/map1.txt");
 		getTilepng();
+		
 	}
 	
 	public void getTilepng() {
@@ -30,8 +37,51 @@ public class TileManager {
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser.png"));
 			
+			tile[3] = new Tile();
+			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/gehweg.png"));
+			
+			tile[4] = new Tile();
+			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/baum.png"));
+			
+			tile[5] = new Tile();
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/grashalme.png"));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void ladeWeltkarte(String file) {
+		try {
+			InputStream karte = getClass().getResourceAsStream(file);
+			BufferedReader br = new BufferedReader(new InputStreamReader(karte));
+			
+			int col = 0;
+			int row = 0;
+			
+			while (col < gl.maxScreenCol && row < gl.maxScreenrow) {
+				
+				String line = br.readLine();	
+				
+				while(col < gl.maxScreenCol) {
+				
+					String number[] = line.split(" ");
+					int num = Integer.parseInt(number[col]);
+				
+					mapTile[col][row] = num;
+					col++;
+				}
+				
+				if (col == gl.maxScreenCol) {
+					col = 0;
+					row++;
+				}
+			
+			}
+			
+			
+		} catch (Exception e) {
+			
 		}
 	}
 	
@@ -45,7 +95,10 @@ public class TileManager {
 		int y = 0;
 		
 		while (col < gl.maxScreenCol && row < gl.maxScreenrow) {
-			g2.drawImage(tile[0].image, x, y,gl.unitsize, gl.unitsize, null);
+			
+			int tileNum = mapTile[col][row];
+			
+			g2.drawImage(tile[tileNum].image, x, y,gl.unitsize, gl.unitsize, null);
 			col++;
 			x += gl.unitsize;
 			
@@ -55,6 +108,8 @@ public class TileManager {
 				row++;
 				y += gl.unitsize;
 			}
+			
 		}
+		g2.drawImage(tile[4].image, 100, 100, gl.baumsize, gl.baumsize , null);
 	}
 }
