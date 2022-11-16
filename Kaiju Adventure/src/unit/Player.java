@@ -30,8 +30,10 @@ public class Player extends Unit{
 		
 		posX = 100;
 		posY = 100; 
-		speed = 5;
+		speed = 4;
+		diagonalspeed = 2; 
 		richtung = "down";
+		animationspeed = 16;
 	}
 	
 	public void getPlayerpng() {
@@ -56,25 +58,68 @@ public class Player extends Unit{
 		if(keyI.upPressed == true || keyI.downPressed == true || 
 				keyI.leftPressed == true || keyI.rightPressed == true) {
 			
-			if (keyI.upPressed == true) {		//player bewegt sich nach oben
-				richtung = "up";
-				posY -= speed;
+			if (keyI.upPressed == true) {							//player bewegt sich nach oben
+				if (keyI.downPressed == true) {						//stoppt
+					
+				}
+				else if (keyI.leftPressed == keyI.rightPressed) {	//nach oben
+					richtung = "up";
+					posY -= speed;
+				}
+				else if (keyI.leftPressed == true) {				//diagonal nach oben-links
+					richtung = "up";
+					posY -= diagonalspeed;
+					posX -= diagonalspeed;
+				}
+				else if (keyI.rightPressed == true) {				//diagonal nach oben-rechts
+					richtung = "up";
+					posY -= diagonalspeed;
+					posX += diagonalspeed;
+				}
+				
 			}
-			else if (keyI.downPressed == true) {//player bewegt sich nach unten
-				richtung = "down";
-				posY += speed;
+			else if (keyI.downPressed == true) {					//player bewegt sich nach unten
+				if (keyI.upPressed == true) {						//stoppt
+					
+				}
+				else if (keyI.leftPressed == keyI.rightPressed) {	//nach unten
+					richtung = "down";
+					posY += speed;
+				}
+				else if (keyI.leftPressed == true) {				//diagonal nach unten-links
+					richtung = "down";
+					posY += diagonalspeed;
+					posX -= diagonalspeed;
+				}
+				else if (keyI.rightPressed == true) {				//diagonal nach unten-rechts
+					richtung = "down";
+					posY += diagonalspeed;
+					posX += diagonalspeed;
+				}
 			}
-			else if (keyI.leftPressed == true) {//player bewegt sich nach links
-				richtung = "left";
-				posX -= speed;
+			else if (keyI.leftPressed == true) {					//player bewegt sich nach links
+				if (keyI.rightPressed == true) {					//stoppt
+					
+				}
+				else {												//nach links
+					richtung = "left";
+					posX -= speed;	
+				}
+				
 			}
-			else if (keyI.rightPressed == true) {//player bewegt sich nach rechts
-				richtung = "right";
-				posX += speed;
+			else if (keyI.rightPressed == true) {					//player bewegt sich nach rechts
+				if (keyI.leftPressed == true) {						//stoppt
+					
+				}
+				else {												//nach rechts
+					richtung = "right";
+					posX += speed;
+				}
+
 			}
 			
 			spriteCounter++;
-			if (spriteCounter > 14) {			//geschwindigkeit der animation. je höher dest langsamer
+			if (spriteCounter > animationspeed) {								//geschwindigkeit der animation. je höher dest langsamer
 				if (spriteNum == 1) {
 					spriteNum = 2;
 				}
