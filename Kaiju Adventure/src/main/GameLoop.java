@@ -18,15 +18,15 @@ public class GameLoop extends JPanel implements Runnable {
 	public int unitsize = standartunitsize * scale;  //48x48
 	public int baumsize = unitsize * 2;
 	
-	public int maxScreenCol = 16;
-	public int maxScreenrow = 12;
+	public int maxScreenCol = 20;
+	public int maxScreenrow = 15;
 	
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
 	
 	//Weltkarten Scalierung
-	public int maxWeltCol = 20;
-	public int maxWeltRow = 20;
+	public int maxWeltCol = 60;
+	public int maxWeltRow = 60;
 	public int weltweite = maxWeltCol + unitsize;
 	public int welthoehe = maxWeltRow + unitsize;
 	
@@ -39,11 +39,6 @@ public class GameLoop extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
-	
-	//Default-Position
-	int playerX = 100;
-	int playerY = 100;
-	int playerSpeed = 4;
 	
 	
 	//Konstruktor
