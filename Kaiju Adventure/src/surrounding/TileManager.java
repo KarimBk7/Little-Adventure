@@ -12,15 +12,18 @@ import main.GameLoop;
 public class TileManager {
 
 	GameLoop gl;
-	Tile[] tile;
-	int mapTile[][];
+	public Tile[] tile;
+	public int mapTile[][];
+	int spriteCounter = 0;
+	int spriteNum = 1;
+	int animationspeed = 30;
 	
 	//Kosntruktor
 	public TileManager(GameLoop gl) {
 		this.gl = gl;
 		tile = new Tile[10];
 		mapTile = new int [gl.maxWeltCol][gl.maxWeltRow];
-		ladeWeltkarte("/weltkarte/map1.txt");
+		ladeWeltkarte("/weltkarte/map2.txt");
 		getTilepng();
 		
 	}
@@ -29,25 +32,41 @@ public class TileManager {
 		try {
 			
 			tile[0] = new Tile();
-			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/gras.png"));
+			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/transparent.png"));
+			tile[0].collision = true;
 			
 			tile[1] = new Tile();
-			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wand.png"));
-			tile[1].collision = true;
+			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/gras.png"));
 			
 			tile[2] = new Tile();
-			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser.png"));
-			tile[2].collision = true;
+			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser1.png"));
+			tile[2].collision = false;
 			
 			tile[3] = new Tile();
-			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/gehweg.png"));
+			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser2.png"));
 			
 			tile[4] = new Tile();
-			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/baum.png"));
+			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wand.png"));
 			tile[4].collision = true;
 			
 			tile[5] = new Tile();
-			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/busch.png"));
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/baum.png"));
+			tile[5].collision = true;
+			
+			tile[6] = new Tile();
+			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/busch.png"));
+			
+			tile[7] = new Tile();
+			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/sand.png"));
+			
+			tile[8] = new Tile();
+			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava1.png"));
+			tile[8].collision = true;
+			
+			tile[9] = new Tile();
+			//tile[9].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava2.png"));
+			tile[9].collision = true;
+		
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,6 +111,18 @@ public class TileManager {
 		
 		//g2.drawImage(tile[0].image, 0, 0, gl.unitsize, gl.unitsize, null); //Test
 		
+		spriteCounter++;
+		if (spriteCounter > animationspeed) {				//geschwindigkeit der animation. je höher dest langsamer
+			if (spriteNum == 1) {
+				spriteNum = 2;
+			}
+			else if (spriteNum == 2) {
+				spriteNum = 1;
+			}
+			spriteCounter = 0;
+		}
+		
+		
 		int col = 0;
 		int row = 0;
 		
@@ -106,14 +137,33 @@ public class TileManager {
 			int scX = x - gl.player.posX + gl.player.camX;
 			int scY = y - gl.player.posY + gl.player.camY;
 			
-			g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
-			col++;
+			if (tileNum == 5) {
+				g2.drawImage(tile[5].image, scX, scY, gl.baumsize, gl.baumsize , null);
+				col++;
+			}
 			
+			else if (tileNum == 2) {
+				if(spriteNum == 1) {
+					g2.drawImage(tile[2].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					col++;
+				}
+				if(spriteNum == 2) {
+					g2.drawImage(tile[3].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					col++;
+				}
+			} 	
+			
+			else {
+				g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
+				col++;
+			}
 			
 			if (col == gl.maxWeltCol) {
 				col = 0;
 				row++;
+				
 			}
+			
 			
 		}
 		//g2.drawImage(tile[4].image, 100, 100, gl.baumsize, gl.baumsize , null);

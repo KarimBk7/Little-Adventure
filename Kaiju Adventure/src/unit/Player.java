@@ -32,8 +32,8 @@ public class Player extends Unit{
 	
 	public void setTest() {
 		
-		posX = 100;
-		posY = 100; 
+		posX = 1920;
+		posY = 1920; 
 		speed = 4;
 		diagonalspeed = speed / 2; 
 		richtung = "down";
@@ -59,72 +59,85 @@ public class Player extends Unit{
 	
 	public void update ()  {
 		
+		//Tastenerkennung
 		if(keyI.upPressed == true || keyI.downPressed == true || 
 				keyI.leftPressed == true || keyI.rightPressed == true) {
 			
-			if (keyI.upPressed == true) {							//player bewegt sich nach oben
-				if (keyI.downPressed == true) {						//stoppt
-					
+			if (keyI.upPressed == true) {							
+				if (keyI.downPressed == true) {	
+					laufen= "stop";									
 				}
-				else if (keyI.leftPressed == keyI.rightPressed) {	//nach oben
+				else if (keyI.leftPressed == keyI.rightPressed) {	
 					richtung = "up";
-					posY -= speed;
+					laufen = "up";
 				}
-				else if (keyI.leftPressed == true) {				//diagonal nach oben-links
+				else if (keyI.leftPressed == true) {				
 					richtung = "up";
-					posY -= diagonalspeed;
-					posX -= diagonalspeed;
+					laufen = "upleft";
 				}
-				else if (keyI.rightPressed == true) {				//diagonal nach oben-rechts
+				else if (keyI.rightPressed == true) {				
 					richtung = "up";
-					posY -= diagonalspeed;
-					posX += diagonalspeed;
+					laufen = "upright";
 				}
 				
 			}
-			else if (keyI.downPressed == true) {					//player bewegt sich nach unten
-				if (keyI.upPressed == true) {						//stoppt
-					
+			else if (keyI.downPressed == true) {					
+				if (keyI.upPressed == true) {						
 				}
-				else if (keyI.leftPressed == keyI.rightPressed) {	//nach unten
+				else if (keyI.leftPressed == keyI.rightPressed) {	
 					richtung = "down";
-					posY += speed;
+					laufen = "down";
 				}
-				else if (keyI.leftPressed == true) {				//diagonal nach unten-links
+				else if (keyI.leftPressed == true) {				
 					richtung = "down";
-					posY += diagonalspeed;
-					posX -= diagonalspeed;
+					laufen = "downleft";
 				}
-				else if (keyI.rightPressed == true) {				//diagonal nach unten-rechts
+				else if (keyI.rightPressed == true) {				
 					richtung = "down";
-					posY += diagonalspeed;
-					posX += diagonalspeed;
+					laufen = "downright";
 				}
 			}
-			else if (keyI.leftPressed == true) {					//player bewegt sich nach links
-				if (keyI.rightPressed == true) {					//stoppt
-					
-				}
-				else {												//nach links
-					richtung = "left";
-					posX -= speed;	
-				}
-				
+			else if (keyI.leftPressed == true && keyI.rightPressed == true) {	
+				laufen = "stop";		
 			}
-			else if (keyI.rightPressed == true) {					//player bewegt sich nach rechts
-				if (keyI.leftPressed == true) {						//stoppt
-					
-				}
-				else {												//nach rechts
+			else if (keyI.rightPressed == true) {																			
 					richtung = "right";
-					posX += speed;
-				}
-
+					laufen = "right";
+			}
+			else if (keyI.leftPressed == true) {
+				richtung = "left";
+				laufen = "left";
 			}
 			
+			//check if collision
 			iscollision = false;
 			gl.cc.checkTile(this);
 			
+			//wenn nicht collision dann laufen
+			if (iscollision == false) {
+				switch (laufen) {
+				case "up": posY -= speed;
+					break;
+				case "upleft": posY -= diagonalspeed; posX -= diagonalspeed;
+					break;
+				case "upright": posY -= diagonalspeed; posX += diagonalspeed;
+					break;
+				case "left": posX -= speed;
+					break;
+				case "right": posX += speed;
+					break;
+				case "down": posY += speed;
+					break;
+				case "downleft": posY += diagonalspeed; posX -= diagonalspeed;
+					break;
+				case "downright": posY += diagonalspeed; posX += diagonalspeed;
+					break;
+				case "stop":
+					break;
+				}
+			}
+			
+			//Animations-Loop
 			spriteCounter++;
 			if (spriteCounter > animationspeed) {								//geschwindigkeit der animation. je höher dest langsamer
 				if (spriteNum == 1) {

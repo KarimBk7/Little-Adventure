@@ -17,6 +17,7 @@ public class GameLoop extends JPanel implements Runnable {
 	private int scale = 3;
 	public int unitsize = standartunitsize * scale;  //48x48
 	public int baumsize = unitsize * 2;
+	public int buildingsize = unitsize * 3;
 	
 	public int maxScreenCol = 20;
 	public int maxScreenrow = 15;
@@ -25,8 +26,8 @@ public class GameLoop extends JPanel implements Runnable {
 	public int screenhoehe = unitsize * maxScreenrow;
 	
 	//Weltkarten Scalierung
-	public int maxWeltCol = 60;
-	public int maxWeltRow = 60;
+	public int maxWeltCol = 80;
+	public int maxWeltRow = 80;
 	public int weltweite = maxWeltCol + unitsize;
 	public int welthoehe = maxWeltRow + unitsize;
 	
