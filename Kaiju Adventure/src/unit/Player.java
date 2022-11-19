@@ -32,15 +32,20 @@ public class Player extends Unit{
 	
 	public void setTest() {
 		
-		posX = 1920;
-		posY = 1920; 
-		speed = 4;
-		diagonalspeed = speed / 2; 
+		//Spieler-Position bei Start
+		posX = 40 * gl.unitsize;			
+		posY = 50 * gl.unitsize; 
+		
+		//Spieler- & Animationsgeschwindigkeit
+		speed = 15;
+		diagonalspeed = 15; 
 		richtung = "down";
 		animationspeed = 16;
 	}
 	
 	public void getPlayerpng() {
+		
+		//speichert Spieler Bilder in BufferdImage
 		try {
 			
 			up1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_up1.png"));
@@ -118,26 +123,26 @@ public class Player extends Unit{
 				switch (laufen) {
 				case "up": posY -= speed;
 					break;
-				case "upleft": posY -= diagonalspeed; posX -= diagonalspeed;
-					break;
-				case "upright": posY -= diagonalspeed; posX += diagonalspeed;
-					break;
 				case "left": posX -= speed;
 					break;
 				case "right": posX += speed;
 					break;
 				case "down": posY += speed;
 					break;
+				/**case "upleft": posY -= diagonalspeed; posX -= diagonalspeed;
+					break;
+				case "upright": posY -= diagonalspeed; posX += diagonalspeed;
+					break;
 				case "downleft": posY += diagonalspeed; posX -= diagonalspeed;
 					break;
 				case "downright": posY += diagonalspeed; posX += diagonalspeed;
 					break;
 				case "stop":
-					break;
+					break;**/
 				}
 			}
 			
-			//Animations-Loop
+			//Animations-Loop-Counter
 			spriteCounter++;
 			if (spriteCounter > animationspeed) {								//geschwindigkeit der animation. je höher dest langsamer
 				if (spriteNum == 1) {
@@ -157,6 +162,7 @@ public class Player extends Unit{
 		
 		BufferedImage image = null;
 		
+		//Wählt Image zur Rischtung
 		switch(richtung) {
 		case "up":
 			if(spriteNum == 1) {
@@ -193,6 +199,7 @@ public class Player extends Unit{
 		
 		}
 		
+		//zeichnet Player
 		g2.drawImage(image, camX, camY, gl.unitsize, gl.unitsize, null);
 		
 	}

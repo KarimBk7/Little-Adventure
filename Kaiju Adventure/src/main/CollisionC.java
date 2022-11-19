@@ -24,6 +24,7 @@ public class CollisionC {
 		
 		int tileNum1, tileNum2;
 		
+		//Setzt isCollision auf true wenn Spieler auf festes Tiles trifft
 		switch (unit.richtung) {
 		case "up": 
 			unitTopRow = (unitTopY - unit.speed) / gl.unitsize;

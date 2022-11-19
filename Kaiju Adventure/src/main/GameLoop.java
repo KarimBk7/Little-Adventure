@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import objekt.Objekt;
 import surrounding.TileManager;
 import unit.Player;
 
@@ -17,10 +19,10 @@ public class GameLoop extends JPanel implements Runnable {
 	private int scale = 3;
 	public int unitsize = standartunitsize * scale;  //48x48
 	public int baumsize = unitsize * 2;
-	public int buildingsize = unitsize * 3;
+	public int buildingsize = unitsize * 4;
 	
-	public int maxScreenCol = 20;
-	public int maxScreenrow = 15;
+	public int maxScreenCol = 16;
+	public int maxScreenrow = 12;
 	
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
@@ -35,11 +37,14 @@ public class GameLoop extends JPanel implements Runnable {
 	//FPS
 	int fps = 60;
 
+	//Objekte erstellen
 	TileManager tileM = new TileManager(this);
 	KeyInput keyI = new KeyInput();
 	Thread gameThread;
 	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
+	public Objekt obj [] = new Objekt[10];
+	public ObjektSetter oSetter = new ObjektSetter(this);
 	
 	
 	//Konstruktor
@@ -69,6 +74,7 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		while (gameThread != null) {	
 			
+			//FPS Rechner
 			currentTime = System.nanoTime();
 			delta += (currentTime - lastTime) / drawInt;
 			timer += (currentTime -lastTime);
@@ -98,13 +104,35 @@ public class GameLoop extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D)g;
+		
+		//draw Weltkarte
 		tileM.draw(g2);
+		
+		//Draw Alle Objekte
+		for (int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				if (i < 3) {
+					obj[i].drawBuilding(g2, this);
+				}
+				else {
+					obj[i].draw(g2, this);
+				}
+				
+			}
+		}
+		
+		//Draw Spieler
 		player.draw(g2);
-		//tileM.ladeWeltkarte();
+	
 		g2.dispose();
 		
+		
+	}
+	
+	public void setupObjekt() {
+		
+		oSetter.setObjekt();
 		
 	}
 }

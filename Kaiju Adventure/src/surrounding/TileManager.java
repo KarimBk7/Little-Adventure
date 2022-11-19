@@ -29,6 +29,7 @@ public class TileManager {
 	}
 	
 	public void getTilepng() {
+		//Speichert alle Tile in die BufferedImages
 		try {
 			
 			tile[0] = new Tile();
@@ -40,10 +41,11 @@ public class TileManager {
 			
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser1.png"));
-			tile[2].collision = false;
+			tile[2].collision = true;
 			
 			tile[3] = new Tile();
 			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser2.png"));
+			tile[3].collision = true;
 			
 			tile[4] = new Tile();
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wand.png"));
@@ -54,7 +56,7 @@ public class TileManager {
 			tile[5].collision = true;
 			
 			tile[6] = new Tile();
-			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/busch.png"));
+			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/gehweg.png"));
 			
 			tile[7] = new Tile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/sand.png"));
@@ -64,7 +66,7 @@ public class TileManager {
 			tile[8].collision = true;
 			
 			tile[9] = new Tile();
-			//tile[9].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava2.png"));
+			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava2.png"));
 			tile[9].collision = true;
 		
 			
@@ -103,14 +105,13 @@ public class TileManager {
 			
 			
 		} catch (Exception e) {
-			
+		
 		}
 	}
 	
 	public void draw(Graphics2D g2) {
 		
-		//g2.drawImage(tile[0].image, 0, 0, gl.unitsize, gl.unitsize, null); //Test
-		
+		//Animationsloop
 		spriteCounter++;
 		if (spriteCounter > animationspeed) {				//geschwindigkeit der animation. je höher dest langsamer
 			if (spriteNum == 1) {
@@ -137,35 +138,31 @@ public class TileManager {
 			int scX = x - gl.player.posX + gl.player.camX;
 			int scY = y - gl.player.posY + gl.player.camY;
 			
+			//Wenn Tile baum
 			if (tileNum == 5) {
 				g2.drawImage(tile[5].image, scX, scY, gl.baumsize, gl.baumsize , null);
-				col++;
 			}
 			
-			else if (tileNum == 2) {
+			//Wenn Wasser oder Lava ist
+			else if (tileNum == 2 || tileNum == 8) {
 				if(spriteNum == 1) {
-					g2.drawImage(tile[2].image, scX, scY,gl.unitsize, gl.unitsize, null);
-					col++;
+					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
 				if(spriteNum == 2) {
-					g2.drawImage(tile[3].image, scX, scY,gl.unitsize, gl.unitsize, null);
-					col++;
+					g2.drawImage(tile[tileNum + 1].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
 			} 	
-			
+		
+			//Restliche Tiles
 			else {
 				g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
-				col++;
 			}
+			col++;
 			
 			if (col == gl.maxWeltCol) {
 				col = 0;
-				row++;
-				
-			}
-			
-			
+				row++;	
+			}	
 		}
-		//g2.drawImage(tile[4].image, 100, 100, gl.baumsize, gl.baumsize , null);
 	}
 }

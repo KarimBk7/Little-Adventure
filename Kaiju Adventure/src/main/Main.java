@@ -18,6 +18,7 @@ public class Main {
 		window.setLocationRelativeTo(null);//fenster taicht in der mitte des Bildschrims auf
 		window.setVisible(true);
 		
+		gameloop.setupObjekt();
 		gameloop.startGameThread();
 		
 	}
