@@ -21,8 +21,8 @@ public class GameLoop extends JPanel implements Runnable {
 	public int baumsize = unitsize * 2;
 	public int buildingsize = unitsize * 4;
 	
-	public int maxScreenCol = 16;
-	public int maxScreenrow = 10;
+	public int maxScreenCol = 25;
+	public int maxScreenrow = 16;
 	
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
@@ -112,12 +112,8 @@ public class GameLoop extends JPanel implements Runnable {
 		//Draw Alle Objekte
 		for (int i = 0; i < obj.length; i++) {
 			if (obj[i] != null) {
-				if (i < 3) {
-					obj[i].drawBuilding(g2, this);
-				}
-				else {
-					obj[i].draw(g2, this);
-				}
+				
+					obj[i].draw(g2, this,obj,i);
 				
 			}
 		}

@@ -15,6 +15,7 @@ public class Player extends Unit{
 	KeyInput keyI;
 	
 	public int camX, camY;
+	public int amountKey = 0;
 	
 	public Player(GameLoop gl, KeyInput keyI) {
 		this.gl = gl;
@@ -23,7 +24,9 @@ public class Player extends Unit{
 		camX = (gl.screenweite / 2) - (gl.unitsize / 2);
 		camY = (gl.screenhoehe / 2) - (gl.unitsize / 2);	
 		
-		hitbox = new Rectangle(8, 8, 32, 32);
+		hitbox = new Rectangle(8, 16, 32, 32);
+		hitboxX = hitbox.x;
+		hitboxY = hitbox.y;
 		
 		setTest();
 		getPlayerpng();
@@ -33,8 +36,8 @@ public class Player extends Unit{
 	public void setTest() {
 		
 		//Spieler-Position bei Start
-		posX = 16 * gl.unitsize;			
-		posY = 22 * gl.unitsize; 
+		posX = 40 * gl.unitsize;			
+		posY = 68 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
 		speed = 15;
@@ -117,6 +120,8 @@ public class Player extends Unit{
 			//check if collision
 			iscollision = false;
 			gl.cc.checkTile(this);
+			int objindex = gl.cc.checkObjekt(this, true);
+			pickUp(objindex);
 			
 			//wenn nicht collision dann laufen
 			if (iscollision == false) {
@@ -158,6 +163,31 @@ public class Player extends Unit{
 		
 	}
 	
+	//interargieren
+	public void pickUp(int i) {
+		
+		if (i != 99) {
+		
+			switch (gl.obj[i].name) {
+			case "Key":
+				amountKey++;
+				gl.obj[i] = null;
+				System.out.println("Key: " + amountKey);
+				break;
+			case "closeddoor":
+				if(amountKey > 0) {
+					gl.obj[i+1].posX = gl.obj[i].posX;
+					gl.obj[i+1].posY = gl.obj[i].posY;
+					gl.obj[i] = null;
+					
+					amountKey--;
+				}
+				break;
+			}
+		}
+	}
+	
+	//zeichnet spieler
 	public void draw(Graphics2D g2) {
 		
 		BufferedImage image = null;
