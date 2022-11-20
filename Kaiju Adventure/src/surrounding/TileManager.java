@@ -21,7 +21,7 @@ public class TileManager {
 	//Kosntruktor
 	public TileManager(GameLoop gl) {
 		this.gl = gl;
-		tile = new Tile[10];
+		tile = new Tile[12];
 		mapTile = new int [gl.maxWeltCol][gl.maxWeltRow];
 		ladeWeltkarte("/weltkarte/map2.txt");
 		getTilepng();
@@ -44,8 +44,7 @@ public class TileManager {
 			tile[2].collision = true;
 			
 			tile[3] = new Tile();
-			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser2.png"));
-			tile[3].collision = true;
+			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/steinboden.png"));
 			
 			tile[4] = new Tile();
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wand.png"));
@@ -66,8 +65,16 @@ public class TileManager {
 			tile[8].collision = true;
 			
 			tile[9] = new Tile();
-			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava2.png"));
+			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/felsen.png"));
 			tile[9].collision = true;
+			
+			tile[10] = new Tile();
+			tile[10].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/wasser2.png"));
+			tile[10].collision = true;
+			
+			tile[11] = new Tile();
+			tile[11].image = ImageIO.read(getClass().getResourceAsStream("/surrounding/lava2.png"));
+			tile[11].collision = true;
 		
 			
 		} catch (Exception e) {
@@ -144,12 +151,23 @@ public class TileManager {
 			}
 			
 			//Wenn Wasser oder Lava ist
-			else if (tileNum == 2 || tileNum == 8) {
+			else if (tileNum == 2) {
 				if(spriteNum == 1) {
 					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
 				if(spriteNum == 2) {
-					g2.drawImage(tile[tileNum + 1].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					g2.drawImage(tile[10].image, scX, scY,gl.unitsize, gl.unitsize, null);
+				}
+			} 	
+			else if(tileNum == 9) {
+				g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize , null);
+			}
+			else if (tileNum == 8) {
+				if(spriteNum == 1) {
+					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
+				}
+				if(spriteNum == 2) {
+					g2.drawImage(tile[11].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
 			} 	
 		

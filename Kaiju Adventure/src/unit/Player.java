@@ -33,8 +33,8 @@ public class Player extends Unit{
 	public void setTest() {
 		
 		//Spieler-Position bei Start
-		posX = 40 * gl.unitsize;			
-		posY = 50 * gl.unitsize; 
+		posX = 16 * gl.unitsize;			
+		posY = 22 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
 		speed = 15;

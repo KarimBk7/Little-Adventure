@@ -22,7 +22,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public int buildingsize = unitsize * 4;
 	
 	public int maxScreenCol = 16;
-	public int maxScreenrow = 12;
+	public int maxScreenrow = 10;
 	
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
