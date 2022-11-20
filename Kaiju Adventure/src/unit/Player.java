@@ -170,12 +170,14 @@ public class Player extends Unit{
 		
 			switch (gl.obj[i].name) {
 			case "Key":
+				gl.soundEffekt(1);
 				amountKey++;
 				gl.obj[i] = null;
 				System.out.println("Key: " + amountKey);
 				break;
 			case "closeddoor":
 				if(amountKey > 0) {
+					gl.soundEffekt(2);
 					gl.obj[i+1].posX = gl.obj[i].posX;
 					gl.obj[i+1].posY = gl.obj[i].posY;
 					gl.obj[i] = null;

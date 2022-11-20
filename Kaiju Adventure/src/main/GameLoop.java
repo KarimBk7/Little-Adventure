@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Iterator;
@@ -45,6 +46,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public Player player = new Player(this,keyI);
 	public Objekt obj [] = new Objekt[10];
 	public ObjektSetter oSetter = new ObjektSetter(this);
+	Sound sound = new Sound();
 	
 	
 	//Konstruktor
@@ -95,9 +97,19 @@ public class GameLoop extends JPanel implements Runnable {
 		}	
 	}
 	
-	public void update() {
+	public void update() {//
 		
 		player.update();
+		
+	}
+	
+	public void setupObjekt() {
+		
+		//settet alle Objekte
+		oSetter.setObjekt();
+		
+		//Spielt main-theme ab
+		//playMusik(0);
 		
 	}
 	
@@ -126,9 +138,24 @@ public class GameLoop extends JPanel implements Runnable {
 		
 	}
 	
-	public void setupObjekt() {
+	//startet audio in loop
+	public void playMusik(int i) {
 		
-		oSetter.setObjekt();
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	
+	//stoppt audio
+	public void stopMusik() {
 		
+		sound.stop();
+	}
+	
+	//startet audio
+	public void soundEffekt(int i) {
+		
+		sound.setFile(i);
+		sound.play();
 	}
 }
