@@ -15,7 +15,6 @@ public class House extends Objekt{
 		} catch (Exception e) {
 			
 		}
-		isCollision = true;
 		hitbox.height = gl.buildingsize;
 		hitbox.width = gl.buildingsize;
 		

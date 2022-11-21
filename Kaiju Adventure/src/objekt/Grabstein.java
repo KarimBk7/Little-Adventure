@@ -7,7 +7,7 @@ import main.GameLoop;
 public class Grabstein extends Objekt{
 
 	public Grabstein() {
-		name = "grabstein";
+		name = "Grabstein";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/Objekt/grabstein.png"));
 		} catch (Exception e) {

@@ -7,7 +7,7 @@ public class KeyInput implements KeyListener {
 	
 	GameLoop gl;
 	public boolean upPressed, downPressed, leftPressed, rightPressed,
-	jPressed, kPressed, iPressed, pausePressed;
+	jPressed, kPressed, iPressed, pausePressed, enterPressed;
 
 	public KeyInput(GameLoop gl) {
 		this.gl = gl;
@@ -23,29 +23,40 @@ public class KeyInput implements KeyListener {
 
 		int eingabe = e.getKeyCode();
 			
-		if (eingabe == KeyEvent.VK_W) {
-			upPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_A) {
-			leftPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_S) {
-			downPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_D) {
-			rightPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_J) {
-			jPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_K) {
-			kPressed = true;
-		}
-		if (eingabe == KeyEvent.VK_P) {
-			if(gl.gameState == gl.playState) {
-				gl.gameState = gl.pauseState;
+		if (gl.gameState == gl.playState) {
+			if (eingabe == KeyEvent.VK_W) {
+				upPressed = true;
 			}
-			else if(gl.gameState == gl.pauseState) {
+			if (eingabe == KeyEvent.VK_A) {
+				leftPressed = true;
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				downPressed = true;
+			}
+			if (eingabe == KeyEvent.VK_D) {
+				rightPressed = true;
+			}
+			if (eingabe == KeyEvent.VK_J) {
+				jPressed = true;
+			}
+			if (eingabe == KeyEvent.VK_K) {
+				kPressed = true;
+			}
+			if (eingabe == KeyEvent.VK_P) {
+					gl.gameState = gl.pauseState;
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				enterPressed = true;
+		}
+		}
+		
+		else if (gl.gameState == gl.pauseState) {
+			if (eingabe == KeyEvent.VK_P) { 
+				gl.gameState = gl.playState;
+			}	
+		}
+		else if (gl.gameState == gl.dialogState) {
+			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
 			}
 		}
@@ -76,6 +87,9 @@ public class KeyInput implements KeyListener {
 		}
 		if (eingabe == KeyEvent.VK_P) {
 			pausePressed = false;
+		}
+		if (eingabe == KeyEvent.VK_ENTER) {
+			enterPressed = false;
 		}
 
 	}

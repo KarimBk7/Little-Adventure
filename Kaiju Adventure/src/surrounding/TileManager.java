@@ -29,7 +29,7 @@ public class TileManager {
 	}
 	
 	public void getTilepng() {
-		//Speichert alle Tile in die BufferedImages
+		//Speichert alle images in Tile-Array
 		try {
 			
 			tile[0] = new Tile();
@@ -82,6 +82,7 @@ public class TileManager {
 		}
 	}
 	
+	//speichert die welt von der .txt in ein 2D-Array
 	public void ladeWeltkarte(String file) {
 		try {
 			InputStream karte = getClass().getResourceAsStream(file);
@@ -116,9 +117,10 @@ public class TileManager {
 		}
 	}
 	
+	//Lädt die Welt
 	public void draw(Graphics2D g2) {
 		
-		//Animationsloop
+		
 		spriteCounter++;
 		if (spriteCounter > animationspeed) {				//geschwindigkeit der animation. je höher dest langsamer
 			if (spriteNum == 1) {
@@ -142,6 +144,7 @@ public class TileManager {
 			int x = col * gl.unitsize;
 			int y = row * gl.unitsize;
 			
+			
 			int scX = x - gl.player.posX + gl.player.camX;
 			int scY = y - gl.player.posY + gl.player.camY;
 			
@@ -150,7 +153,7 @@ public class TileManager {
 				g2.drawImage(tile[5].image, scX, scY, gl.baumsize, gl.baumsize , null);
 			}
 			
-			//Wenn Wasser oder Lava ist
+			//Wenn Wasser tile ist dann animation
 			else if (tileNum == 2) {
 				if(spriteNum == 1) {
 					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
@@ -159,9 +162,8 @@ public class TileManager {
 					g2.drawImage(tile[10].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
 			} 	
-			else if(tileNum == 9) {
-				g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize , null);
-			}
+			
+			//Wenn Lava Tile ist dann Lava animation
 			else if (tileNum == 8) {
 				if(spriteNum == 1) {
 					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);

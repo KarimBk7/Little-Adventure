@@ -3,6 +3,7 @@ package unit;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -11,7 +12,6 @@ import main.KeyInput;
 
 public class Player extends Unit{
 
-	GameLoop gl;
 	KeyInput keyI;
 	
 	public int camX, camY;
@@ -20,13 +20,13 @@ public class Player extends Unit{
 	public boolean beendet = false;
 	
 	public Player(GameLoop gl, KeyInput keyI) {
-		this.gl = gl;
+		super(gl);
+	
 		this.keyI = keyI;
 		
 		camX = (gl.screenweite / 2) - (gl.unitsize / 2);
 		camY = (gl.screenhoehe / 2) - (gl.unitsize / 2);	
 		
-		hitbox = new Rectangle(8, 16, 32, 32);
 		hitboxX = hitbox.x;
 		hitboxY = hitbox.y;
 		
@@ -38,11 +38,11 @@ public class Player extends Unit{
 	public void setTest() {
 		
 		//Spieler-Position bei Start
-		posX = 60 * gl.unitsize;			
-		posY = 41 * gl.unitsize; 
+		posX = 55 * gl.unitsize;			
+		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 6;
+		speed = 15;
 		diagonalspeed = 15; 
 		richtung = "down";
 		animationspeed = 16;
@@ -121,13 +121,15 @@ public class Player extends Unit{
 			
 			
 			//check if collision
-			iscollision = false;
+			isCollision = false;
 			gl.cc.checkTile(this);
+			int npcindex = gl.cc.checkNpc(this,true);
 			int objindex = gl.cc.checkObjekt(this, true);
 			interact(objindex);
+			interactNpc(npcindex);
 			
 			//wenn nicht collision dann laufen
-			if (iscollision == false) {
+			if (isCollision == false) {
 				switch (richtung) {
 				case "up": posY -= speed;
 					break;
@@ -166,64 +168,107 @@ public class Player extends Unit{
 		
 	}
 	
-	//interargieren
+	//interargieren mit objekten
 	public void interact(int i) {
 		
 		if (i != 99) {
 		
 			switch (gl.obj[i].name) {
 			
+			//Wenn Man Kiste öffnet 
+			case "Schaufel":
+				if (keyI.enterPressed == true) {
+					try {
+						gl.obj[i].image = ImageIO.read(getClass().getResourceAsStream("/objekt/openchest.png"));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					};
+					gl.ui.showMessage("Schaufel erhalten!", 90);
+					gl.npc[0].dialogIndex = 1;
+					hatSchaufel = true;
+				}
+				break;
+				
+			case "Grabstein":
+				if (keyI.enterPressed == true) {		
+					gl.ui.showMessage("Ich schaffte es nicht Tenbusch zu besiegen. \nIch vergrub einen Schlüssel zu seiner Burg."
+							+ " \nDoch nur die Vögel die hoch fliegen können, \nkönnen den Hinweis sichten, um ihn zu finden. ", 480);
+				}
+				break;
+				
 			//Haufen ausgraben
 			case "Haufen":
-				if (keyI.jPressed == true) {
+				if (keyI.enterPressed == true) {
 					if (hatSchaufel == true) {
-					
-						gl.obj[8].posX = gl.obj[i].posX;
-						gl.obj[8].posY = gl.obj[i].posY;
+						try {
+							gl.gameThread.sleep(200);
+						} catch (InterruptedException e) {
+							
+							e.printStackTrace();
+						}
 						gl.obj[i] = null;
-						
+						gl.ui.showMessage("Schlüssel ausgegraben!", 90);
 					}
 					else {
-						gl.ui.showMessage("Die Erde ist hier weicher");
+						gl.ui.showMessage("Was ist mit der Erde hier?", 90);
 					}
 				}
+				
 				break;
 				
 			//Schlüssel einsammeln	
 			case "Key":
+				if (keyI.enterPressed == true) {
 					gl.obj[i] = null;
 					gl.soundEffekt(1);
 					amountKey++;
-					gl.ui.showMessage("Schlüssel erhalten!");
+					gl.ui.showMessage("Schlüssel erhalten!", 90);
+				}
 				break;
 				
 			//Tür öffnen	
 			case "closeddoor":
-				if (keyI.jPressed == true) {
+				if (keyI.enterPressed == true) {
 					if(amountKey > 1) {
-						gl.soundEffekt(2);
-						gl.obj[i+1].posX = gl.obj[i].posX;
-						gl.obj[i+1].posY = gl.obj[i].posY;
-						gl.obj[i] = null;
-						gl.ui.showMessage("Tür geöffnet!");
-						amountKey--;
+						//gl.soundEffekt(2);
+						try {
+							gl.obj[i].image = ImageIO.read(getClass().getResourceAsStream("/Objekt/opendoor.png"));
+							gl.obj[i].isCollision = false;
+							gl.obj[10] = null;
+						} catch (Exception e) {
+							// TODO: handle exception
+						} 
+						gl.ui.showMessage("Tür geöffnet! \nMöge der Kampf gegen Tenbusch\nbeginnen!!!", 120);
 					}
 					else {
-						gl.ui.showMessage("Du brauchst zwei Schlüssel.");
+						gl.ui.showMessage("Ich benötige 2 Schlüssel.", 90);
 					}
-				
 				}
 				break;
 			}
 		}
 	}
 	
+	//interagieren mit npc
+	public void interactNpc(int i) {
+		
+		if (i != 99) {
+			if (keyI.enterPressed == true) {
+				gl.gameState = gl.dialogState;
+				gl.npc[i].speak();
+			}
+			keyI.enterPressed = false;
+		}
+	}
+	
+	
 	//zeichnet spieler
 	public void draw(Graphics2D g2) {
 		
 		BufferedImage image = null;
 		
-		//Wählt Image zur Rischtung
+		//Wählt Image zur Richtung
 		switch(richtung) {
 		case "up":
 			if(spriteNum == 1) {
@@ -260,7 +305,6 @@ public class Player extends Unit{
 		
 		}
 		
-		//zeichnet Player
 		g2.drawImage(image, camX, camY, gl.unitsize, gl.unitsize, null);
 		
 	}
