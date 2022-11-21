@@ -38,16 +38,24 @@ public class GameLoop extends JPanel implements Runnable {
 	//FPS
 	int fps = 60;
 
-	//Objekte erstellen
-	TileManager tileM = new TileManager(this);
-	KeyInput keyI = new KeyInput();
-	Thread gameThread;
+	//Keyinput
+	KeyInput keyI = new KeyInput(this);
+	//Units
 	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
+	//Weltkarte
+	TileManager tileM = new TileManager(this);
 	public Objekt obj [] = new Objekt[10];
 	public ObjektSetter oSetter = new ObjektSetter(this);
+	//sound & ui
 	Sound sound = new Sound();
+	public UI ui = new UI(this);
 	
+	public int gameState;
+	public int playState = 1;
+	public int pauseState = 2;
+	
+	Thread gameThread;
 	
 	//Konstruktor
 	public GameLoop() {
@@ -99,7 +107,12 @@ public class GameLoop extends JPanel implements Runnable {
 	
 	public void update() {//
 		
-		player.update();
+		if (gameState == playState) {
+			player.update();
+		}
+		if (gameState == pauseState) {
+			
+		}
 		
 	}
 	
@@ -110,6 +123,7 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		//Spielt main-theme ab
 		//playMusik(0);
+		gameState = playState;
 		
 	}
 	
@@ -132,7 +146,9 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		//Draw Spieler
 		player.draw(g2);
-	
+		//Draw HUD
+		ui.draw(g2);
+		
 		g2.dispose();
 		
 		

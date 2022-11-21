@@ -5,9 +5,14 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
 	
+	GameLoop gl;
 	public boolean upPressed, downPressed, leftPressed, rightPressed,
 	jPressed, kPressed, iPressed, pausePressed;
 
+	public KeyInput(GameLoop gl) {
+		this.gl = gl;
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -37,7 +42,12 @@ public class KeyInput implements KeyListener {
 			kPressed = true;
 		}
 		if (eingabe == KeyEvent.VK_P) {
-			pausePressed = true;
+			if(gl.gameState == gl.playState) {
+				gl.gameState = gl.pauseState;
+			}
+			else if(gl.gameState == gl.pauseState) {
+				gl.gameState = gl.playState;
+			}
 		}
 	}
 

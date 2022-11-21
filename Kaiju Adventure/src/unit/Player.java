@@ -16,6 +16,8 @@ public class Player extends Unit{
 	
 	public int camX, camY;
 	public int amountKey = 0;
+	public boolean hatSchaufel = false;
+	public boolean beendet = false;
 	
 	public Player(GameLoop gl, KeyInput keyI) {
 		this.gl = gl;
@@ -36,11 +38,11 @@ public class Player extends Unit{
 	public void setTest() {
 		
 		//Spieler-Position bei Start
-		posX = 40 * gl.unitsize;			
-		posY = 68 * gl.unitsize; 
+		posX = 60 * gl.unitsize;			
+		posY = 41 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 15;
+		speed = 6;
 		diagonalspeed = 15; 
 		richtung = "down";
 		animationspeed = 16;
@@ -117,15 +119,16 @@ public class Player extends Unit{
 				laufen = "left";
 			}
 			
+			
 			//check if collision
 			iscollision = false;
 			gl.cc.checkTile(this);
 			int objindex = gl.cc.checkObjekt(this, true);
-			pickUp(objindex);
+			interact(objindex);
 			
 			//wenn nicht collision dann laufen
 			if (iscollision == false) {
-				switch (laufen) {
+				switch (richtung) {
 				case "up": posY -= speed;
 					break;
 				case "left": posX -= speed;
@@ -164,25 +167,51 @@ public class Player extends Unit{
 	}
 	
 	//interargieren
-	public void pickUp(int i) {
+	public void interact(int i) {
 		
 		if (i != 99) {
 		
 			switch (gl.obj[i].name) {
-			case "Key":
-				gl.soundEffekt(1);
-				amountKey++;
-				gl.obj[i] = null;
-				System.out.println("Key: " + amountKey);
-				break;
-			case "closeddoor":
-				if(amountKey > 0) {
-					gl.soundEffekt(2);
-					gl.obj[i+1].posX = gl.obj[i].posX;
-					gl.obj[i+1].posY = gl.obj[i].posY;
-					gl.obj[i] = null;
+			
+			//Haufen ausgraben
+			case "Haufen":
+				if (keyI.jPressed == true) {
+					if (hatSchaufel == true) {
 					
-					amountKey--;
+						gl.obj[8].posX = gl.obj[i].posX;
+						gl.obj[8].posY = gl.obj[i].posY;
+						gl.obj[i] = null;
+						
+					}
+					else {
+						gl.ui.showMessage("Die Erde ist hier weicher");
+					}
+				}
+				break;
+				
+			//Schlüssel einsammeln	
+			case "Key":
+					gl.obj[i] = null;
+					gl.soundEffekt(1);
+					amountKey++;
+					gl.ui.showMessage("Schlüssel erhalten!");
+				break;
+				
+			//Tür öffnen	
+			case "closeddoor":
+				if (keyI.jPressed == true) {
+					if(amountKey > 1) {
+						gl.soundEffekt(2);
+						gl.obj[i+1].posX = gl.obj[i].posX;
+						gl.obj[i+1].posY = gl.obj[i].posY;
+						gl.obj[i] = null;
+						gl.ui.showMessage("Tür geöffnet!");
+						amountKey--;
+					}
+					else {
+						gl.ui.showMessage("Du brauchst zwei Schlüssel.");
+					}
+				
 				}
 				break;
 			}
