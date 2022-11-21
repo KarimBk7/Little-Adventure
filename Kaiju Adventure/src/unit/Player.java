@@ -221,7 +221,7 @@ public class Player extends Unit{
 			case "Key":
 				if (keyI.enterPressed == true) {
 					gl.obj[i] = null;
-					gl.soundEffekt(1);
+					//gl.soundEffekt(1);
 					amountKey++;
 					gl.ui.showMessage("Schlüssel erhalten!", 90);
 				}

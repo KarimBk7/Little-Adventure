@@ -128,7 +128,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setObjekt();
 		oSetter.setNPC();
 		//Spielt main-theme ab
-		playMusik(0);
+		//playMusik(0);
 		gameState = playState;
 		
 	}

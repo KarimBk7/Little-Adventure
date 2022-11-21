@@ -60,7 +60,7 @@ public class UI {
 				drawDialogFenster(g2);
 				counter++;
 				//wie lang die message bleibt
-				if (counter == countermax) {
+				if (counter > countermax) {
 					messageOn = false;
 					counter = 0;
 				}
