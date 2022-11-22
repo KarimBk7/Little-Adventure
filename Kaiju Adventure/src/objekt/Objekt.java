@@ -9,7 +9,7 @@ import main.GameLoop;
 
 public class Objekt {
 
-	public BufferedImage image;
+	public BufferedImage image, image2;
 	public String name;
 	
 	public boolean isCollision = true;

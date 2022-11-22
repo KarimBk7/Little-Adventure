@@ -148,35 +148,41 @@ public class TileManager {
 			int scX = x - gl.player.posX + gl.player.camX;
 			int scY = y - gl.player.posY + gl.player.camY;
 			
-			//Wenn Tile baum
-			if (tileNum == 5) {
-				g2.drawImage(tile[5].image, scX, scY, gl.baumsize, gl.baumsize , null);
-			}
+			if (x + (gl.unitsize * 2) > gl.player.posX - gl.player.camX && x - (gl.unitsize * 2) < gl.player.posX + gl.player.camX &&
+				y + (gl.unitsize * 2) > gl.player.posY - gl.player.camY && x - (gl.unitsize * 2) < gl.player.posX + gl.player.camX) {
+				
+				//Wenn Tile baum
+				if (tileNum == 5) {
+					g2.drawImage(tile[5].image, scX, scY, gl.baumsize, gl.baumsize , null);
+				}
+				
+				//Wenn Wasser tile ist dann animation
+				else if (tileNum == 2) {
+					if(spriteNum == 1) {
+						g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					}
+					if(spriteNum == 2) {
+						g2.drawImage(tile[10].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					}
+				} 	
+				
+				//Wenn Lava Tile ist dann Lava animation
+				else if (tileNum == 8) {
+					if(spriteNum == 1) {
+						g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					}
+					if(spriteNum == 2) {
+						g2.drawImage(tile[11].image, scX, scY,gl.unitsize, gl.unitsize, null);
+					}
+				} 	
 			
-			//Wenn Wasser tile ist dann animation
-			else if (tileNum == 2) {
-				if(spriteNum == 1) {
+				//Restliche Tiles
+				else {
 					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
 				}
-				if(spriteNum == 2) {
-					g2.drawImage(tile[10].image, scX, scY,gl.unitsize, gl.unitsize, null);
-				}
-			} 	
-			
-			//Wenn Lava Tile ist dann Lava animation
-			else if (tileNum == 8) {
-				if(spriteNum == 1) {
-					g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
-				}
-				if(spriteNum == 2) {
-					g2.drawImage(tile[11].image, scX, scY,gl.unitsize, gl.unitsize, null);
-				}
-			} 	
-		
-			//Restliche Tiles
-			else {
-				g2.drawImage(tile[tileNum].image, scX, scY,gl.unitsize, gl.unitsize, null);
 			}
+			
+			
 			col++;
 			
 			if (col == gl.maxWeltCol) {

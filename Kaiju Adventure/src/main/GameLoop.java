@@ -23,9 +23,9 @@ public class GameLoop extends JPanel implements Runnable {
 	public int baumsize = unitsize * 2;
 	public int buildingsize = unitsize * 4;
 	
+	//Fenster groesse
 	public int maxScreenCol = 16;
 	public int maxScreenrow = 12;
-	
 	public int screenweite = unitsize * maxScreenCol;
 	public int screenhoehe = unitsize * maxScreenrow;
 	
@@ -37,7 +37,7 @@ public class GameLoop extends JPanel implements Runnable {
 	
 	
 	//FPS
-	int fps = 60;
+	int fps = 45;
 
 	//Keyinput
 	public KeyInput keyI = new KeyInput(this);
@@ -60,6 +60,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public int playState = 1;
 	public int pauseState = 2;
 	public int dialogState = 3;
+	public int titlestate = 4;
 	
 	public Thread gameThread;
 	
@@ -89,6 +90,7 @@ public class GameLoop extends JPanel implements Runnable {
 		long drawCounter = 0;
 		
 		while (gameThread != null) {	
+			long starttim = System.nanoTime();	
 			
 			//FPS Rechner
 			currentTime = System.nanoTime();
@@ -105,9 +107,13 @@ public class GameLoop extends JPanel implements Runnable {
 			
 			if(timer >= 1000000000) {
 				System.out.println("FPS: " + drawCounter);
+				long endtime = System.nanoTime();
+				endtime -= starttim;
+				System.out.println("Nanosec =" + endtime);
 				drawCounter = 0;
 				timer = 0;
 			}
+			
 		}	
 	}
 	
@@ -127,9 +133,8 @@ public class GameLoop extends JPanel implements Runnable {
 		//settet alle Objekte
 		oSetter.setObjekt();
 		oSetter.setNPC();
-		//Spielt main-theme ab
-		//playMusik(0);
-		gameState = playState;
+		
+		gameState = titlestate;
 		
 	}
 	
@@ -138,32 +143,36 @@ public class GameLoop extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
-		//draw Weltkarte
-		tileM.draw(g2);
-		
-		//Draw Alle Objekte
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				obj[i].draw(g2, this,obj,i);
-			}
+		//Titel-Screen
+		if (gameState == titlestate) {
+			ui.draw(g2);
 		}
-		
-		//Draw alle NPC
-		for (int i = 0; i < npc.length; i++) {
-			if (npc[i] != null) {
-				npc[i].draw(g2, this,npc,i);
+		else {
+			//draw Weltkarte
+			tileM.draw(g2);
+			
+			//Draw Alle Objekte
+			for (int i = 0; i < obj.length; i++) {
+				if (obj[i] != null) {
+					obj[i].draw(g2, this,obj,i);
+				}
 			}
+			
+			//Draw alle NPC
+			for (int i = 0; i < npc.length; i++) {
+				if (npc[i] != null) {
+					npc[i].draw(g2, this,npc,i);
+				}
+			}
+			
+			//Draw Spieler
+			player.draw(g2);
+			
+			//Draw HUD
+			ui.draw(g2);
+			
+			g2.dispose();
 		}
-		
-		//Draw Spieler
-		player.draw(g2);
-		
-		//Draw HUD
-		ui.draw(g2);
-		
-		g2.dispose();
-		
-		
 	}
 	
 	//startet audio in loop

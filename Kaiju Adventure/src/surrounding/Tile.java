@@ -8,6 +8,7 @@ public class Tile {
 	public BufferedImage image;
 	public boolean collision = false;
 	
+	//Animationscounter
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 }

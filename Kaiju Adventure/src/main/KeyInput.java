@@ -23,6 +23,33 @@ public class KeyInput implements KeyListener {
 
 		int eingabe = e.getKeyCode();
 			
+		if (gl.gameState == gl.titlestate) {
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 2;
+				}
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 2) {
+					gl.ui.befehl = 0;
+				}
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				enterPressed = true;
+				if (gl.ui.befehl == 0) {
+					gl.gameState = gl.playState;
+					//gl.playMusik(0);
+				}
+				if (gl.ui.befehl == 1) {
+					
+				}
+				if (gl.ui.befehl == 2) {
+					System.exit(0);
+				}
+			}
+		}
 		if (gl.gameState == gl.playState) {
 			if (eingabe == KeyEvent.VK_W) {
 				upPressed = true;
@@ -47,12 +74,29 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
-		}
+			}
 		}
 		
 		else if (gl.gameState == gl.pauseState) {
-			if (eingabe == KeyEvent.VK_P) { 
-				gl.gameState = gl.playState;
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 1;
+				}
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 1) {
+					gl.ui.befehl = 0;
+				}
+			}
+			if (eingabe == KeyEvent.VK_ENTER) { 
+				if (gl.ui.befehl == 0) {
+					gl.gameState = gl.playState;
+				}
+				else if(gl.ui.befehl == 1) {
+					gl.gameState = gl.titlestate;
+				}
 			}	
 		}
 		else if (gl.gameState == gl.dialogState) {

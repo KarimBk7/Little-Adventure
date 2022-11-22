@@ -42,10 +42,13 @@ public class Player extends Unit{
 		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 15;
-		diagonalspeed = 15; 
+		speed = 15; 
 		richtung = "down";
 		animationspeed = 16;
+		
+		//Spieler werte
+		maxHealth = 3;
+		health = maxHealth;
 	}
 	
 	public void getPlayerpng() {
@@ -139,16 +142,6 @@ public class Player extends Unit{
 					break;
 				case "down": posY += speed;
 					break;
-				/**case "upleft": posY -= diagonalspeed; posX -= diagonalspeed;
-					break;
-				case "upright": posY -= diagonalspeed; posX += diagonalspeed;
-					break;
-				case "downleft": posY += diagonalspeed; posX -= diagonalspeed;
-					break;
-				case "downright": posY += diagonalspeed; posX += diagonalspeed;
-					break;
-				case "stop":
-					break;**/
 				}
 			}
 			
@@ -192,8 +185,8 @@ public class Player extends Unit{
 				
 			case "Grabstein":
 				if (keyI.enterPressed == true) {		
-					gl.ui.showMessage("Ich schaffte es nicht Tenbusch zu besiegen. \nIch vergrub einen Schlüssel zu seiner Burg."
-							+ " \nDoch nur die Vögel die hoch fliegen können, \nkönnen den Hinweis sichten, um ihn zu finden. ", 480);
+					gl.ui.showMessage("Ich schaffte es nicht Tenbusch zu besiegen. \nIch vergrub einen Schluessel zu seiner Burg."
+							+ " \nDoch nur die Voegel die hoch fliegen koennen, \nkoennen den Hinweis sichten, um ihn zu finden. ", 480);
 				}
 				break;
 				
@@ -208,7 +201,7 @@ public class Player extends Unit{
 							e.printStackTrace();
 						}
 						gl.obj[i] = null;
-						gl.ui.showMessage("Schlüssel ausgegraben!", 90);
+						gl.ui.showMessage("Schluessel ausgegraben!", 60);
 					}
 					else {
 						gl.ui.showMessage("Was ist mit der Erde hier?", 90);
@@ -223,7 +216,7 @@ public class Player extends Unit{
 					gl.obj[i] = null;
 					//gl.soundEffekt(1);
 					amountKey++;
-					gl.ui.showMessage("Schlüssel erhalten!", 90);
+					gl.ui.showMessage("Schluessel erhalten!", 60);
 				}
 				break;
 				

@@ -11,7 +11,7 @@ public class Unit {
 	//Attribute
 	GameLoop gl;
 	public int posX, posY;
-	public int speed, diagonalspeed, animationspeed;
+	public int speed, animationspeed;
 	String dialog[] = new String[20];
 	public int dialogIndex = 0;
 	
@@ -25,6 +25,10 @@ public class Unit {
 	public Rectangle hitbox = new Rectangle(8, 16, 32, 32);
 	public int hitboxX, hitboxY;
 	public boolean isCollision = false;
+	
+	//Attrivute für ingame-wert
+	public int maxHealth;
+	public int health;
 	
 	public Unit(GameLoop gl) {
 		this.gl = gl;

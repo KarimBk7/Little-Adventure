@@ -8,19 +8,22 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
+import objekt.Heart;
 import objekt.Key;
 import objekt.Schaufel;
 
 public class UI {
 
+	Graphics2D g2;
 	GameLoop gl;
 	Font arial40;
-	BufferedImage key, schaufel;
+	BufferedImage key, schaufel, herz, herzleer;
 	public boolean messageOn = false;
 	public String message = "";
 	int counter, countermax;
 	public boolean spielbeendet = false;
 	public String currentDialog = "";
+	public int befehl = 0;
 	
 	public UI(GameLoop gl) {
 		this.gl = gl;
@@ -30,6 +33,10 @@ public class UI {
 		
 		Schaufel schaufel = new Schaufel();
 		this.schaufel = schaufel.image;
+		
+		Heart heart = new Heart(gl);
+		herz = heart.image;
+		herzleer = heart.image2;
 	}
 	
 	public void showMessage(String text, int countermax) {
@@ -37,21 +44,29 @@ public class UI {
 		messageOn = true;
 		this.countermax = countermax;
 	}
+	
 	public void draw(Graphics2D g2) {
 		
 		if (spielbeendet == true) {
 			
 		}
-		else {
-			//zeigt Schlüssel-anzahl
-			g2.setFont(arial40);
-			g2.setColor(Color.white);
-			g2.drawImage(key, 25, 25, gl.unitsize, gl.unitsize, null);
-			g2.drawString("x " + gl.player.amountKey, 75, 65);
-			
-			//zeigt Schaufel an wenn in besitz
-			if (gl.player.hatSchaufel == true) {
-				g2.drawImage(schaufel, 25, 85, gl.unitsize, gl.unitsize, null);
+		else if(gl.gameState != gl.titlestate){
+			//wenn nicht in dialog
+			if (gl.gameState == gl.playState) {
+				//zeigt Schlüssel-anzahl
+				g2.setFont(arial40);
+				g2.setColor(Color.black);
+				g2.drawString("x " + gl.player.amountKey, 78, 68);
+				g2.setColor(Color.white);
+				g2.drawImage(key, 25, 25, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + gl.player.amountKey, 75, 65);
+				
+				//zeigt Schaufel an wenn in besitz
+				if (gl.player.hatSchaufel == true) {
+					g2.drawImage(schaufel, 25, 85, gl.unitsize, gl.unitsize, null);
+				}
+				
+				drawPlayerHealth(g2);
 			}
 		
 			//Interaktions Messages
@@ -66,15 +81,123 @@ public class UI {
 				}
 			}
 			
+			//wenn Pause
 			if (gl.gameState == gl.pauseState) {
 				drawPauseScreen(g2);
 			}
+			//wenn dialog
 			if (gl.gameState == gl.dialogState) {
 				drawDialogFenster(g2);
 			}
 		}
+		else if(gl.gameState == gl.titlestate){
+			//wenn Titelscreen
+			drawTitleScreen(g2);
+		}
+	
 	}
 	
+	private void drawPlayerHealth(Graphics2D g2) {
+		//draw Leere herzen
+		int x = gl.screenweite / 2 + gl.unitsize * 4;
+		int y = gl.unitsize / 2;
+		int i = 0;
+		
+		while (i < gl.player.maxHealth) {
+			g2.drawImage(herzleer, x, y, gl.unitsize, gl.unitsize, null);
+			i++; 
+			x+= gl.unitsize;
+		}
+		
+		//draw Volle Herzen
+		x = gl.screenweite / 2 + gl.unitsize * 4;
+		y = gl.unitsize / 2;
+		i = 0;
+		
+		while (i < gl.player.health) {
+			g2.drawImage(herz, x, y, gl.unitsize, gl.unitsize, null);
+			i++; 
+			x+=gl.unitsize;
+			
+		}
+	}
+
+	private void drawTitleScreen(Graphics2D g2) {
+		
+		//Hintergrund
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		
+		//titel text
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,60F));
+		String text = "Kaiju Adventure";
+		int x = gl.unitsize * 3;
+		int y = gl.unitsize * 2;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 4, y + 4);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		
+		//Spieler
+		g2.drawImage(gl.player.down1, gl.unitsize * 6, gl.unitsize * 4, gl.unitsize * 3, gl.unitsize * 3, null);
+		
+		
+		//Menu
+		//Starte Spiel
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+		text = "Starte Spiel";
+		x = gl.unitsize * 5;
+		y = gl.unitsize * 8;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 4, y + 4);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 0) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 4, y + 4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+		}
+		
+		//Lade Spiel
+		text = "Lade Spiel";
+		x = gl.unitsize * 5 + 15;
+		y = gl.unitsize * 9;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 4, y + 4);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 1) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 4, y + 4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+		}
+		
+		//Verlasse Speil
+		text = "Beenden";
+		x = gl.unitsize * 5 + 30;
+		y = gl.unitsize * 10;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 4, y + 4);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 2) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 4, y + 4);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+		}
+	}
+
 	private void drawDialogFenster(Graphics2D g2) {
 			
 		//Dialog-Fenster
@@ -103,20 +226,20 @@ public class UI {
 		
 	}
 	
+	
 	public void drawSubWindow(int x, int y, int weite, int hoehe, Graphics2D g2) {
 		
 		//Schwarzer Kaste
-		Color c = new Color(10,10,10,220);
-		g2.setColor(c);
+		g2.setColor(new Color(0,0,0,220));
 		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
 		
 		//weißer Rand
-		c = new Color(255,255,255);
-		g2.setColor(c);
-		g2.setStroke(new BasicStroke(5));
+		g2.setColor(new Color(255,255,255));
+		g2.setStroke(new BasicStroke(4));
 		g2.drawRoundRect(x+5, y+5, weite-10, hoehe-10, 25, 25);
 		
 	}
+	
 
 	public void drawPauseScreen(Graphics2D g2) {
 		//Hintergrund
@@ -128,8 +251,50 @@ public class UI {
 		String pausetext = "Pause";
 		int x = gl.screenweite / 2 - gl.unitsize * 2;
 		int y = gl.screenhoehe / 4;
-		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,70F));
+		g2.setColor(Color.white);
+		g2.drawString(pausetext, x + 4, y + 4);
+		g2.setColor(new Color(255,100,100));
 		g2.drawString(pausetext, x, y);
+		
+		//Weiter Spielen
+		String text = "Weiter Spielen";
+		x = gl.unitsize * 5 + 25;
+		y = gl.unitsize * 8;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
+		g2.setColor(Color.gray);
+		g2.drawString(text, x + 2, y + 2);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 0) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 2, y + 2);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);			
+		}
+		
+		//Zurück zum Hauptmenu
+		text = "Hauptmenu";
+		x = gl.unitsize * 6;
+		y = gl.unitsize * 9;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
+		g2.setColor(Color.gray);
+		g2.drawString(text, x + 2, y + 2);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 1) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 2, y + 2);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);			
+		}
+		
+		
+		
+		
 	}
 }
