@@ -147,7 +147,12 @@ public class UI {
 		text = "Starte Spiel";
 		x = gl.unitsize * 5;
 		y = gl.unitsize * 8;
-		g2.setColor(Color.black);
+		if (befehl == 0) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.black);
+		}
 		g2.drawString(text, x + 4, y + 4);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
@@ -165,7 +170,12 @@ public class UI {
 		text = "Lade Spiel";
 		x = gl.unitsize * 5 + 15;
 		y = gl.unitsize * 9;
-		g2.setColor(Color.black);
+		if (befehl == 1) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.black);
+		}
 		g2.drawString(text, x + 4, y + 4);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
@@ -183,7 +193,12 @@ public class UI {
 		text = "Beenden";
 		x = gl.unitsize * 5 + 30;
 		y = gl.unitsize * 10;
-		g2.setColor(Color.black);
+		if (befehl == 2) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.black);
+		}
 		g2.drawString(text, x + 4, y + 4);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
@@ -260,9 +275,14 @@ public class UI {
 		//Weiter Spielen
 		String text = "Weiter Spielen";
 		x = gl.unitsize * 5 + 25;
-		y = gl.unitsize * 8;
+		y = gl.screenhoehe / 2;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
-		g2.setColor(Color.gray);
+		if (befehl == 0) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
 		g2.drawString(text, x + 2, y + 2);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
@@ -278,9 +298,14 @@ public class UI {
 		//Zurück zum Hauptmenu
 		text = "Hauptmenu";
 		x = gl.unitsize * 6;
-		y = gl.unitsize * 9;
+		y = gl.screenhoehe / 2 + gl.unitsize;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
-		g2.setColor(Color.gray);
+		if (befehl == 1) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
 		g2.drawString(text, x + 2, y + 2);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
