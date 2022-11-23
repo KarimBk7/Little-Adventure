@@ -10,6 +10,7 @@ public class House extends Objekt{
 	
 	public House (GameLoop gl) {
 		name = "house";
+		isCollision = true;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objekt/house.png"));
 		} catch (Exception e) {

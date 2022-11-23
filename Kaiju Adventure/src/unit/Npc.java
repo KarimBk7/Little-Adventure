@@ -16,8 +16,11 @@ public class Npc extends Unit{
 	}
 	
 	public void setDialog() {
-		dialog[0] = "Lass deine Haende von \nmeiner Kiste!!";
-		dialog[1] = "ach manno...das war \nmeine Schaufel.";
+		dialog[0] = "Du willst meine wertvolle Kiste?\nDann bring mir 3 Aepfel, damit ich \neinen Apfelkuchen backen kann."
+					+ "\nVielleicht bekommst du auch etwas ab.";
+		dialog[1] = "Vielen Dank fuer die Aepfel mein Freund\n"
+					+ "Der Inhalt meiner Kiste gehört dir.\n"
+					+ "Erwarte aber nicht zu viel.";
 		dialog[2] = "Danke das du mir die Mosnter \nverjagt hast!\nWie kann ich mich revanchieren?";
 		dialog[3] = "juckt";
 	}

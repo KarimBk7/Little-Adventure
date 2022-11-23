@@ -4,9 +4,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import objekt.Apfel;
 import objekt.ClosedDoor;
 import objekt.Grabstein;
-import objekt.Haufen;
+import objekt.Objekt;
 import objekt.House;
 import objekt.Key;
 import objekt.Schaufel;
@@ -43,19 +44,11 @@ public class ObjektSetter {
 		gl.obj[3].posX = 16 * gl.unitsize;
 		gl.obj[3].posY = 14 * gl.unitsize;
 		
-		//Key unterm Haufen
-		gl.obj[4] = new Key();					
-		gl.obj[4].posX = 53 * gl.unitsize;		
-		gl.obj[4].posY = 41 * gl.unitsize;	
-		gl.obj[4].hitbox.x = 4;
-		gl.obj[4].hitbox.y = 4;
-		gl.obj[4].hitbox.width = 30;
-		gl.obj[4].hitbox.x = 30;
+		//Key unter der erde
+		gl.obj[4] = new Key();						
 		
-		//Haufen am See
-		gl.obj[5] = new Haufen();					
-		gl.obj[5].posX = 53 * gl.unitsize;		
-		gl.obj[5].posY = 41 * gl.unitsize;		
+		//loch am See
+		gl.obj[5] = new Objekt("loch",53 * gl.unitsize,41 * gl.unitsize);			
 		
 		//Grabstein am see
 		gl.obj[6] = new Grabstein();
@@ -68,28 +61,41 @@ public class ObjektSetter {
 		gl.obj[7].posY = 28 * gl.unitsize;
 		
 		
-		gl.obj[9] = new Key();
+		gl.obj[8] = new Key();
 		
 		//Dach übers der Burg von Tenbusch
-		gl.obj[10] = new House(gl);
-		gl.obj[10].posX = 30 * gl.unitsize;
-		gl.obj[10].posY = 8 * gl.unitsize;
+		gl.obj[9] = new House(gl);
+		gl.obj[9].posX = 30 * gl.unitsize;
+		gl.obj[9].posY = 8 * gl.unitsize;
 		try {
-			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
+			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 		//Schaufel
-		gl.obj[11] = new Schaufel();
+		gl.obj[10] = new Schaufel();
 		try {
-			gl.obj[11].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
+			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gl.obj[11].posX = 63 * gl.unitsize + 20;
-		gl.obj[11].posY = 59 * gl.unitsize - 35;
+		gl.obj[10].posX = 63 * gl.unitsize + 20;
+		gl.obj[10].posY = 59 * gl.unitsize - 35;
+		
+		//Apfel
+		gl.obj[11] = new Apfel();
+		gl.obj[11].posX = 58 * gl.unitsize;
+		gl.obj[11].posY = 13 * gl.unitsize;
+		
+		gl.obj[12] = new Apfel();
+		gl.obj[12].posX = 59 * gl.unitsize;
+		gl.obj[12].posY = 17 * gl.unitsize;
+		
+		gl.obj[13] = new Apfel();
+		gl.obj[13].posX = 61 * gl.unitsize;
+		gl.obj[13].posY = 15 * gl.unitsize;
 	}
 	
 	//setzt positionen von npc

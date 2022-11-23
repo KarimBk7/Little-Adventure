@@ -122,7 +122,7 @@ public class TileManager {
 		
 		
 		spriteCounter++;
-		if (spriteCounter > animationspeed) {				//geschwindigkeit der animation. je höher dest langsamer
+		if (spriteCounter > animationspeed && gl.gameState == gl.playState) {				//geschwindigkeit der animation. je höher dest langsamer
 			if (spriteNum == 1) {
 				spriteNum = 2;
 			}

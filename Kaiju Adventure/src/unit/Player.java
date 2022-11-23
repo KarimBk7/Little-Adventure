@@ -16,6 +16,7 @@ public class Player extends Unit{
 	
 	public int camX, camY;
 	public int amountKey = 0;
+	public int amountApfel = 0;
 	public boolean hatSchaufel = false;
 	public boolean beendet = false;
 	boolean playersteht = true;
@@ -43,7 +44,7 @@ public class Player extends Unit{
 		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 4; 
+		speed = 12; 
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -63,8 +64,10 @@ public class Player extends Unit{
 			down = ImageIO.read(getClass().getResourceAsStream("/player/pl_down.png"));
 			down1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down1.png"));
 			down2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down2.png"));
+			//left = ImageIO.read(getClass().getResourceAsStream("/player/pl_left.png"));
 			left1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left1.png"));
 			left2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left2.png"));
+			//right = ImageIO.read(getClass().getResourceAsStream("/player/pl_right.png"));
 			right1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right2.png"));
 			
@@ -74,6 +77,9 @@ public class Player extends Unit{
 	}
 	
 	public void update ()  {
+		
+		int npcindex;
+		int objindex = 99;
 		
 		//Tastenerkennung
 		if(keyI.upPressed == true || keyI.downPressed == true || 
@@ -130,8 +136,8 @@ public class Player extends Unit{
 			//check if collision
 			isCollision = false;
 			gl.cc.checkTile(this);
-			int npcindex = gl.cc.checkNpc(this,true);
-			int objindex = gl.cc.checkObjekt(this, true);
+			npcindex = gl.cc.checkNpc(this,true);
+			objindex = gl.cc.checkObjekt(this, true);
 			interact(objindex);
 			interactNpc(npcindex);
 			
@@ -163,6 +169,10 @@ public class Player extends Unit{
 		}
 		else {
 		playersteht = true;
+		npcindex = gl.cc.checkNpc(this,true);
+		objindex = gl.cc.checkObjekt(this, true);
+		interact(objindex);
+		interactNpc(npcindex);
 		}
 	}
 	
@@ -173,21 +183,23 @@ public class Player extends Unit{
 		
 			switch (gl.obj[i].name) {
 			
-			//Wenn Man Kiste öffnet 
+			//Kiste oeffnen 
 			case "Schaufel":
-				if (keyI.enterPressed == true) {
+				if (keyI.enterPressed == true && gl.npc[0].dialogIndex == 1) {
 					try {
 						gl.obj[i].image = ImageIO.read(getClass().getResourceAsStream("/objekt/openchest.png"));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					};
 					gl.ui.showMessage("Schaufel erhalten!", 90);
-					gl.npc[0].dialogIndex = 1;
 					hatSchaufel = true;
+				}
+				else if(keyI.enterPressed == true) {
+					gl.ui.showMessage("*verschlossen*", 60);
 				}
 				break;
 				
+			//Grabstein
 			case "Grabstein":
 				if (keyI.enterPressed == true) {		
 					gl.ui.showMessage("Ich schaffte es nicht Tenbusch zu besiegen. \nIch vergrub einen Schluessel zu seiner Burg."
@@ -196,20 +208,13 @@ public class Player extends Unit{
 				break;
 				
 			//Haufen ausgraben
-			case "Haufen":
+			case "loch":
 				if (keyI.enterPressed == true) {
 					if (hatSchaufel == true) {
-						try {
-							gl.gameThread.sleep(200);
-						} catch (InterruptedException e) {
-							
-							e.printStackTrace();
-						}
-						gl.obj[i] = null;
 						gl.ui.showMessage("Schluessel ausgegraben!", 60);
-					}
-					else {
-						gl.ui.showMessage("Was ist mit der Erde hier?", 90);
+						gl.obj[4].posX = gl.obj[i].posX - gl.unitsize;
+						gl.obj[4].posY = gl.obj[i].posY;
+						gl.obj[i] = null;
 					}
 				}
 				
@@ -225,6 +230,14 @@ public class Player extends Unit{
 				}
 				break;
 				
+				//Apfel einsammeln
+			case "apfel":
+				if(keyI.enterPressed == true) {
+					gl.obj[i] = null;
+					amountApfel++;
+				}
+				break;
+				
 			//Tür öffnen	
 			case "closeddoor":
 				if (keyI.enterPressed == true) {
@@ -235,7 +248,7 @@ public class Player extends Unit{
 							gl.obj[i].isCollision = false;
 							gl.obj[10] = null;
 						} catch (Exception e) {
-							// TODO: handle exception
+							
 						} 
 						gl.ui.showMessage("Tuer geoeffnet! \nMoege der Kampf gegen Tenbusch\nbeginnen!!!", 120);
 					}
@@ -253,6 +266,10 @@ public class Player extends Unit{
 		
 		if (i != 99) {
 			if (keyI.enterPressed == true) {
+				if (amountApfel > 2) {
+					gl.npc[i].dialogIndex++;
+					amountApfel -= 3;
+				}
 				gl.gameState = gl.dialogState;
 				gl.npc[i].speak();
 			}

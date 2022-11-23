@@ -23,6 +23,7 @@ public class KeyInput implements KeyListener {
 
 		int eingabe = e.getKeyCode();
 			
+		//Wenn Titelbildschirm
 		if (gl.gameState == gl.titlestate) {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
@@ -38,6 +39,7 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
+				//Spiel Starte
 				if (gl.ui.befehl == 0) {
 					if (gl.ui.prologabgespielt == false) {
 						gl.gameState = gl.prologstate;
@@ -46,24 +48,27 @@ public class KeyInput implements KeyListener {
 					else {
 						gl.gameState = gl.playState;
 					}
-					
-					//gl.playMusik(0);
 				}
+				//Lade Spiel
 				if (gl.ui.befehl == 1) {
 					
 				}
+				//Beende Spiel
 				if (gl.ui.befehl == 2) {
 					System.exit(0);
 				}
 			}
 		}
 		
-		if (gl.gameState == gl.prologstate) {
-			if (eingabe == KeyEvent.VK_SPACE) {
+		//Wenn Prologbildschirm
+		else if (gl.gameState == gl.prologstate) {
+			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
 			}
 		}
-		if (gl.gameState == gl.playState) {
+		
+		//Wenn Spielbildschirm
+		else if (gl.gameState == gl.playState) {
 			if (eingabe == KeyEvent.VK_W) {
 				upPressed = true;
 			}
@@ -90,6 +95,7 @@ public class KeyInput implements KeyListener {
 			}
 		}
 		
+		//Wenn Pausebildschirm
 		else if (gl.gameState == gl.pauseState) {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
@@ -109,9 +115,12 @@ public class KeyInput implements KeyListener {
 				}
 				else if(gl.ui.befehl == 1) {
 					gl.gameState = gl.titlestate;
+					gl.ui.befehl = 0;
 				}
 			}	
 		}
+		
+		//Wenn Dialog-Fenster
 		else if (gl.gameState == gl.dialogState) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;

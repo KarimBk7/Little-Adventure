@@ -50,19 +50,22 @@ public class GameLoop extends JPanel implements Runnable {
 	
 	//Weltkarte
 	TileManager tileM = new TileManager(this);
-	public Objekt obj [] = new Objekt[20];
+	public Objekt obj [] = new Objekt[30];
 	public ObjektSetter oSetter = new ObjektSetter(this);
 	
 	//sound & ui
 	Sound sound = new Sound();
 	public UI ui = new UI(this);
 	
+	//Gamestate
 	public int gameState;
 	public int titlestate = 0;
 	public int prologstate = 1;
 	public int playState = 2;
 	public int pauseState = 3;
 	public int dialogState = 4;
+	public int winstate = 5;
+	public int losestate = 6;
 	
 	
 	public Thread gameThread;
@@ -112,7 +115,7 @@ public class GameLoop extends JPanel implements Runnable {
 				System.out.println("FPS: " + drawCounter);
 				long endtime = System.nanoTime();
 				endtime -= starttim;
-				System.out.println("Nanosec =" + endtime);
+				System.out.println("Nanosec: " + endtime);
 				drawCounter = 0;
 				timer = 0;
 			}

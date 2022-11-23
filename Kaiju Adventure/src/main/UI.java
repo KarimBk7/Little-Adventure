@@ -12,29 +12,35 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.plaf.ColorUIResource;
 
+import objekt.Apfel;
 import objekt.Heart;
 import objekt.Key;
 import objekt.Schaufel;
 
 public class UI {
 
+	//Attribute
 	Graphics2D g2;
 	GameLoop gl;
 	Font arial40;
-	BufferedImage key, schaufel, herz, herzleer, prologimg;
+	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg;
+	public boolean prologabgespielt = false;
+	public boolean spielbeendet = false;
 	public boolean messageOn = false;
 	public String message = "";
-	int counter, countermax;
-	public boolean spielbeendet = false;
 	public String currentDialog = "";
+	int counter, countermax;
 	public int befehl = 0;
-	public boolean prologabgespielt = false;
 	
+	//Konstruktor
 	public UI(GameLoop gl) {
 		this.gl = gl;
 		arial40 = new Font("Arial", Font.PLAIN, 40);
 		Key key = new Key();
 		this.key = key.image;
+		
+		Apfel apfel = new Apfel();
+		this.apfel = apfel.image;
 		
 		Schaufel schaufel = new Schaufel();
 		this.schaufel = schaufel.image;
@@ -59,12 +65,11 @@ public class UI {
 	
 	public void draw(Graphics2D g2) {
 		
-		if (spielbeendet == true) {
-			
-		}
-		else if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate){
-			//wenn nicht in dialog
+		//wenn nicht titel- oder prologbildschirm
+		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate){
+			//Spielt
 			if (gl.gameState == gl.playState) {
+				
 				//zeigt SchlÃ¼ssel-anzahl
 				g2.setFont(arial40);
 				g2.setColor(Color.black);
@@ -72,6 +77,14 @@ public class UI {
 				g2.setColor(Color.white);
 				g2.drawImage(key, 25, 25, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + gl.player.amountKey, 75, 65);
+				if (gl.player.amountApfel > 0) {
+					g2.setFont(arial40);
+					g2.setColor(Color.black);
+					g2.drawString("x " + gl.player.amountApfel, 78, 75 + gl.unitsize);
+					g2.setColor(Color.white);
+					g2.drawImage(apfel, 25, gl.unitsize + 35, gl.unitsize, gl.unitsize, null);
+					g2.drawString("x " + gl.player.amountApfel, 75, 72 + gl.unitsize);
+				}
 				
 				//zeigt Schaufel an wenn in besitz
 				if (gl.player.hatSchaufel == true) {
@@ -93,7 +106,7 @@ public class UI {
 				}
 			}
 			
-			//wenn Pause
+			//wenn Pause gedrÃ¼ckt wird
 			if (gl.gameState == gl.pauseState) {
 				drawPauseScreen(g2);
 			}
@@ -102,10 +115,12 @@ public class UI {
 				drawDialogFenster(g2);
 			}
 		}
+		
+		//wenn Titelscreen
 		else if(gl.gameState == gl.titlestate){
-			//wenn Titelscreen
 			drawTitleScreen(g2);
 		}
+		//prolog
 		else if(gl.gameState == gl.prologstate) {
 			drawProlog(g2);
 		}
@@ -118,24 +133,33 @@ public class UI {
 		g2.setColor(new Color(0,0,0,150));
 		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
 		String text = "IT-Dollar.... Sie regieren diese Welt. \n"
-					+ "Doch wer regiert die Dollar? Es ist kein anderer \n"
-					+ "als Herr Tenbusch die Wurzel allen Übels. \n"
+					+ "Doch wer regiert die Dollar? \nEs ist kein anderer "
+					+ "als Herr Tenbusch \ndie Wurzel allen uebels. \n"
 					+ "Mit Hilfe der IT-Dollar hinterzog Herr Tenbusch \n"
 					+ "das Finanzamt in Mecklenburg-Vorpommern \n"
 					+ "und kam so an die Macht. \n"
 					+ "Doch Kaiju hatt es satt und macht sich auf den Weg \n"
-					+ "Herr Tenbusch ein für alle mal das Gar aus zu machen...";
+					+ "Herr Tenbusch ein fuer alle mal das Gar aus zu machen...";
 		
 		g2.setColor(Color.white);
-		int x = gl.unitsize * 2;
-		int y = gl.unitsize * 4 + 10;
+		int x = gl.unitsize;
+		int y = gl.unitsize * 3 + 30;
+		int weite = gl.unitsize * 14;
+		int hoehe = gl.unitsize * 6 + 15;
 		
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRoundRect(x - 5, y - 5, weite + 10, hoehe + 10, 35, 35);
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(4));
+		g2.drawRoundRect(x, y, weite, hoehe, 25, 25);
+		
+		x = gl.unitsize * 2 - 30;
+		y = gl.unitsize * 4 + 20;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 		for (String line : text.split("\n")) {
 			g2.drawString(line, x, y);
 			y+=30;
 		}
-		//g2.drawRoundRect(x+5, posy+5, weite-10, hoehe-10, 25, 25);
 		
 	}
 
@@ -267,7 +291,7 @@ public class UI {
 		posY += gl.unitsize - 15;
 		
 		//setzt Dialog in Fenster
-		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
 		for (String line : currentDialog.split("\n")) {
 			g2.drawString(line, posX, posY);
 			posY+=30;
