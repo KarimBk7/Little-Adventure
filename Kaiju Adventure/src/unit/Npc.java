@@ -16,7 +16,7 @@ public class Npc extends Unit{
 	}
 	
 	public void setDialog() {
-		dialog[0] = "Lass deine Hände von \nmeiner Kiste!!";
+		dialog[0] = "Lass deine Haende von \nmeiner Kiste!!";
 		dialog[1] = "ach manno...das war \nmeine Schaufel.";
 		dialog[2] = "Danke das du mir die Mosnter \nverjagt hast!\nWie kann ich mich revanchieren?";
 		dialog[3] = "juckt";

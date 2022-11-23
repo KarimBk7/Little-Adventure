@@ -39,7 +39,14 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
 				if (gl.ui.befehl == 0) {
-					gl.gameState = gl.playState;
+					if (gl.ui.prologabgespielt == false) {
+						gl.gameState = gl.prologstate;
+						gl.ui.prologabgespielt = true;
+					}
+					else {
+						gl.gameState = gl.playState;
+					}
+					
 					//gl.playMusik(0);
 				}
 				if (gl.ui.befehl == 1) {
@@ -48,6 +55,12 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl == 2) {
 					System.exit(0);
 				}
+			}
+		}
+		
+		if (gl.gameState == gl.prologstate) {
+			if (eingabe == KeyEvent.VK_SPACE) {
+				gl.gameState = gl.playState;
 			}
 		}
 		if (gl.gameState == gl.playState) {

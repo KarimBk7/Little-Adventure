@@ -9,13 +9,13 @@ public class Main {
 
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);				//Vom nutzer verstellbar (nein)
+		window.setResizable(false);					//Vom nutzer verstellbar (nein)
 		window.setTitle("Kaiju Adventure");	
 		
 		GameLoop gameloop = new GameLoop();
 		window.add(gameloop);
 		window.pack();
-		window.setLocationRelativeTo(null);//fenster taicht in der mitte des Bildschrims auf
+		window.setLocationRelativeTo(null);			//fenster taicht in der mitte des Bildschrims auf
 		window.setVisible(true);
 		
 		gameloop.setupObjekt();

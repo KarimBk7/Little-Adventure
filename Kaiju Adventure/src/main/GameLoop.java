@@ -37,7 +37,8 @@ public class GameLoop extends JPanel implements Runnable {
 	
 	
 	//FPS
-	int fps = 45;
+	int fps = 60;
+	long sleep = 100;
 
 	//Keyinput
 	public KeyInput keyI = new KeyInput(this);
@@ -57,10 +58,12 @@ public class GameLoop extends JPanel implements Runnable {
 	public UI ui = new UI(this);
 	
 	public int gameState;
-	public int playState = 1;
-	public int pauseState = 2;
-	public int dialogState = 3;
-	public int titlestate = 4;
+	public int titlestate = 0;
+	public int prologstate = 1;
+	public int playState = 2;
+	public int pauseState = 3;
+	public int dialogState = 4;
+	
 	
 	public Thread gameThread;
 	
@@ -144,7 +147,7 @@ public class GameLoop extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D)g;
 		
 		//Titel-Screen
-		if (gameState == titlestate) {
+		if (gameState == titlestate || gameState == prologstate) {
 			ui.draw(g2);
 		}
 		else {

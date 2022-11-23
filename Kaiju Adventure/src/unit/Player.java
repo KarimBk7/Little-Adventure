@@ -18,6 +18,7 @@ public class Player extends Unit{
 	public int amountKey = 0;
 	public boolean hatSchaufel = false;
 	public boolean beendet = false;
+	boolean playersteht = true;
 	
 	public Player(GameLoop gl, KeyInput keyI) {
 		super(gl);
@@ -42,7 +43,7 @@ public class Player extends Unit{
 		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 15; 
+		speed = 4; 
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -56,8 +57,10 @@ public class Player extends Unit{
 		//speichert Spieler Bilder in BufferdImage
 		try {
 			
+			up = ImageIO.read(getClass().getResourceAsStream("/player/pl_up.png"));
 			up1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_up1.png"));
 			up2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_up2.png"));
+			down = ImageIO.read(getClass().getResourceAsStream("/player/pl_down.png"));
 			down1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down1.png"));
 			down2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down2.png"));
 			left1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left1.png"));
@@ -75,6 +78,7 @@ public class Player extends Unit{
 		//Tastenerkennung
 		if(keyI.upPressed == true || keyI.downPressed == true || 
 				keyI.leftPressed == true || keyI.rightPressed == true) {
+			playersteht = false;
 			
 			if (keyI.upPressed == true) {							
 				if (keyI.downPressed == true) {	
@@ -157,8 +161,9 @@ public class Player extends Unit{
 				spriteCounter = 0;
 			}
 		}
-		
-		
+		else {
+		playersteht = true;
+		}
 	}
 	
 	//interargieren mit objekten
@@ -232,10 +237,10 @@ public class Player extends Unit{
 						} catch (Exception e) {
 							// TODO: handle exception
 						} 
-						gl.ui.showMessage("Tür geöffnet! \nMöge der Kampf gegen Tenbusch\nbeginnen!!!", 120);
+						gl.ui.showMessage("Tuer geoeffnet! \nMoege der Kampf gegen Tenbusch\nbeginnen!!!", 120);
 					}
 					else {
-						gl.ui.showMessage("Ich benötige 2 Schlüssel.", 90);
+						gl.ui.showMessage("Ich benoetige 2 Schlüssel.", 90);
 					}
 				}
 				break;
@@ -264,34 +269,46 @@ public class Player extends Unit{
 		//Wählt Image zur Richtung
 		switch(richtung) {
 		case "up":
-			if(spriteNum == 1) {
+			if (playersteht) {
+				image = up;
+			}
+			else if(spriteNum == 1) {
 				image = up1;
 			}
-			if(spriteNum == 2) {
+			else if(spriteNum == 2) {
 				image = up2;
 			}
 			break;
 		case "down":
-			if(spriteNum == 1) {
+			if (playersteht) {
+				image = down;
+			}
+			else if(spriteNum == 1) {
 				image = down1;
 			}
-			if(spriteNum == 2) {
+			else if(spriteNum == 2) {
 				image = down2;
 			}
 			break;
 		case "left":
-			if(spriteNum == 1) {
+			if (playersteht) {
+				image = left;
+			}
+			else if(spriteNum == 1) {
 				image = left1;
 			}
-			if(spriteNum == 2) {
+			else if(spriteNum == 2) {
 				image = left2;
 			}
 			break;
 		case "right":
-			if(spriteNum == 1) {
+			if (playersteht) {
+				 image = right;
+			}
+			else if(spriteNum == 1) {
 				image = right1;
 			}
-			if(spriteNum == 2) {
+			else if(spriteNum == 2) {
 				image = right2;
 			}
 			break;

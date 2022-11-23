@@ -6,7 +6,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+import javax.swing.plaf.ColorUIResource;
 
 import objekt.Heart;
 import objekt.Key;
@@ -17,13 +21,14 @@ public class UI {
 	Graphics2D g2;
 	GameLoop gl;
 	Font arial40;
-	BufferedImage key, schaufel, herz, herzleer;
+	BufferedImage key, schaufel, herz, herzleer, prologimg;
 	public boolean messageOn = false;
 	public String message = "";
 	int counter, countermax;
 	public boolean spielbeendet = false;
 	public String currentDialog = "";
 	public int befehl = 0;
+	public boolean prologabgespielt = false;
 	
 	public UI(GameLoop gl) {
 		this.gl = gl;
@@ -37,6 +42,13 @@ public class UI {
 		Heart heart = new Heart(gl);
 		herz = heart.image;
 		herzleer = heart.image2;
+		
+		try {
+			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void showMessage(String text, int countermax) {
@@ -50,7 +62,7 @@ public class UI {
 		if (spielbeendet == true) {
 			
 		}
-		else if(gl.gameState != gl.titlestate){
+		else if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate){
 			//wenn nicht in dialog
 			if (gl.gameState == gl.playState) {
 				//zeigt SchlÃ¼ssel-anzahl
@@ -94,30 +106,56 @@ public class UI {
 			//wenn Titelscreen
 			drawTitleScreen(g2);
 		}
+		else if(gl.gameState == gl.prologstate) {
+			drawProlog(g2);
+		}
 	
 	}
 	
+	private void drawProlog(Graphics2D g2) {
+		
+		g2.drawImage(prologimg, 0, 0, gl.screenweite, gl.screenhoehe, null);
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		String text = "IT-Dollar.... Sie regieren diese Welt. \n"
+					+ "Doch wer regiert die Dollar? Es ist kein anderer \n"
+					+ "als Herr Tenbusch die Wurzel allen Übels. \n"
+					+ "Mit Hilfe der IT-Dollar hinterzog Herr Tenbusch \n"
+					+ "das Finanzamt in Mecklenburg-Vorpommern \n"
+					+ "und kam so an die Macht. \n"
+					+ "Doch Kaiju hatt es satt und macht sich auf den Weg \n"
+					+ "Herr Tenbusch ein für alle mal das Gar aus zu machen...";
+		
+		g2.setColor(Color.white);
+		int x = gl.unitsize * 2;
+		int y = gl.unitsize * 4 + 10;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
+		for (String line : text.split("\n")) {
+			g2.drawString(line, x, y);
+			y+=30;
+		}
+		//g2.drawRoundRect(x+5, posy+5, weite-10, hoehe-10, 25, 25);
+		
+	}
+
 	private void drawPlayerHealth(Graphics2D g2) {
 		//draw Leere herzen
-		int x = gl.screenweite / 2 + gl.unitsize * 4;
-		int y = gl.unitsize / 2;
+		int x = 20;
+		int y = gl.unitsize * 9;
 		int i = 0;
 		
-		while (i < gl.player.maxHealth) {
-			g2.drawImage(herzleer, x, y, gl.unitsize, gl.unitsize, null);
+			g2.drawImage(herzleer, x, y + 20, gl.unitsize * 3, gl.unitsize * 3, null);
 			i++; 
-			x+= gl.unitsize;
-		}
 		
 		//draw Volle Herzen
-		x = gl.screenweite / 2 + gl.unitsize * 4;
-		y = gl.unitsize / 2;
+		y += gl.unitsize + 20;
 		i = 0;
 		
 		while (i < gl.player.health) {
 			g2.drawImage(herz, x, y, gl.unitsize, gl.unitsize, null);
 			i++; 
-			x+=gl.unitsize;
+			x+=gl.unitsize + 1;
 			
 		}
 	}
@@ -138,14 +176,14 @@ public class UI {
 		g2.drawString(text, x, y);
 		
 		//Spieler
-		g2.drawImage(gl.player.down1, gl.unitsize * 6, gl.unitsize * 4, gl.unitsize * 3, gl.unitsize * 3, null);
+		g2.drawImage(gl.player.down1, gl.unitsize * 6 + 10, gl.unitsize * 4, gl.unitsize * 3, gl.unitsize * 3, null);
 		
 		
 		//Menu
 		//Starte Spiel
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
 		text = "Starte Spiel";
-		x = gl.unitsize * 5;
+		x = gl.unitsize * 5 + 20;
 		y = gl.unitsize * 8;
 		if (befehl == 0) {
 			g2.setColor(Color.cyan);
@@ -168,7 +206,7 @@ public class UI {
 		
 		//Lade Spiel
 		text = "Lade Spiel";
-		x = gl.unitsize * 5 + 15;
+		x = gl.unitsize * 5 + 30;
 		y = gl.unitsize * 9;
 		if (befehl == 1) {
 			g2.setColor(Color.cyan);
@@ -191,7 +229,7 @@ public class UI {
 		
 		//Verlasse Speil
 		text = "Beenden";
-		x = gl.unitsize * 5 + 30;
+		x = gl.unitsize * 6;
 		y = gl.unitsize * 10;
 		if (befehl == 2) {
 			g2.setColor(Color.cyan);
