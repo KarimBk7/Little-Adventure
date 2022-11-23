@@ -14,6 +14,7 @@ public class Unit {
 	public int speed, animationspeed;
 	String dialog[] = new String[20];
 	public int dialogIndex = 0;
+	public String name = "";
 	
 	//Attribute für Image
 	public BufferedImage up, up1, up2, down, down1, down2, left, left1, left2, right, right1, right2;

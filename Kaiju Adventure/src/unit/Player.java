@@ -253,7 +253,7 @@ public class Player extends Unit{
 						gl.ui.showMessage("Tuer geoeffnet! \nMoege der Kampf gegen Tenbusch\nbeginnen!!!", 120);
 					}
 					else {
-						gl.ui.showMessage("Ich benoetige 2 Schlüssel.", 90);
+						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
 					}
 				}
 				break;
@@ -266,12 +266,29 @@ public class Player extends Unit{
 		
 		if (i != 99) {
 			if (keyI.enterPressed == true) {
-				if (amountApfel > 2) {
-					gl.npc[i].dialogIndex++;
-					amountApfel -= 3;
+				switch (gl.npc[i].name) {
+				case "brandon":
+					if (amountApfel > 2) {
+						gl.npc[i].dialogIndex++;
+						amountApfel -= 3;
+					}
+					gl.gameState = gl.dialogState;
+					gl.npc[i].speak();
+					break;
+
+				case "angler":
+					if (gl.npc[i].dialogIndex == 2) {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex = 3;
+					}
+					else {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex = 2;
+					}
+					break;
 				}
-				gl.gameState = gl.dialogState;
-				gl.npc[i].speak();
 			}
 			keyI.enterPressed = false;
 		}

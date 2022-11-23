@@ -70,7 +70,6 @@ public class ObjektSetter {
 		try {
 			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		//Schaufel
@@ -78,7 +77,6 @@ public class ObjektSetter {
 		try {
 			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		gl.obj[10].posX = 63 * gl.unitsize + 20;
@@ -96,16 +94,34 @@ public class ObjektSetter {
 		gl.obj[13] = new Apfel();
 		gl.obj[13].posX = 61 * gl.unitsize;
 		gl.obj[13].posY = 15 * gl.unitsize;
+		
+		//pier am see
+		gl.obj[14] = new Objekt("pier",55 * gl.unitsize, 31 * gl.unitsize);
+		try {
+			gl.obj[14].image = ImageIO.read(getClass().getResourceAsStream("/objekt/pier.png"));
+		} catch (Exception e) {
+		}
 	}
 	
 	//setzt positionen von npc
 	public void setNPC() {
 		
-		//Brandon
+		//Brandon Apfelkuchen
 		gl.npc[0] = new Npc(gl);
 		gl.npc[0].posX = 61 * gl.unitsize;
 		gl.npc[0].posY = 59 * gl.unitsize;
+		gl.npc[0].name = "brandon";
 		
+		//NPC am pier
+		gl.npc[1] =  new Npc(gl);	
+		gl.npc[1].posX = 55 * gl.unitsize;
+		gl.npc[1].posY = 31 * gl.unitsize;
+		gl.npc[1].dialogIndex = 2;
+		gl.npc[1].name = "angler";
+		try {
+			gl.npc[1].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
+		} catch (Exception e) {
 		
+		}
 	}
 }

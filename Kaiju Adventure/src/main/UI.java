@@ -7,11 +7,7 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Iterator;
-
 import javax.imageio.ImageIO;
-import javax.swing.plaf.ColorUIResource;
-
 import objekt.Apfel;
 import objekt.Heart;
 import objekt.Key;
@@ -52,7 +48,6 @@ public class UI {
 		try {
 			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -160,11 +155,13 @@ public class UI {
 			g2.drawString(line, x, y);
 			y+=30;
 		}
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
+		g2.drawString("press ENTER", 550, 500);
 		
 	}
 
 	private void drawPlayerHealth(Graphics2D g2) {
-		//draw Leere herzen
+		//leere lebensbalken
 		int x = 20;
 		int y = gl.unitsize * 9;
 		int i = 0;
@@ -172,12 +169,12 @@ public class UI {
 			g2.drawImage(herzleer, x, y + 20, gl.unitsize * 3, gl.unitsize * 3, null);
 			i++; 
 		
-		//draw Volle Herzen
+		//draw lebenseinheiten
 		y += gl.unitsize + 20;
 		i = 0;
 		
 		while (i < gl.player.health) {
-			g2.drawImage(herz, x, y, gl.unitsize, gl.unitsize, null);
+			g2.drawImage(herz, x, y, gl.unitsize - 2, gl.unitsize, null);
 			i++; 
 			x+=gl.unitsize + 1;
 			

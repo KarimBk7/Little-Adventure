@@ -13,6 +13,7 @@ public class Grabstein extends Objekt{
 		} catch (Exception e) {
 			
 		}
+		hitbox.height = 96;
 		isCollision = true;
 	}
 }

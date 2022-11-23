@@ -16,13 +16,16 @@ public class Npc extends Unit{
 	}
 	
 	public void setDialog() {
-		dialog[0] = "Du willst meine wertvolle Kiste?\nDann bring mir 3 Aepfel, damit ich \neinen Apfelkuchen backen kann."
+		//Brandon
+		dialog[0] = "Du willst meine wertvolle Kiste?\nDann bring mir 3 Aepfel, \ndamit ich einen Apfelkuchen backen kann."
 					+ "\nVielleicht bekommst du auch etwas ab.";
 		dialog[1] = "Vielen Dank fuer die Aepfel mein Freund\n"
 					+ "Der Inhalt meiner Kiste gehört dir.\n"
 					+ "Erwarte aber nicht zu viel.";
-		dialog[2] = "Danke das du mir die Mosnter \nverjagt hast!\nWie kann ich mich revanchieren?";
-		dialog[3] = "juckt";
+		
+		//Angler
+		dialog[2] = "Nachdem ich einen Fisch geangelt hab hol ich \nmir ein paar Aepfel vom Wald.";
+		dialog[3] = "Hab gehoert das es welche etwas noerdlich von hier gibt.";
 	}
 
 	public void getNpcpng() {

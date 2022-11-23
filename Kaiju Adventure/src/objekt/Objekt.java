@@ -41,6 +41,12 @@ public class Objekt {
 		else if(i == 9) {
 			g2.drawImage(image, scX, scY,gl.unitsize * 20, gl.unitsize * 20, null);
 		}
+		else if(obj[i].name == "pier") {
+			g2.drawImage(image, scX, scY,gl.unitsize * 2, gl.unitsize * 3, null);
+		}
+		else if(obj[i].name == "Grabstein") {
+			g2.drawImage(image, scX, scY,gl.unitsize, gl.unitsize * 2, null);
+		}
 		else {
 			g2.drawImage(image, scX, scY,gl.unitsize, gl.unitsize, null);
 		}
