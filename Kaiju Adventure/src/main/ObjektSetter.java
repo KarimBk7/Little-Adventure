@@ -123,5 +123,18 @@ public class ObjektSetter {
 		} catch (Exception e) {
 		
 		}
+		
+		
+		//NPC momo
+		gl.npc[2] =  new Npc(gl);	
+		gl.npc[2].posX = 55 * gl.unitsize;
+		gl.npc[2].posY = 61 * gl.unitsize + 20;
+		gl.npc[2].dialogIndex = 4;
+		gl.npc[2].name = "momo";
+		try {
+			gl.npc[2].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
+		} catch (Exception e) {
+				
+		}
 	}
 }

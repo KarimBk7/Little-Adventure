@@ -44,7 +44,7 @@ public class Player extends Unit{
 		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 12; 
+		speed = 10; 
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -64,10 +64,10 @@ public class Player extends Unit{
 			down = ImageIO.read(getClass().getResourceAsStream("/player/pl_down.png"));
 			down1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down1.png"));
 			down2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down2.png"));
-			//left = ImageIO.read(getClass().getResourceAsStream("/player/pl_left.png"));
+			left = ImageIO.read(getClass().getResourceAsStream("/player/pl_left.png"));
 			left1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left1.png"));
 			left2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left2.png"));
-			//right = ImageIO.read(getClass().getResourceAsStream("/player/pl_right.png"));
+			right = ImageIO.read(getClass().getResourceAsStream("/player/pl_right.png"));
 			right1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right2.png"));
 			
@@ -246,7 +246,7 @@ public class Player extends Unit{
 						try {
 							gl.obj[i].image = ImageIO.read(getClass().getResourceAsStream("/Objekt/opendoor.png"));
 							gl.obj[i].isCollision = false;
-							gl.obj[10] = null;
+							gl.obj[9] = null;
 						} catch (Exception e) {
 							
 						} 
@@ -286,6 +286,23 @@ public class Player extends Unit{
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.npc[i].dialogIndex = 2;
+					}
+					break;
+				case "momo":
+					if (gl.npc[i].dialogIndex == 4) {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex = 5;
+					}
+					else if (gl.npc[i].dialogIndex == 5){
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex = 6;
+					}
+					else {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex = 4;
 					}
 					break;
 				}
