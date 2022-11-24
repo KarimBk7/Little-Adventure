@@ -60,25 +60,16 @@ public class ObjektSetter {
 		gl.obj[7].posX = 39 * gl.unitsize;
 		gl.obj[7].posY = 28 * gl.unitsize;
 		
-		
 		gl.obj[8] = new Key();
 		
 		//Dach übers der Burg von Tenbusch
 		gl.obj[9] = new House(gl);
 		gl.obj[9].posX = 30 * gl.unitsize;
 		gl.obj[9].posY = 8 * gl.unitsize;
-		try {
-			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
-		} catch (Exception e) {
-		}
 		
 		//Schaufel
 		gl.obj[10] = new Schaufel();
-		try {
-			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		gl.obj[10].posX = 63 * gl.unitsize + 20;
 		gl.obj[10].posY = 59 * gl.unitsize - 35;
 		
@@ -98,6 +89,8 @@ public class ObjektSetter {
 		//pier am see
 		gl.obj[14] = new Objekt("pier",55 * gl.unitsize, 31 * gl.unitsize);
 		try {
+			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
+			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
 			gl.obj[14].image = ImageIO.read(getClass().getResourceAsStream("/objekt/pier.png"));
 		} catch (Exception e) {
 		}
@@ -118,20 +111,16 @@ public class ObjektSetter {
 		gl.npc[1].posY = 31 * gl.unitsize;
 		gl.npc[1].dialogIndex = 2;
 		gl.npc[1].name = "angler";
-		try {
-			gl.npc[1].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
-		} catch (Exception e) {
-		
-		}
-		
 		
 		//NPC momo
 		gl.npc[2] =  new Npc(gl);	
-		gl.npc[2].posX = 55 * gl.unitsize;
-		gl.npc[2].posY = 61 * gl.unitsize + 20;
+		gl.npc[2].posX = 53 * gl.unitsize;
+		gl.npc[2].posY = 53 * gl.unitsize + 20;
 		gl.npc[2].dialogIndex = 4;
 		gl.npc[2].name = "momo";
+		
 		try {
+			gl.npc[1].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
 			gl.npc[2].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
 		} catch (Exception e) {
 				

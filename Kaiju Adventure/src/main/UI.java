@@ -18,8 +18,8 @@ public class UI {
 	//Attribute
 	Graphics2D g2;
 	GameLoop gl;
-	Font arial40;
-	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg;
+	Font arial40, arial20;
+	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg, wasd, enter;
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
 	public boolean messageOn = false;
@@ -32,6 +32,7 @@ public class UI {
 	public UI(GameLoop gl) {
 		this.gl = gl;
 		arial40 = new Font("Arial", Font.PLAIN, 40);
+		arial20 = new Font("Arial", Font.PLAIN, 20);
 		Key key = new Key();
 		this.key = key.image;
 		
@@ -47,9 +48,13 @@ public class UI {
 		
 		try {
 			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
+			wasd = ImageIO.read(getClass().getResourceAsStream("/steuerung/wasd.png"));
+			enter = ImageIO.read(getClass().getResourceAsStream("/steuerung/enter.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Steuerung einfuegen
 	}
 	
 	public void showMessage(String text, int countermax) {
@@ -64,6 +69,12 @@ public class UI {
 		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate){
 			//Spielt
 			if (gl.gameState == gl.playState) {
+				
+				g2.setFont(arial20);
+				g2.setColor(Color.black);
+				g2.drawString("pause(p)", 15, 20);
+				g2.setColor(Color.white);
+				g2.drawString("pause(p)", 16, 21);
 				
 				//zeigt Schlüssel-anzahl
 				g2.setFont(arial40);
@@ -322,14 +333,27 @@ public class UI {
 		g2.fillRect(0, 0, gl.screenweite + gl.unitsize, gl.screenhoehe * gl.unitsize);
 		
 		//Pause Text
-		String pausetext = "Pause";
 		int x = gl.screenweite / 2 - gl.unitsize * 2;
 		int y = gl.screenhoehe / 4;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,70F));
 		g2.setColor(Color.white);
-		g2.drawString(pausetext, x + 4, y + 4);
+		g2.drawString("Pause", x + 4, y + 4);
 		g2.setColor(new Color(255,100,100));
-		g2.drawString(pausetext, x, y);
+		g2.drawString("Pause", x, y);
+		
+		//Steuerung anzeigen
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,30F));
+		g2.setColor(Color.gray);
+		g2.drawString("Bewegen:", gl.unitsize + 2, gl.unitsize * 9 + 22);
+		g2.setColor(Color.white);
+		g2.drawString("Bewegen:", gl.unitsize, gl.unitsize * 9 + 20);
+		g2.drawImage(wasd, gl.unitsize, gl.unitsize * 9, gl.unitsize * 3, gl.unitsize * 3, null);
+
+		g2.setColor(Color.gray);
+		g2.drawString("Interargieren:", gl.unitsize * 11 + 27, gl.unitsize * 9 + 22);
+		g2.setColor(Color.white);
+		g2.drawString("Interargieren:", gl.unitsize * 11 + 25, gl.unitsize * 9 + 20);
+		g2.drawImage(enter, gl.unitsize * 12, gl.unitsize * 8 + 35, gl.unitsize * 4, gl.unitsize * 4, null);
 		
 		//Weiter Spielen
 		String text = "Weiter Spielen";

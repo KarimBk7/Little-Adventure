@@ -16,8 +16,9 @@ public class House extends Objekt{
 		} catch (Exception e) {
 			
 		}
+		hitboxX = 20;
 		hitbox.height = gl.buildingsize;
-		hitbox.width = gl.buildingsize;
+		hitbox.width = gl.buildingsize - 40;
 		
 	}
 	

@@ -44,7 +44,7 @@ public class Player extends Unit{
 		posY = 63 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 10; 
+		speed = 4; 
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -140,6 +140,7 @@ public class Player extends Unit{
 			objindex = gl.cc.checkObjekt(this, true);
 			interact(objindex);
 			interactNpc(npcindex);
+			keyI.enterPressed = false;
 			
 			//wenn nicht collision dann laufen
 			if (isCollision == false) {

@@ -12,10 +12,11 @@ public class Main {
 		window.setResizable(false);					//Vom nutzer verstellbar (nein)
 		window.setTitle("Kaiju Adventure");	
 		
+		//fügt gameloop zum fenster hinzu
 		GameLoop gameloop = new GameLoop();
 		window.add(gameloop);
 		window.pack();
-		window.setLocationRelativeTo(null);			//fenster taicht in der mitte des Bildschrims auf
+		window.setLocationRelativeTo(null);			//fenster taucht in mitte auf
 		window.setVisible(true);
 		
 		gameloop.setupObjekt();
