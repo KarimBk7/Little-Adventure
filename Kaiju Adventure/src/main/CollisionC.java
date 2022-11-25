@@ -136,6 +136,8 @@ public class CollisionC {
 
 	//collision für monster
 	public int checkUnit(Unit unit, Unit[] target) {
+
+		
 	
 	int index = 99;
 	
@@ -191,10 +193,71 @@ public class CollisionC {
 			}
 			unit.hitbox.x = unit.hitboxX;
 			unit.hitbox.y = unit.hitboxY;
-			target[i].hitbox.x = gl.npc[i].hitboxX;
+			target[i].hitbox.x = target[i].hitboxX;
 			target[i].hitbox.y = target[i].hitboxY;
 		}	
 	}
 	return index;
 	}
+	
+	//check if unit trifft player
+	public void checkPlayer(Unit unit) {
+		
+		unit.hitbox.x = unit.posX + unit.hitbox.x;
+		unit.hitbox.y = unit.posY + unit.hitbox.y;
+		
+		gl.player.hitbox.x = gl.player.posX	+ gl.player.hitbox.x;
+		gl.player.hitbox.y = gl.player.posY + gl.player.hitbox.y;
+		
+		switch (unit.richtung) {
+		case "up":	
+			unit.hitbox.y -= unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;
+					if (gl.player.immunity == false) {
+						gl.player.health--; 
+						gl.player.immunity = true;
+						gl.player.losthealth = true;
+					}
+			}
+			break;
+		case "down":
+			unit.hitbox.y += unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;	
+					if (gl.player.immunity == false) {
+						gl.player.health--; 
+						gl.player.immunity = true;
+						gl.player.losthealth = true;
+					}
+			}
+			break;
+		case "left":
+			unit.hitbox.x -= unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;
+					if (gl.player.immunity == false) {
+						gl.player.health--; 
+						gl.player.immunity = true;
+						gl.player.losthealth = true;
+					}
+			}
+			break;
+		case "right":
+			unit.hitbox.x += unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;	
+					if (gl.player.immunity == false) {
+						gl.player.health--; 
+						gl.player.immunity = true;
+						gl.player.losthealth = true;
+					}
+			}
+			break;
+		}
+		unit.hitbox.x = unit.hitboxX;
+		unit.hitbox.y = unit.hitboxY;
+		gl.player.hitbox.x = gl.player.hitboxX;
+		gl.player.hitbox.y = gl.player.hitboxY;
+	}	
 }

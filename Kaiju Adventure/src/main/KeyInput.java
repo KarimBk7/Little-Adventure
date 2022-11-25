@@ -60,6 +60,33 @@ public class KeyInput implements KeyListener {
 			}
 		}
 		
+		else if(gl.gameState == gl.losestate) {
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 1;
+				}
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 1) {
+					gl.ui.befehl = 0;
+				}
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				enterPressed = true;
+				//Spiel Starte
+				if (gl.ui.befehl == 0) {
+					
+					//TODO	
+				}
+				else if (gl.ui.befehl == 1){
+					gl.ui.befehl = 0;
+					gl.gameState = gl.titlestate;
+				}
+			}
+		}
+
 		//Wenn Prologbildschirm
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {

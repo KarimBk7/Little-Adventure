@@ -70,6 +70,7 @@ public class UI {
 			//Spielt
 			if (gl.gameState == gl.playState) {
 				
+				//pause hinweis
 				g2.setFont(arial20);
 				g2.setColor(Color.black);
 				g2.drawString("pause(p)", 15, 20);
@@ -97,6 +98,8 @@ public class UI {
 					g2.drawImage(schaufel, 25, 85, gl.unitsize, gl.unitsize, null);
 				}
 				
+				lostHealth(g2);
+				getHealth(g2);
 				drawPlayerHealth(g2);
 			}
 		
@@ -113,13 +116,22 @@ public class UI {
 			}
 			
 			//wenn Pause gedrückt wird
-			if (gl.gameState == gl.pauseState) {
+			else if (gl.gameState == gl.pauseState) {
 				drawPauseScreen(g2);
 			}
 			//wenn dialog
-			if (gl.gameState == gl.dialogState) {
+			else if (gl.gameState == gl.dialogState) {
 				drawDialogFenster(g2);
 			}
+			
+			else if(gl.gameState == gl.losestate) {
+				drawLosingscreen(g2);
+			}
+			
+			else if(gl.gameState == gl.winstate) {
+				drawWinscreen(g2);
+			}
+			
 		}
 		
 		//wenn Titelscreen
@@ -130,9 +142,103 @@ public class UI {
 		else if(gl.gameState == gl.prologstate) {
 			drawProlog(g2);
 		}
-	
 	}
 	
+	private void getHealth(Graphics2D g2) {
+		if (gl.player.gethealth == true) {
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
+			g2.setColor(Color.white);
+			g2.drawString("+1 Leben", gl.unitsize + 21, gl.unitsize * 10 + 21);
+			g2.setColor(Color.cyan);
+			g2.drawString("+1 Leben", gl.unitsize + 20, gl.unitsize * 10 + 20);
+			gl.counter[0].count();
+		}
+		if (gl.counter[0].isDone()) {
+			gl.player.losthealth = false;
+			gl.counter[0].resetCount();
+		}
+	}
+
+	private void lostHealth(Graphics2D g2) {
+		if (gl.player.losthealth == true) {
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
+			g2.setColor(Color.white);
+			g2.drawString("-1 Leben", gl.unitsize + 21, gl.unitsize * 10 + 21);
+			g2.setColor(Color.red);
+			g2.drawString("-1 Leben", gl.unitsize + 20, gl.unitsize * 10 + 20);
+			gl.counter[1].count();
+		}
+		if (gl.counter[1].isDone()) {
+			gl.player.losthealth = false;
+			gl.counter[1].resetCount();
+		}
+		
+	}
+
+	private void drawWinscreen(Graphics2D g2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void drawLosingscreen(Graphics2D g2) {
+
+		g2.setColor(new Color(0,0,0,220));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,100F));
+		g2.setColor(Color.white);
+		g2.drawString("Loser", gl.unitsize * 5 + 4, gl.unitsize * 2 + 4);	
+		g2.setColor(new Color(200,60,60));
+		g2.drawString("Loser", gl.unitsize * 5, gl.unitsize * 2);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+		String text = "Neu Starten";
+		int x = gl.unitsize * 5 + 20;
+		int y = gl.unitsize * 6;
+		if (befehl == 0) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawString(text, x + 3, y + 3);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 0) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.gray);
+			g2.drawString(text, x + 3, y + 3);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+		}
+		
+		//Lade Spiel
+		text = "Hauptmenu";
+		x = gl.unitsize * 5 + 30;
+		y = gl.unitsize * 7;
+		if (befehl == 1) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawString(text, x + 3, y + 3);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 1) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.gray);
+			g2.drawString(text, x + 3, y + 3);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+			
+		}
+		
+		//TODO punkte und respawn button
+	}
+
 	private void drawProlog(Graphics2D g2) {
 		
 		g2.drawImage(prologimg, 0, 0, gl.screenweite, gl.screenhoehe, null);
@@ -301,12 +407,18 @@ public class UI {
 		//setzt Dialog in Fenster
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
 		for (String line : currentDialog.split("\n")) {
+			g2.setColor(Color.gray);
+			g2.drawString(line, posX + 1, posY + 1);
+			g2.setColor(Color.white);
 			g2.drawString(line, posX, posY);
 			posY+=30;
 		}
 		if (gl.gameState == gl.dialogState) {
-			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
-			g2.drawString("press ENTER", 520, 500);
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,16F));
+			g2.setColor(Color.gray);
+			g2.drawString("press ENTER", 551, 511);
+			g2.setColor(Color.white);
+			g2.drawString("press ENTER", 550, 510);
 		}
 		
 	}
@@ -400,9 +512,5 @@ public class UI {
 			g2.setColor(Color.white);
 			g2.drawString(text, x, y);			
 		}
-		
-		
-		
-		
 	}
 }

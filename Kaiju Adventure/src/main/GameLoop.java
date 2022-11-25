@@ -54,16 +54,19 @@ public class GameLoop extends JPanel implements Runnable {
 	//sound & ui
 	Sound sound = new Sound();
 	public UI ui = new UI(this);
-	
+	public Counter counter []= new Counter[20]; 	
+	public CountSetter countsetter= new CountSetter(this);
+		
 	//Gamestate
 	public int gameState;
 	public int titlestate = 0;
 	public int prologstate = 1;
 	public int playState = 2;
 	public int pauseState = 3;
-	public int dialogState = 4;
-	public int winstate = 5;
-	public int losestate = 6;
+	public int dialogState = 4; 
+	public int shopState = 5;
+	public int winstate = 6;
+	public int losestate = 7;
 	
 	
 	public Thread gameThread;
@@ -134,10 +137,6 @@ public class GameLoop extends JPanel implements Runnable {
 				}
 			}
 		}
-		if (gameState == pauseState) {
-			
-		}
-		
 	}
 	
 	public void setupObjekt() {
@@ -146,8 +145,10 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setObjekt();
 		oSetter.setNPC();
 		oSetter.setMonster();
+		countsetter.setCounter();
 		
-		gameState = titlestate;
+		
+		gameState = losestate;
 		
 	}
 	

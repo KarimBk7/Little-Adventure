@@ -130,8 +130,16 @@ public class ObjektSetter {
 	public void setMonster() {
 		
 		gl.monster[0] = new Monster_Snake(gl);
-		gl.monster[0].posX = 53 * gl.unitsize;
-		gl.monster[0].posY = 54 * gl.unitsize;
+		gl.monster[0].posX = 16 * gl.unitsize;
+		gl.monster[0].posY = 64 * gl.unitsize;
+		
+		gl.monster[1] = new Monster_Snake(gl);
+		gl.monster[1].posX = 16 * gl.unitsize;
+		gl.monster[1].posY = 60 * gl.unitsize;
+		
+		gl.monster[2] = new Monster_Snake(gl);
+		gl.monster[2].posX = 20 * gl.unitsize;
+		gl.monster[2].posY = 60 * gl.unitsize;
 		
 		
 	}

@@ -15,13 +15,17 @@ public class Player extends Unit{
 	KeyInput keyI;
 	
 	public int camX, camY;
+	public int defaultspeed;
+	boolean playersteht = true;
 	public int amountKey = 0;
 	public int amountApfel = 0;
 	public boolean hatSchaufel = false;
-	public boolean beendet = false;
-	boolean playersteht = true;
-	public boolean immunity = false;
+	
+	//statuseffekte
+	public boolean immunity, slowness, poison = false;
 	int immunityCounter = 0;
+
+	
 	
 	public Player(GameLoop gl, KeyInput keyI) {
 		super(gl);
@@ -42,11 +46,12 @@ public class Player extends Unit{
 	public void setTest() {
 		
 		//Spieler-Position bei Start
-		posX = 55 * gl.unitsize;			
-		posY = 63 * gl.unitsize; 
+		posX = 11 * gl.unitsize;			
+		posY = 62 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		speed = 4; 
+		defaultspeed = 10;
+		speed = defaultspeed; 
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -80,6 +85,8 @@ public class Player extends Unit{
 	
 	public void update ()  {
 		
+		statuseffects();
+		
 		if (health < 1) {
 			gl.gameState = gl.losestate;
 		}
@@ -88,11 +95,11 @@ public class Player extends Unit{
 		int monsterindex;
 		
 		if (immunity) {
-			 immunityCounter++;
+			 gl.counter[2].count();
 		}
-		if (immunityCounter == 120) {
+		if (gl.counter[2].isDone()) {
+			gl.counter[2].resetCount();
 			immunity = false;
-			immunityCounter = 0;
 		}
 		
 		//Tastenerkennung
@@ -196,6 +203,11 @@ public class Player extends Unit{
 		}
 	}
 	
+	private void statuseffects() {
+		
+		
+	}
+
 	//interargieren mit objekten
 	public void interact(int i) {
 		
@@ -339,6 +351,7 @@ public class Player extends Unit{
 				case "snake": 
 					health--; 
 					immunity = true;
+					losthealth = true;
 					break;
 			}
 		}

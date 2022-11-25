@@ -30,6 +30,7 @@ public class Unit {
 	//Attrivute für ingame-wert
 	public int maxHealth;
 	public int health;
+	public boolean losthealth, gethealth = false;
 	
 	public Unit(GameLoop gl) {
 		this.gl = gl;
@@ -54,6 +55,7 @@ public class Unit {
 		gl.cc.checkTile(this);
 		gl.cc.checkObjekt(this, false);
 		gl.cc.checkUnit(this, gl.npc);
+		gl.cc.checkPlayer(this);
 		
 		if (isCollision == false) {
 			
