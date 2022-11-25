@@ -2,11 +2,8 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Iterator;
-
 import javax.swing.JPanel;
 
 import objekt.Objekt;
@@ -47,6 +44,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
 	public Unit npc[] = new Unit[10];
+	public Unit monster[] = new Unit[10];
 	
 	//Weltkarte
 	TileManager tileM = new TileManager(this);
@@ -127,6 +125,14 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		if (gameState == playState) {
 			player.update();
+			
+			
+			//update Monster
+			for (int i = 0; i < monster.length; i++) {
+				if (monster[i] != null) {
+					monster[i].update();
+				}
+			}
 		}
 		if (gameState == pauseState) {
 			
@@ -139,6 +145,7 @@ public class GameLoop extends JPanel implements Runnable {
 		//settet alle Objekte
 		oSetter.setObjekt();
 		oSetter.setNPC();
+		oSetter.setMonster();
 		
 		gameState = titlestate;
 		
@@ -168,6 +175,13 @@ public class GameLoop extends JPanel implements Runnable {
 			for (int i = 0; i < npc.length; i++) {
 				if (npc[i] != null) {
 					npc[i].draw(g2, this,npc,i);
+				}
+			}
+			
+			//Draw alle Monster
+			for (int i = 0; i < monster.length; i++) {
+				if (monster[i] != null) {
+					monster[i].draw(g2, this,monster,i);
 				}
 			}
 			

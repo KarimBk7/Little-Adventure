@@ -17,7 +17,7 @@ public class Unit {
 	public String name = "";
 	
 	//Attribute für Image
-	public BufferedImage up, up1, up2, down, down1, down2, left, left1, left2, right, right1, right2;
+	public BufferedImage image, up, up1, up2, down, down1, down2, left, left1, left2, right, right1, right2;
 	public String richtung, laufen;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
@@ -42,7 +42,42 @@ public class Unit {
 		int scY = posY - gl.player.posY + gl.player.camY;
 		
 		
-		g2.drawImage(down1, scX, scY,gl.unitsize, gl.unitsize, null);
+		g2.drawImage(image, scX, scY,gl.unitsize, gl.unitsize, null);
+	}
+
+	public void setAction() {}
+	public void update() {
 		
+		setAction();
+		
+		isCollision = false;
+		gl.cc.checkTile(this);
+		gl.cc.checkObjekt(this, false);
+		gl.cc.checkUnit(this, gl.npc);
+		
+		if (isCollision == false) {
+			
+			switch (richtung) {
+			case "up": 
+				posY -= speed; break;
+			case "down":
+				posY += speed; break;
+			case "left": 
+				posX -= speed; break;
+			case "right": 
+				posX += speed; break;
+			}
+		}
+		
+		spriteCounter++;
+		if (spriteCounter > 12) {
+			if (spriteNum == 1) {
+				spriteNum = 2;
+			}
+			else if(spriteNum == 2) {
+				spriteNum = 1;
+			}
+			spriteCounter = 0;
+		}
 	}
 }

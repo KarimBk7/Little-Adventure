@@ -20,6 +20,8 @@ public class Player extends Unit{
 	public boolean hatSchaufel = false;
 	public boolean beendet = false;
 	boolean playersteht = true;
+	public boolean immunity = false;
+	int immunityCounter = 0;
 	
 	public Player(GameLoop gl, KeyInput keyI) {
 		super(gl);
@@ -78,8 +80,20 @@ public class Player extends Unit{
 	
 	public void update ()  {
 		
+		if (health < 1) {
+			gl.gameState = gl.losestate;
+		}
 		int npcindex;
-		int objindex = 99;
+		int objindex;
+		int monsterindex;
+		
+		if (immunity) {
+			 immunityCounter++;
+		}
+		if (immunityCounter == 120) {
+			immunity = false;
+			immunityCounter = 0;
+		}
 		
 		//Tastenerkennung
 		if(keyI.upPressed == true || keyI.downPressed == true || 
@@ -136,10 +150,13 @@ public class Player extends Unit{
 			//check if collision
 			isCollision = false;
 			gl.cc.checkTile(this);
-			npcindex = gl.cc.checkNpc(this,true);
+			npcindex = gl.cc.checkUnit(this, gl.npc);
 			objindex = gl.cc.checkObjekt(this, true);
+			monsterindex = gl.cc.checkUnit(this, gl.monster);
+			
 			interact(objindex);
 			interactNpc(npcindex);
+			hitbyMonster(monsterindex);
 			keyI.enterPressed = false;
 			
 			//wenn nicht collision dann laufen
@@ -170,10 +187,12 @@ public class Player extends Unit{
 		}
 		else {
 		playersteht = true;
-		npcindex = gl.cc.checkNpc(this,true);
+		npcindex = gl.cc.checkUnit(this,gl.npc);
 		objindex = gl.cc.checkObjekt(this, true);
+		monsterindex = gl.cc.checkUnit(this, gl.monster);
 		interact(objindex);
 		interactNpc(npcindex);
+		hitbyMonster(monsterindex);
 		}
 	}
 	
@@ -312,11 +331,21 @@ public class Player extends Unit{
 		}
 	}
 	
+	//von monster gehittet
+	public void hitbyMonster(int i) {
+		
+		if (i!=99 && immunity == false) {
+			switch (gl.monster[i].name) {		
+				case "snake": 
+					health--; 
+					immunity = true;
+					break;
+			}
+		}
+	}
 	
 	//zeichnet spieler
 	public void draw(Graphics2D g2) {
-		
-		BufferedImage image = null;
 		
 		//Wählt Image zur Richtung
 		switch(richtung) {

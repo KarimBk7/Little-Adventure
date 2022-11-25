@@ -60,7 +60,6 @@ public class CollisionC {
 			}
 			break;
 		}
-		
 	}
 	
 	//Collision für Objekte
@@ -134,76 +133,68 @@ public class CollisionC {
 		}
 		return index;
 	}
+
+	//collision für monster
+	public int checkUnit(Unit unit, Unit[] target) {
 	
-	//Collision für NPC
-public int checkNpc(Unit unit, boolean player) {
+	int index = 99;
+	
+	for (int i = 0; i < target.length; i++) {
 		
-		int index = 99;
-		
-		for (int i = 0; i < gl.npc.length; i++) {
+		if (target[i] != null) {
 			
-			if (gl.npc[i] != null) {
-				
-				//Unit's hitbox
-				unit.hitbox.x = unit.posX + unit.hitbox.x;
-				unit.hitbox.y = unit.posY + unit.hitbox.y;
-				
-				//objekt's hitbox
-				gl.npc[i].hitbox.x = gl.npc[i].posX	+ gl.npc[i].hitbox.x;
-				gl.npc[i].hitbox.y = gl.npc[i].posY + gl.npc[i].hitbox.y;
-				
-				switch (unit.richtung) {
-				case "up":	
-					unit.hitbox.y -= unit.speed;
-					if(unit.hitbox.intersects(gl.npc[i].hitbox)) {
-						if(gl.npc[i].isCollision == true) {
-							unit.isCollision = true;
-						}
-						if (player == true) {
-							index = i;
-						}
+			//Unit's hitbox
+			unit.hitbox.x = unit.posX + unit.hitbox.x;
+			unit.hitbox.y = unit.posY + unit.hitbox.y;
+			
+			//objekt's hitbox
+			target[i].hitbox.x = target[i].posX	+ target[i].hitbox.x;
+			target[i].hitbox.y = target[i].posY + target[i].hitbox.y;
+			
+			switch (unit.richtung) {
+			case "up":	
+				unit.hitbox.y -= unit.speed;
+				if(unit.hitbox.intersects(target[i].hitbox)) {
+					if(target[i].isCollision == true) {
+						unit.isCollision = true;
 					}
-					break;
-				case "down":
-					unit.hitbox.y += unit.speed;
-					if(unit.hitbox.intersects(gl.npc[i].hitbox)) {
-						if(gl.npc[i].isCollision == true) {
-							unit.isCollision = true;
-						}
-						if (player == true) {
-							index = i;
-						}
-					}
-					break;
-				case "left":
-					unit.hitbox.x -= unit.speed;
-					if(unit.hitbox.intersects(gl.npc[i].hitbox)) {
-						if(gl.npc[i].isCollision == true) {
-							unit.isCollision = true;
-						}
-						if (player == true) {
-							index = i;
-						}
-					}
-					break;
-				case "right":
-					unit.hitbox.x += unit.speed;
-					if(unit.hitbox.intersects(gl.npc[i].hitbox)) {
-						if(gl.npc[i].isCollision == true) {
-							unit.isCollision = true;
-						}
-						if (player == true) {
-							index = i;
-						}
-					}
-					break;
+						index = i;
 				}
-				unit.hitbox.x = unit.hitboxX;
-				unit.hitbox.y = unit.hitboxY;
-				gl.npc[i].hitbox.x = gl.npc[i].hitboxX;
-				gl.npc[i].hitbox.y = gl.npc[i].hitboxY;
-			}	
-		}
-		return index;
+				break;
+			case "down":
+				unit.hitbox.y += unit.speed;
+				if(unit.hitbox.intersects(target[i].hitbox)) {
+					if(target[i].isCollision == true) {
+						unit.isCollision = true;
+					}
+						index = i;
+				}
+				break;
+			case "left":
+				unit.hitbox.x -= unit.speed;
+				if(unit.hitbox.intersects(target[i].hitbox)) {
+					if(target[i].isCollision == true) {
+						unit.isCollision = true;
+					}
+						index = i;
+				}
+				break;
+			case "right":
+				unit.hitbox.x += unit.speed;
+				if(unit.hitbox.intersects(target[i].hitbox)) {
+					if(target[i].isCollision == true) {
+						unit.isCollision = true;
+					}
+						index = i;
+				}
+				break;
+			}
+			unit.hitbox.x = unit.hitboxX;
+			unit.hitbox.y = unit.hitboxY;
+			target[i].hitbox.x = gl.npc[i].hitboxX;
+			target[i].hitbox.y = target[i].hitboxY;
+		}	
+	}
+	return index;
 	}
 }

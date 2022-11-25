@@ -1,7 +1,5 @@
 package main;
 
-import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 import objekt.Apfel;
@@ -11,6 +9,7 @@ import objekt.Objekt;
 import objekt.House;
 import objekt.Key;
 import objekt.Schaufel;
+import unit.Monster_Snake;
 import unit.Npc;
 
 public class ObjektSetter {
@@ -93,6 +92,7 @@ public class ObjektSetter {
 			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
 			gl.obj[14].image = ImageIO.read(getClass().getResourceAsStream("/objekt/pier.png"));
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -120,10 +120,19 @@ public class ObjektSetter {
 		gl.npc[2].name = "momo";
 		
 		try {
-			gl.npc[1].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
-			gl.npc[2].down1 = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
+			gl.npc[1].image = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
+			gl.npc[2].image = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
 		} catch (Exception e) {
 				
 		}
 	}
-}
+	
+	public void setMonster() {
+		
+		gl.monster[0] = new Monster_Snake(gl);
+		gl.monster[0].posX = 53 * gl.unitsize;
+		gl.monster[0].posY = 54 * gl.unitsize;
+		
+		
+	}
+ }

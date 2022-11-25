@@ -36,16 +36,15 @@ public class Npc extends Unit{
 		dialog[7] = "Hilf mir diese Monster zu vertreiben!!!";
 		dialog[8] = "Ich danke dir reisender.\nIch hab schon befuerchtet das dies mein Ende sei\n"
 					+ "Ich wollte eigentlich nur im Wald etwas \nHolz hacken";
-		dialog[9] = "Falls es irgendwas gibt was ich fuer dich tun kann, \ndann sag es mit. \nIch moechte mich"
+		dialog[9] = "Falls es irgendwas gibt was ich fuer dich tun kann, \ndann sag es mir. \nIch moechte mich"
 					+ "revanchieren. Ich bin ein schmied, weist du?";
 	}
 
 	public void getNpcpng() {
 		
-		//speichert Spieler Bilder in BufferdImage
 		try {
 			
-			down1 = ImageIO.read(getClass().getResourceAsStream("/npc/brandon.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/npc/brandon.png"));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
