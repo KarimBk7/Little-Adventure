@@ -55,7 +55,6 @@ public class GameLoop extends JPanel implements Runnable {
 	Sound sound = new Sound();
 	public UI ui = new UI(this);
 	public Counter counter []= new Counter[20]; 	
-	public CountSetter countsetter= new CountSetter(this);
 		
 	//Gamestate
 	public int gameState;
@@ -145,7 +144,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setObjekt();
 		oSetter.setNPC();
 		oSetter.setMonster();
-		countsetter.setCounter();
+		oSetter.setCounter();
 		
 		
 		gameState = losestate;
