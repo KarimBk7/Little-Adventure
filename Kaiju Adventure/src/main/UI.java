@@ -19,7 +19,7 @@ public class UI {
 	Graphics2D g2;
 	GameLoop gl;
 	Font arial40, arial20;
-	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg, wasd, enter;
+	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg, wasd, enter, poison, slowness;
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
 	public boolean messageOn = false;
@@ -50,6 +50,7 @@ public class UI {
 			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
 			wasd = ImageIO.read(getClass().getResourceAsStream("/steuerung/wasd.png"));
 			enter = ImageIO.read(getClass().getResourceAsStream("/steuerung/enter.png"));
+			poison = ImageIO.read(getClass().getResourceAsStream("/effekt/poison.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -148,13 +149,13 @@ public class UI {
 		if (gl.player.gethealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 			g2.setColor(Color.white);
-			g2.drawString("+1 Leben", gl.unitsize + 21, gl.unitsize * 10 + 21);
+			g2.drawString("+1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 28);
 			g2.setColor(Color.cyan);
-			g2.drawString("+1 Leben", gl.unitsize + 20, gl.unitsize * 10 + 20);
+			g2.drawString("+1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 30);
 			gl.counter[0].count();
 		}
 		if (gl.counter[0].isDone()) {
-			gl.player.losthealth = false;
+			gl.player.gethealth = false;
 			gl.counter[0].resetCount();
 		}
 	}
@@ -163,9 +164,9 @@ public class UI {
 		if (gl.player.losthealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 			g2.setColor(Color.white);
-			g2.drawString("-1 Leben", gl.unitsize + 21, gl.unitsize * 10 + 21);
+			g2.drawString("-1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 28);
 			g2.setColor(Color.red);
-			g2.drawString("-1 Leben", gl.unitsize + 20, gl.unitsize * 10 + 20);
+			g2.drawString("-1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 30);
 			gl.counter[1].count();
 		}
 		if (gl.counter[1].isDone()) {
@@ -296,6 +297,15 @@ public class UI {
 			x+=gl.unitsize + 1;
 			
 		}
+		
+		if (gl.player.poison) {
+			g2.drawImage(poison, gl.unitsize * 3 + 30, gl.unitsize * 10 + 30, gl.unitsize / 2, gl.unitsize / 2, null);
+			gl.counter[3].count();
+		}
+		if (gl.counter[3].isDone()) {
+			gl.counter[3].resetCount();
+			gl.player.poison = false;
+		}
 	}
 
 	private void drawTitleScreen(Graphics2D g2) {
@@ -423,7 +433,6 @@ public class UI {
 		
 	}
 	
-	
 	public void drawSubWindow(int x, int y, int weite, int hoehe, Graphics2D g2) {
 		
 		//Schwarzer Kaste
@@ -437,7 +446,6 @@ public class UI {
 		
 	}
 	
-
 	public void drawPauseScreen(Graphics2D g2) {
 		//Hintergrund
 		Color c = new Color(0,0,0,220);

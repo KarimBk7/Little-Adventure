@@ -29,4 +29,8 @@ public class Counter {
 	public void setCountermax(int counterMax) {
 		this.counterMax =  counterMax;
 	}
+	
+	public void removeCount() {
+		counter = counterMax;
+	}
 }

@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Iterator;
 
 public class KeyInput implements KeyListener {
 	
@@ -82,6 +83,11 @@ public class KeyInput implements KeyListener {
 				}
 				else if (gl.ui.befehl == 1){
 					gl.ui.befehl = 0;
+					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
+							gl.counter[i].removeCount();
+					}
+					gl.player.health = gl.player.maxHealth;
+					gl.player.setTest();
 					gl.gameState = gl.titlestate;
 				}
 			}

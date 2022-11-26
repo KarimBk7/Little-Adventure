@@ -32,10 +32,8 @@ public class GameLoop extends JPanel implements Runnable {
 	public int weltweite = maxWeltCol + unitsize;
 	public int welthoehe = maxWeltRow + unitsize;
 	
-	
 	//FPS
 	int fps = 60;
-	long sleep = 100;
 
 	//Keyinput
 	public KeyInput keyI = new KeyInput(this);
@@ -147,7 +145,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setCounter();
 		
 		
-		gameState = losestate;
+		gameState = titlestate;
 		
 	}
 	

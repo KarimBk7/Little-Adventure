@@ -146,11 +146,17 @@ public class ObjektSetter {
 	
 	public void setCounter() {
 		
-		
+		//get health ui
 		gl.counter[0] = new Counter();
 		
+		//lost health ui
 		gl.counter[1] = new Counter();
 		
+		//immunity player player
 		gl.counter[2] = new Counter();
+		
+		//poisoncounter
+		gl.counter[3] = new Counter();
+		gl.counter[3].setCountermax(180);
 	}
  }

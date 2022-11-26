@@ -350,6 +350,7 @@ public class Player extends Unit{
 			switch (gl.monster[i].name) {		
 				case "snake": 
 					health--; 
+					poison = true;
 					immunity = true;
 					losthealth = true;
 					break;

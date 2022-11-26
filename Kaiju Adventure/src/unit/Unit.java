@@ -18,6 +18,7 @@ public class Unit {
 	
 	//Attribute für Image
 	public BufferedImage image, up, up1, up2, down, down1, down2, left, left1, left2, right, right1, right2;
+	public BufferedImage attackup, attackdown, attackleft, attackright;
 	public String richtung, laufen;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
@@ -27,7 +28,7 @@ public class Unit {
 	public int hitboxX, hitboxY;
 	public boolean isCollision = false;
 	
-	//Attrivute für ingame-wert
+	//Attribute für ingame-wert
 	public int maxHealth;
 	public int health;
 	public boolean losthealth, gethealth = false;
@@ -55,6 +56,7 @@ public class Unit {
 		gl.cc.checkTile(this);
 		gl.cc.checkObjekt(this, false);
 		gl.cc.checkUnit(this, gl.npc);
+		gl.cc.checkUnit(this, gl.monster);
 		gl.cc.checkPlayer(this);
 		
 		if (isCollision == false) {
