@@ -65,6 +65,7 @@ public class ObjektSetter {
 		gl.obj[9] = new House(gl);
 		gl.obj[9].posX = 30 * gl.unitsize;
 		gl.obj[9].posY = 8 * gl.unitsize;
+		gl.obj[9].name = "dach";
 		
 		//Schaufel
 		gl.obj[10] = new Schaufel();
@@ -157,6 +158,6 @@ public class ObjektSetter {
 		
 		//poisoncounter
 		gl.counter[3] = new Counter();
-		gl.counter[3].setCountermax(180);
+		gl.counter[3].setCountermax(300);
 	}
  }

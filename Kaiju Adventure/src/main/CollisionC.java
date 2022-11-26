@@ -218,6 +218,9 @@ public class CollisionC {
 						gl.player.health--; 
 						gl.player.immunity = true;
 						gl.player.losthealth = true;
+						if (unit.name == "snake") {
+							gl.player.poison = true;
+						}
 					}
 			}
 			break;
@@ -229,6 +232,9 @@ public class CollisionC {
 						gl.player.health--; 
 						gl.player.immunity = true;
 						gl.player.losthealth = true;
+						if (unit.name == "snake") {
+							gl.player.poison = true;
+						}
 					}
 			}
 			break;
@@ -240,6 +246,9 @@ public class CollisionC {
 						gl.player.health--; 
 						gl.player.immunity = true;
 						gl.player.losthealth = true;
+						if (unit.name == "snake") {
+							gl.player.poison = true;
+						}
 					}
 			}
 			break;
@@ -251,6 +260,9 @@ public class CollisionC {
 						gl.player.health--; 
 						gl.player.immunity = true;
 						gl.player.losthealth = true;
+						if (unit.name == "snake") {
+							gl.player.poison = true;
+						}
 					}
 			}
 			break;

@@ -9,14 +9,21 @@ import javax.imageio.ImageIO;
 
 import main.GameLoop;
 import main.KeyInput;
+import main.ScaleTool;
 
 public class Player extends Unit{
 
 	KeyInput keyI;
-	
+
 	public int camX, camY;
 	public int defaultspeed;
 	boolean playersteht = true;
+	
+	//attack
+	public Rectangle attackhitbox = new Rectangle(8, 8, 40, 32);
+	boolean attacking = false;
+	
+	//inventar
 	public int amountKey = 0;
 	public int amountApfel = 0;
 	public boolean hatSchaufel = false;
@@ -61,35 +68,40 @@ public class Player extends Unit{
 	}
 	
 	public void getPlayerpng() {
-		
-		//speichert Spieler Bilder in BufferdImage
-		try {
+		ScaleTool sTool = new ScaleTool();
+			//movement bilder
+			up = sTool.setupImage("pl_up", gl.unitsize, gl.unitsize);
+			up1 = sTool.setupImage("pl_up1", gl.unitsize, gl.unitsize);
+			up2 = sTool.setupImage("pl_up2", gl.unitsize, gl.unitsize);
+			down = sTool.setupImage("pl_down", gl.unitsize, gl.unitsize);
+			down1 = sTool.setupImage("pl_down1", gl.unitsize, gl.unitsize);
+			down2 = sTool.setupImage("pl_down2", gl.unitsize, gl.unitsize);
+			left = sTool.setupImage("pl_left", gl.unitsize, gl.unitsize);
+			left1 = sTool.setupImage("pl_left1", gl.unitsize, gl.unitsize);
+			left2 = sTool.setupImage("pl_left2", gl.unitsize, gl.unitsize);
+			right = sTool.setupImage("pl_right", gl.unitsize, gl.unitsize);
+			right1 = sTool.setupImage("pl_right1", gl.unitsize, gl.unitsize);
+			right2 = sTool.setupImage("pl_right2", gl.unitsize, gl.unitsize);
 			
-			up = ImageIO.read(getClass().getResourceAsStream("/player/pl_up.png"));
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_up1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_up2.png"));
-			down = ImageIO.read(getClass().getResourceAsStream("/player/pl_down.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_down2.png"));
-			left = ImageIO.read(getClass().getResourceAsStream("/player/pl_left.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_left2.png"));
-			right = ImageIO.read(getClass().getResourceAsStream("/player/pl_right.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/pl_right2.png"));
+			//angriffsbilder
+			attackup1 = sTool.setupImage("attackup1", gl.unitsize, gl.unitsize * 2);
+			attackup2 = sTool.setupImage("attackup2", gl.unitsize, gl.unitsize * 2);
+			attackdown1 = sTool.setupImage("attackdown1", gl.unitsize, gl.unitsize * 2);
+			attackdown2 = sTool.setupImage("attackdown2", gl.unitsize, gl.unitsize * 2);
+			attackleft1 = sTool.setupImage("attackleft1", gl.unitsize * 2, gl.unitsize);
+			attackleft2 = sTool.setupImage("attackleft2", gl.unitsize * 2, gl.unitsize);
+			attackright1 = sTool.setupImage("attackright1", gl.unitsize * 2, gl.unitsize);
+			attackright2 = sTool.setupImage("attackright2", gl.unitsize * 2, gl.unitsize);
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void update ()  {
 		
-		statuseffects();
 		
 		if (health < 1) {
 			gl.gameState = gl.losestate;
 		}
+		
 		int npcindex;
 		int objindex;
 		int monsterindex;
@@ -102,8 +114,11 @@ public class Player extends Unit{
 			immunity = false;
 		}
 		
-		//Tastenerkennung
-		if(keyI.upPressed == true || keyI.downPressed == true || 
+		if (attacking) {
+			attacking();
+		}
+		
+		else if(keyI.upPressed == true || keyI.downPressed == true || 
 				keyI.leftPressed == true || keyI.rightPressed == true) {
 			playersteht = false;
 			
@@ -202,10 +217,57 @@ public class Player extends Unit{
 		hitbyMonster(monsterindex);
 		}
 	}
-	
-	private void statuseffects() {
+
+	private void attacking() {
 		
+		spriteCounter++;
 		
+		if (spriteCounter <= 5) {
+			spriteNum = 1;
+		}
+		if (spriteCounter  > 5 && spriteCounter <= 25) {
+			spriteNum = 2;
+			
+			//sichert spielers position & hitbox
+			int currentPosX = posX;
+			int currentPosY = posY;
+			int hitboxWith = hitbox.width;
+			int hitboxHeigh = hitbox.height;
+			
+			//setzt schlag-hitbox
+			switch (richtung) {
+			case "up": posY -= attackhitbox.height;break;
+			case "down": posY += attackhitbox.height;break;
+			case "left": posX -= attackhitbox.width;
+			case "right": posX += attackhitbox.width;				
+			}
+			
+			//ersetz hitbox mit attackhitbox
+			hitbox.width = attackhitbox.width;
+			hitbox.height = attackhitbox.height;
+			
+			//checkt ob mosnter getroffen wird
+			int monsterindex = gl.cc.checkUnit(this, gl.monster);
+			damageMonster(monsterindex);
+			
+			//nach dem checken wird player information wiederhergestellt
+			posX = currentPosX;
+			posY = currentPosY;
+			hitbox.width = hitboxWith;
+			hitbox.height = hitboxHeigh;
+		}
+		if (spriteCounter > 25) {
+			spriteNum = 1;
+			spriteCounter = 0;
+			attacking = false;
+		}
+		
+	}
+
+	private void damageMonster(int i) {
+		if (i != 99) {
+			gl.monster[i].health--;
+		}	
 	}
 
 	//interargieren mit objekten
@@ -341,6 +403,12 @@ public class Player extends Unit{
 			}
 			keyI.enterPressed = false;
 		}
+		
+		else {
+			if (gl.keyI.enterPressed == true) {
+				attacking = true;
+			}
+		}
 	}
 	
 	//von monster gehittet
@@ -361,56 +429,63 @@ public class Player extends Unit{
 	//zeichnet spieler
 	public void draw(Graphics2D g2) {
 		
+		int tempCamX = camX;
+		int tempCamY = camY;
+		
 		//Wählt Image zur Richtung
 		switch(richtung) {
 		case "up":
-			if (playersteht) {
-				image = up;
+			if (!attacking) {
+				if (playersteht) {image = up;}
+				else if(spriteNum == 1) {image = up1;}
+				else if(spriteNum == 2) {image = up2;}	
 			}
-			else if(spriteNum == 1) {
-				image = up1;
-			}
-			else if(spriteNum == 2) {
-				image = up2;
+			else {
+				tempCamY = camY - gl.unitsize;
+				if(spriteNum == 1) {image = attackup1;}
+				if(spriteNum == 2) {image = attackup2;}	
 			}
 			break;
+			
 		case "down":
-			if (playersteht) {
-				image = down;
+			if (!attacking) {
+				if (playersteht) {image = down;}
+				else if(spriteNum == 1) {image = down1;}
+				else if(spriteNum == 2) {image = down2;}
 			}
-			else if(spriteNum == 1) {
-				image = down1;
-			}
-			else if(spriteNum == 2) {
-				image = down2;
+			else {
+				if(spriteNum == 1) {image = attackdown1;}
+				if(spriteNum == 2) {image = attackdown2;}
 			}
 			break;
+			
 		case "left":
-			if (playersteht) {
-				image = left;
+			if (!attacking) {
+				if (playersteht) {image = left;}
+				else if(spriteNum == 1) {image = left1;}
+				else if(spriteNum == 2) {image = left2;}
 			}
-			else if(spriteNum == 1) {
-				image = left1;
-			}
-			else if(spriteNum == 2) {
-				image = left2;
+			else {
+				tempCamX = camX - gl.unitsize;
+				if(spriteNum == 1) {image = attackleft1;}
+				if(spriteNum == 2) {image = attackleft2;}
 			}
 			break;
+			
 		case "right":
-			if (playersteht) {
-				 image = right;
+			if (!attacking) {
+				if (playersteht) {image = right;}
+				else if(spriteNum == 1) {image = right1;}
+				else if(spriteNum == 2) {image = right2;}
 			}
-			else if(spriteNum == 1) {
-				image = right1;
-			}
-			else if(spriteNum == 2) {
-				image = right2;
+			else {
+				if(spriteNum == 1) {image = attackright1;}
+				if(spriteNum == 2) {image = attackright2;}
 			}
 			break;
-		
 		}
 		
-		g2.drawImage(image, camX, camY, gl.unitsize, gl.unitsize, null);
+		g2.drawImage(image, tempCamX, tempCamY, null);
 		
 	}
 	

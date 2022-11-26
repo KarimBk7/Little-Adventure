@@ -237,7 +237,7 @@ public class UI {
 			
 		}
 		
-		//TODO punkte und respawn button
+		//TODO punkte anzeigen
 	}
 
 	private void drawProlog(Graphics2D g2) {

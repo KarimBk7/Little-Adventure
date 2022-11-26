@@ -43,9 +43,7 @@ public class Npc extends Unit{
 	public void getNpcpng() {
 		
 		try {
-			
 			image = ImageIO.read(getClass().getResourceAsStream("/npc/brandon.png"));
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,6 +51,5 @@ public class Npc extends Unit{
 	
 	public void speak() {
 		gl.ui.currentDialog = dialog[dialogIndex];
-		
 	}
 }

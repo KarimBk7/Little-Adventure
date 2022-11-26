@@ -18,7 +18,7 @@ public class Unit {
 	
 	//Attribute für Image
 	public BufferedImage image, up, up1, up2, down, down1, down2, left, left1, left2, right, right1, right2;
-	public BufferedImage attackup, attackdown, attackleft, attackright;
+	public BufferedImage attackup1, attackup2, attackdown1, attackdown2, attackleft1, attackleft2, attackright1, attackright2;
 	public String richtung, laufen;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
