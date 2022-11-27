@@ -88,10 +88,16 @@ public class ObjektSetter {
 		
 		//pier am see
 		gl.obj[14] = new Objekt("pier",55 * gl.unitsize, 31 * gl.unitsize);
+		
+		gl.obj[15] = new ClosedDoor(gl);
+		gl.obj[15].posX = 17 * gl.unitsize;
+		gl.obj[15].posY = 24 * gl.unitsize;
+		gl.obj[15].name = "zaun";
 		try {
 			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
 			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
 			gl.obj[14].image = ImageIO.read(getClass().getResourceAsStream("/objekt/pier.png"));
+			gl.obj[15].image = ImageIO.read(getClass().getResourceAsStream("/objekt/zauntuer.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

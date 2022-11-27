@@ -29,7 +29,8 @@ public class Player extends Unit{
 	public int amountKey = 0;
 	public int amountApfel = 0;
 	public int schmiedquest = 0;
-	public boolean hatSchaufel, hatSpitzhacke = false;
+	public boolean hatSchaufel = false;
+	public boolean hatSpitzhacke = false;
 	public int itDollar = 0; 
 	public int itDollargesamt = 0;
 	public int healing_potion = 0;
@@ -107,6 +108,7 @@ public class Player extends Unit{
 		if (health < 1) {
 			//gl.stopMusik();
 			gl.soundEffekt(5);
+			gl.ui.befehl = 0;
 			gl.gameState = gl.losestate;
 		}
 		
@@ -126,7 +128,7 @@ public class Player extends Unit{
 			attacking();
 		}
 		else if (keyI.ePressed) {
-			if (health < maxHealth ) {
+			if (health < maxHealth && poison == false && healing_potion > 0) {
 				health++;
 				healing_potion--;
 				gl.soundEffekt(7);
@@ -241,10 +243,10 @@ public class Player extends Unit{
 		
 		spriteCounter++;
 		
-		if (spriteCounter <= 5) {
+		if (spriteCounter <= 15) {
 			spriteNum = 1;
 		}
-		if (spriteCounter  > 5 && spriteCounter <= 25) {
+		if (spriteCounter  > 15 && spriteCounter <= 40) {
 			spriteNum = 2;
 			
 			//sichert spielers position & hitbox
@@ -365,7 +367,16 @@ public class Player extends Unit{
 					amountApfel++;
 				}
 				break;
-				
+			
+			case "zaun":
+				if (keyI.enterPressed == true) {
+					try {
+						gl.obj[i].image = ImageIO.read(getClass().getResourceAsStream("/Objekt/zaunopen.png"));
+						gl.obj[i].isCollision = false;
+					} catch (Exception e) {
+					}
+				}
+				break;
 			//Tür öffnen	
 			case "closeddoor":
 				if (keyI.enterPressed == true) {

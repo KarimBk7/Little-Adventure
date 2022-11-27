@@ -35,7 +35,7 @@ public class Objekt {
 		if (obj[i].name == "house" && i != 9) {
 			g2.drawImage(image, scX, scY,gl.buildingsize, gl.buildingsize, null);
 		}
-		else if(obj[i].name == "closeddoor") {
+		else if(obj[i].name == "closeddoor" || obj[i].name == "zaun") {
 			g2.drawImage(image, scX, scY,gl.unitsize * 2, gl.unitsize * 2, null);
 		}
 		else if(obj[i].name == "dach") {

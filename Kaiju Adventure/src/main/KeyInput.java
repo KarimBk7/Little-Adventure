@@ -106,7 +106,7 @@ public class KeyInput implements KeyListener {
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
-				//gl.playMusik(0);
+				//TODO gl.playMusik(0);
 			}
 		}
 		
@@ -208,7 +208,7 @@ public class KeyInput implements KeyListener {
 				}
 				if (gl.ui.befehl == 3) {
 					if (spitzhacke > 0) {
-						gl.player.hatSchaufel = true;
+						gl.player.hatSpitzhacke = true;
 						gl.soundEffekt(7);
 						spitzhacke--;
 					}
@@ -242,7 +242,7 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) { 
 				if (gl.ui.befehl == 0) {
 					gl.gameState = gl.playState;
-					gl.resumeMusik(0);
+					//TODO gl.resumeMusik(0);
 				}
 				else if(gl.ui.befehl == 1) {
 					gl.gameState = gl.titlestate;
