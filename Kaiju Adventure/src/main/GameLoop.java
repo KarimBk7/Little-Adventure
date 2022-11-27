@@ -144,7 +144,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setMonster();
 		oSetter.setCounter();
 		
-		gameState = shopState;
+		gameState = titlestate;
 	}
 	
 	public void paintComponent(Graphics g) {
