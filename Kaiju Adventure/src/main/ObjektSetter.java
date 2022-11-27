@@ -159,5 +159,9 @@ public class ObjektSetter {
 		//poisoncounter
 		gl.counter[3] = new Counter();
 		gl.counter[3].setCountermax(300);
+		
+		//monster immunity counter
+		gl.counter[4] = new Counter();
+		gl.counter[4].setCountermax(60);
 	}
  }

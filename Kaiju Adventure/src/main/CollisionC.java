@@ -135,9 +135,7 @@ public class CollisionC {
 	}
 
 	//collision für monster
-	public int checkUnit(Unit unit, Unit[] target) {
-
-		
+	public int checkUnit(Unit unit, Unit[] target) {	
 	
 	int index = 99;
 	

@@ -1,5 +1,6 @@
 package unit;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -20,16 +21,17 @@ public class Player extends Unit{
 	boolean playersteht = true;
 	
 	//attack
-	public Rectangle attackhitbox = new Rectangle(8, 8, 40, 32);
+	public Rectangle attackhitbox = new Rectangle(0, 8, 48, 32);
 	boolean attacking = false;
 	
 	//inventar
 	public int amountKey = 0;
 	public int amountApfel = 0;
 	public boolean hatSchaufel = false;
+	public int experience = 0;
 	
 	//statuseffekte
-	public boolean immunity, slowness, poison = false;
+	public boolean slowness, poison = false;
 	int immunityCounter = 0;
 
 	
@@ -265,9 +267,17 @@ public class Player extends Unit{
 	}
 
 	private void damageMonster(int i) {
+		
 		if (i != 99) {
-			gl.monster[i].health--;
-		}	
+			if (gl.monster[i].immunity == false) {
+				gl.monster[i].health--;
+				gl.monster[i].immunity = true;
+				if (gl.monster[i].health < 1) {
+					gl.monster[i] = null;
+					experience += 100;
+				}
+			}	
+		}
 	}
 
 	//interargieren mit objekten
@@ -485,7 +495,13 @@ public class Player extends Unit{
 			break;
 		}
 		
+		if (immunity) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+		}
+		
 		g2.drawImage(image, tempCamX, tempCamY, null);
+		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 	}
 	

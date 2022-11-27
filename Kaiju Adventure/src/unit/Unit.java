@@ -1,5 +1,6 @@
 package unit;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -31,7 +32,7 @@ public class Unit {
 	//Attribute für ingame-wert
 	public int maxHealth;
 	public int health;
-	public boolean losthealth, gethealth = false;
+	public boolean losthealth, gethealth, immunity = false;
 	
 	public Unit(GameLoop gl) {
 		this.gl = gl;
@@ -43,8 +44,11 @@ public class Unit {
 		int scX = posX - gl.player.posX + gl.player.camX;
 		int scY = posY - gl.player.posY + gl.player.camY;
 		
-		
+		if (immunity) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+		}
 		g2.drawImage(image, scX, scY,gl.unitsize, gl.unitsize, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 	}
 
 	public void setAction() {}

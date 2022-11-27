@@ -84,39 +84,32 @@ public class Monster_Snake extends Unit{
 		
 		switch(richtung) {
 		case "up":
+			if(spriteNum == 1) {image = up1;}
+			else if(spriteNum == 2) {image = up2;}
+			break;
 			
-			if(spriteNum == 1) {
-				image = up1;
-			}
-			else if(spriteNum == 2) {
-				image = up2;
-			}
-			break;
 		case "down":
-			if(spriteNum == 1) {
-				image = down1;
-			}
-			else if(spriteNum == 2) {
-				image = down2;
-			}
+			if(spriteNum == 1) {image = down1;}
+			else if(spriteNum == 2) {image = down2;}
 			break;
+			
 		case "left":
-			if(spriteNum == 1) {
-				image = left1;
-			}
-			else if(spriteNum == 2) {
-				image = left2;
-			}
+			if(spriteNum == 1) {image = left1;}
+			else if(spriteNum == 2) {image = left2;}
 			break;
-		case "right":	
-			if(spriteNum == 1) {
-				image = right1;
-			}
-			else if(spriteNum == 2) {
-				image = right2;
-			}
+			
+		case "right":
+			if(spriteNum == 1) {image = right1;}
+			else if(spriteNum == 2) {image = right2;}
 			break;
+		}
 		
+		if (this.immunity) {
+			gl.counter[4].count();
+		}
+		if (gl.counter[4].isDone()) {
+			gl.counter[4].resetCount();
+		this.immunity = false;
 		}
 	}
 }
