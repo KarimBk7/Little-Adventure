@@ -322,9 +322,9 @@ public class UI {
 		if (gl.player.gethealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 			g2.setColor(Color.white);
-			g2.drawString("+1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 28);
+			g2.drawString("+1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 38);
 			g2.setColor(Color.cyan);
-			g2.drawString("+1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 30);
+			g2.drawString("+1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 40);
 			gl.counter[0].count();
 		}
 		if (gl.counter[0].isDone()) {

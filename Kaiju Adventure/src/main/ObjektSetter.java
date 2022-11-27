@@ -187,5 +187,6 @@ public class ObjektSetter {
 		//kein geld
 		gl.counter[6] = new Counter();
 		gl.counter[6].setCountermax(90);
+		
 	}
  }

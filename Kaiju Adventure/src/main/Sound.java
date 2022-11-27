@@ -10,7 +10,7 @@ import javax.sound.sampled.FloatControl;
 public class Sound {
 
 	Clip clip;
-	URL soundURL[] = new URL[10];
+	URL soundURL[] = new URL[15];
 	long clipTime;
 	
 	public Sound() {
@@ -24,6 +24,7 @@ public class Sound {
 		soundURL[7] = getClass().getResource("/sound/upgrade.wav");
 		soundURL[8] = getClass().getResource("/sound/ausverkauft.wav");
 		soundURL[9] = getClass().getResource("/sound/open.wav");
+		soundURL[10] = getClass().getResource("/sound/block.wav");
 	}
 	
 	public void setFile(int i) {

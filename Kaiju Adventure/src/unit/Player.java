@@ -104,7 +104,6 @@ public class Player extends Unit{
 	
 	public void update ()  {
 		
-		
 		if (health < 1) {
 			//gl.stopMusik();
 			gl.soundEffekt(5);
@@ -126,7 +125,18 @@ public class Player extends Unit{
 		if (attacking) {
 			attacking();
 		}
-		
+		else if (keyI.ePressed) {
+			if (health < maxHealth ) {
+				health++;
+				healing_potion--;
+				gl.soundEffekt(7);
+				gethealth = true;
+			}
+			else {
+				gl.soundEffekt(10);
+			}
+			keyI.ePressed = false;
+		}
 		else if(keyI.upPressed == true || keyI.downPressed == true || 
 				keyI.leftPressed == true || keyI.rightPressed == true) {
 			playersteht = false;
@@ -424,27 +434,27 @@ public class Player extends Unit{
 					}
 					break;
 				case "haendler":
-						if (schmiedquest < 1) {
-							gl.gameState = gl.dialogState;
-							gl.npc[i].speak();
-						}
-						if (schmiedquest > 1 && gl.npc[i].dialogIndex == 7) {
-							gl.npc[i].dialogIndex++;
-							gl.gameState = gl.dialogState;
-							gl.npc[i].speak();
-							gl.npc[i].dialogIndex++;
-						}
-						else if (schmiedquest > 1 && gl.npc[i].dialogIndex == 9) {
-							gl.gameState = gl.dialogState;
-							gl.npc[i].speak();
-							gl.npc[i].dialogIndex++;
-						}
-						else if (schmiedquest > 1) {
-							gl.gameState = gl.dialogState;
-							gl.npc[i].speak();
-							gl.gameState = gl.shopState;
-						}
-					
+					if (schmiedquest < 1) {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+					}
+					if (schmiedquest > 1 && gl.npc[i].dialogIndex == 7) {
+						gl.npc[i].dialogIndex++;
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex++;
+					}
+					else if (schmiedquest > 1 && gl.npc[i].dialogIndex == 9) {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.npc[i].dialogIndex++;
+					}
+					else if (schmiedquest > 1) {
+						gl.gameState = gl.dialogState;
+						gl.npc[i].speak();
+						gl.ui.befehl = 0;
+						gl.gameState = gl.shopState;
+					}
 					break;
 				}
 			}

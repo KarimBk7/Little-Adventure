@@ -6,8 +6,8 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener {
 	
 	GameLoop gl;
-	public boolean upPressed, downPressed, leftPressed, rightPressed,
-	jPressed, kPressed, iPressed, pausePressed, enterPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed,
+	pausePressed, enterPressed;
 	
 	//shop
 	public int speed = 1;
@@ -124,11 +124,8 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_D) {
 				rightPressed = true;
 			}
-			if (eingabe == KeyEvent.VK_J) {
-				jPressed = true;
-			}
-			if (eingabe == KeyEvent.VK_K) {
-				kPressed = true;
+			if (eingabe == KeyEvent.VK_E) {
+				ePressed = true;
 			}
 			if (eingabe == KeyEvent.VK_P) {
 					gl.gameState = gl.pauseState;
@@ -279,11 +276,8 @@ public class KeyInput implements KeyListener {
 		if (eingabe == KeyEvent.VK_D) {
 			rightPressed = false;
 		}
-		if (eingabe == KeyEvent.VK_J) {
-			jPressed = false;
-		}
-		if (eingabe == KeyEvent.VK_K) {
-			kPressed = false;
+		if (eingabe == KeyEvent.VK_E) {
+			ePressed = false;
 		}
 		if (eingabe == KeyEvent.VK_P) {
 			pausePressed = false;
