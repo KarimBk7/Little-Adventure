@@ -18,6 +18,7 @@ public class Player extends Unit{
 
 	public int camX, camY;
 	public int defaultspeed;
+	public int strenght;
 	boolean playersteht = true;
 	
 	//attack
@@ -27,8 +28,11 @@ public class Player extends Unit{
 	//inventar
 	public int amountKey = 0;
 	public int amountApfel = 0;
-	public boolean hatSchaufel = false;
-	public int experience = 0;
+	public int schmiedquest = 0;
+	public boolean hatSchaufel, hatSpitzhacke = false;
+	public int itDollar = 0; 
+	public int itDollargesamt = 0;
+	public int healing_potion = 0;
 	
 	//statuseffekte
 	public boolean slowness, poison = false;
@@ -61,6 +65,7 @@ public class Player extends Unit{
 		//Spieler- & Animationsgeschwindigkeit
 		defaultspeed = 10;
 		speed = defaultspeed; 
+		strenght = 1;
 		richtung = "down";
 		animationspeed = 16;
 		
@@ -101,6 +106,8 @@ public class Player extends Unit{
 		
 		
 		if (health < 1) {
+			//gl.stopMusik();
+			gl.soundEffekt(5);
 			gl.gameState = gl.losestate;
 		}
 		
@@ -240,8 +247,8 @@ public class Player extends Unit{
 			switch (richtung) {
 			case "up": posY -= attackhitbox.height;break;
 			case "down": posY += attackhitbox.height;break;
-			case "left": posX -= attackhitbox.width;
-			case "right": posX += attackhitbox.width;				
+			case "left": posX -= attackhitbox.width;break;
+			case "right": posX += attackhitbox.width;break;		
 			}
 			
 			//ersetz hitbox mit attackhitbox
@@ -270,11 +277,18 @@ public class Player extends Unit{
 		
 		if (i != 99) {
 			if (gl.monster[i].immunity == false) {
-				gl.monster[i].health--;
+				gl.monster[i].health -= strenght;
 				gl.monster[i].immunity = true;
+				gl.soundEffekt(3);
 				if (gl.monster[i].health < 1) {
+					if (i == 3 || i == 4) {
+						schmiedquest++;
+					}
 					gl.monster[i] = null;
-					experience += 100;
+					itDollar += 100;
+					itDollargesamt += 100;;
+					gl.soundEffekt(2);
+					mosterKilled = true;
 				}
 			}	
 		}
@@ -409,6 +423,29 @@ public class Player extends Unit{
 						gl.npc[i].dialogIndex = 4;
 					}
 					break;
+				case "haendler":
+						if (schmiedquest < 1) {
+							gl.gameState = gl.dialogState;
+							gl.npc[i].speak();
+						}
+						if (schmiedquest > 1 && gl.npc[i].dialogIndex == 7) {
+							gl.npc[i].dialogIndex++;
+							gl.gameState = gl.dialogState;
+							gl.npc[i].speak();
+							gl.npc[i].dialogIndex++;
+						}
+						else if (schmiedquest > 1 && gl.npc[i].dialogIndex == 9) {
+							gl.gameState = gl.dialogState;
+							gl.npc[i].speak();
+							gl.npc[i].dialogIndex++;
+						}
+						else if (schmiedquest > 1) {
+							gl.gameState = gl.dialogState;
+							gl.npc[i].speak();
+							gl.gameState = gl.shopState;
+						}
+					
+					break;
 				}
 			}
 			keyI.enterPressed = false;
@@ -433,6 +470,7 @@ public class Player extends Unit{
 					losthealth = true;
 					break;
 			}
+			gl.soundEffekt(4);
 		}
 	}
 	

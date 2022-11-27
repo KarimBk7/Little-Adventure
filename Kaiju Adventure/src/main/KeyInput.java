@@ -2,13 +2,17 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Iterator;
 
 public class KeyInput implements KeyListener {
 	
 	GameLoop gl;
 	public boolean upPressed, downPressed, leftPressed, rightPressed,
 	jPressed, kPressed, iPressed, pausePressed, enterPressed;
+	
+	//shop
+	public int speed = 1;
+	public int strenght = 1;
+	public int spitzhacke = 1;
 
 	public KeyInput(GameLoop gl) {
 		this.gl = gl;
@@ -31,12 +35,14 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl < 0) {
 					gl.ui.befehl = 2;
 				}
+				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_S) {
 				gl.ui.befehl++;
 				if (gl.ui.befehl > 2) {
 					gl.ui.befehl = 0;
 				}
+				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -47,7 +53,9 @@ public class KeyInput implements KeyListener {
 						gl.ui.prologabgespielt = true;
 					}
 					else {
+						enterPressed = false;
 						gl.gameState = gl.playState;
+						//gl.playMusik(0);
 					}
 				}
 				//Lade Spiel
@@ -61,6 +69,7 @@ public class KeyInput implements KeyListener {
 			}
 		}
 		
+		//losebildschirm
 		else if(gl.gameState == gl.losestate) {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
@@ -97,6 +106,7 @@ public class KeyInput implements KeyListener {
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
+				//gl.playMusik(0);
 			}
 		}
 		
@@ -122,9 +132,97 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_P) {
 					gl.gameState = gl.pauseState;
+					gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
+			}
+		}
+		
+		//Shopbildschirm
+		else if(gl.gameState == gl.shopState) {
+			if (eingabe == KeyEvent.VK_A) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 3;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_D) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 3) {
+					gl.ui.befehl = 0;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl = 0;
+				
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl = 4;
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				if (gl.ui.befehl == 0) {
+					if (gl.player.itDollar > 99) {
+					gl.player.healing_potion++;
+					gl.soundEffekt(7);
+					gl.player.itDollar -= 100;
+					}
+					else {
+						gl.ui.keinGeld = true;
+						gl.soundEffekt(8);
+					}
+				}
+				if (gl.ui.befehl == 1) {
+					if (gl.player.itDollar > 99 && strenght > 0) {
+						gl.player.strenght++;
+						gl.soundEffekt(7);
+						strenght--;
+						gl.player.itDollar -= 100;
+					}
+					else if(strenght < 1){
+						gl.ui.ausverkauft = true;
+						gl.soundEffekt(8);
+					}
+					else if (gl.player.itDollar < 100) {
+						gl.ui.keinGeld = true;
+						gl.soundEffekt(8);
+					}
+					
+				}
+				if (gl.ui.befehl == 2) {
+					if (gl.player.itDollar > 99 && speed > 0) {
+						gl.player.speed++;
+						gl.soundEffekt(7);
+						speed--;
+						gl.player.itDollar -= 100;
+					}
+					else if (speed < 1){
+						gl.ui.ausverkauft = true;
+						gl.soundEffekt(8);
+					}
+					else if (gl.player.itDollar < 100) {
+						gl.ui.keinGeld = true;
+						gl.soundEffekt(8);
+					}
+				}
+				if (gl.ui.befehl == 3) {
+					if (spitzhacke > 0) {
+						gl.player.hatSchaufel = true;
+						gl.soundEffekt(7);
+						spitzhacke--;
+					}
+					else if (spitzhacke < 1){
+						gl.ui.ausverkauft = true;
+						gl.soundEffekt(8);
+					}
+				}
+				if (gl.ui.befehl == 4) {
+					gl.gameState = gl.playState;
+				}
 			}
 		}
 		
@@ -135,16 +233,19 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl < 0) {
 					gl.ui.befehl = 1;
 				}
+				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_S) {
 				gl.ui.befehl++;
 				if (gl.ui.befehl > 1) {
 					gl.ui.befehl = 0;
 				}
+				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_ENTER) { 
 				if (gl.ui.befehl == 0) {
 					gl.gameState = gl.playState;
+					gl.resumeMusik(0);
 				}
 				else if(gl.ui.befehl == 1) {
 					gl.gameState = gl.titlestate;
@@ -190,7 +291,5 @@ public class KeyInput implements KeyListener {
 		if (eingabe == KeyEvent.VK_ENTER) {
 			enterPressed = false;
 		}
-
 	}
-
 }

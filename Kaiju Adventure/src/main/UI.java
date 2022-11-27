@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,8 +19,10 @@ public class UI {
 	//Attribute
 	Graphics2D g2;
 	GameLoop gl;
-	Font arial40, arial20;
-	BufferedImage key, apfel, schaufel, herz, herzleer, prologimg, wasd, enter, poison, slowness;
+	Font arial40,arial30, arial20;
+	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, prologimg, wasd, enter, poison, slowness, itdollar,
+				  healing_potion, strenght_potion, speed_potion;
+	
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
 	public boolean messageOn = false;
@@ -28,19 +31,20 @@ public class UI {
 	int counter, countermax;
 	public int befehl = 0;
 	
+	//shop
+	public boolean ausverkauft, keinGeld = false;
+	
 	//Konstruktor
 	public UI(GameLoop gl) {
 		this.gl = gl;
 		arial40 = new Font("Arial", Font.PLAIN, 40);
+		arial30 = new Font("Arial", Font.PLAIN, 30);
 		arial20 = new Font("Arial", Font.PLAIN, 20);
 		Key key = new Key();
 		this.key = key.image;
 		
 		Apfel apfel = new Apfel();
 		this.apfel = apfel.image;
-		
-		Schaufel schaufel = new Schaufel();
-		this.schaufel = schaufel.image;
 		
 		Heart heart = new Heart(gl);
 		herz = heart.image;
@@ -51,6 +55,12 @@ public class UI {
 			wasd = ImageIO.read(getClass().getResourceAsStream("/steuerung/wasd.png"));
 			enter = ImageIO.read(getClass().getResourceAsStream("/steuerung/enter.png"));
 			poison = ImageIO.read(getClass().getResourceAsStream("/effekt/poison.png"));
+			itdollar = ImageIO.read(getClass().getResourceAsStream("/objekt/itdollar.png"));
+			healing_potion = ImageIO.read(getClass().getResourceAsStream("/effekt/healing_potion.png"));
+			strenght_potion = ImageIO.read(getClass().getResourceAsStream("/effekt/strenght_potion.png"));
+			speed_potion = ImageIO.read(getClass().getResourceAsStream("/effekt/speed_potion.png"));
+			schaufel = ImageIO.read(getClass().getResourceAsStream("/objekt/schaufel.png"));
+			spitzhacke = ImageIO.read(getClass().getResourceAsStream("/objekt/spitzhacke.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -99,6 +109,13 @@ public class UI {
 					g2.drawImage(schaufel, 25, 85, gl.unitsize, gl.unitsize, null);
 				}
 				
+				//it-dollar anzeigen
+				g2.setColor(Color.black);
+				g2.drawString(gl.player.itDollar + "$", gl.unitsize * 14 -10+ 3, 68);
+				g2.setColor(Color.white);
+				g2.drawImage(itdollar, gl.unitsize * 13 - 20, gl.unitsize - 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString(gl.player.itDollar + "$", gl.unitsize * 14 - 10, 65);
+				
 				lostHealth(g2);
 				getHealth(g2);
 				drawPlayerHealth(g2);
@@ -133,6 +150,10 @@ public class UI {
 				drawWinscreen(g2);
 			}
 			
+			else if(gl.gameState == gl.shopState) {
+				drawShop(g2);
+			}
+			
 		}
 		
 		//wenn Titelscreen
@@ -145,6 +166,158 @@ public class UI {
 		}
 	}
 	
+	private void drawShop(Graphics2D g2) {
+		g2.setColor(new Color(0,0,0,200));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		g2.setFont(arial40);
+		
+		//it-dollar
+		g2.setColor(Color.black);
+		g2.drawString(gl.player.itDollar + "$", gl.unitsize * 14 -10+ 3, 68);
+		g2.setColor(Color.white);
+		g2.drawImage(itdollar, gl.unitsize * 12 - 25, 3, gl.unitsize * 2, gl.unitsize * 2, null);
+		g2.drawString(gl.player.itDollar + "$", gl.unitsize * 14 - 10, 65);
+		
+		//heil_potion
+		int x = gl.unitsize * 3;
+		int y = gl.unitsize * 4;
+		if (befehl == 0) {
+			y -= 20;
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawImage(healing_potion, x, y,gl.unitsize * 2, gl.unitsize * 2, null);
+		g2.drawString("100$", x + 3, y + gl.unitsize * 3 + 3);
+		g2.setColor(Color.white);
+		g2.drawString("100$", x, y + gl.unitsize * 3);
+		
+		//strenght_potion
+		x = gl.unitsize * 6;
+		y = gl.unitsize * 4;
+		if (befehl == 1) {
+			y -= 20;
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		if (gl.keyI.strenght < 1) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+		}
+		else {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		}
+		g2.drawImage(strenght_potion, x, y, gl.unitsize * 2, gl.unitsize * 2, null);
+		g2.drawString("100$", x + 3, y + gl.unitsize * 3 + 3);
+		g2.setColor(Color.white);
+		g2.drawString("100$", x, y + gl.unitsize * 3);
+		
+		//speed_potion
+		x = gl.unitsize * 9;
+		y = gl.unitsize * 4;
+		if (befehl == 2) {
+			y -= 20;
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		if (gl.keyI.speed < 1) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+		}
+		else {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		}
+		g2.drawImage(speed_potion, x, y, gl.unitsize * 2, gl.unitsize * 2, null);
+		g2.drawString("100$", x + 3, y + gl.unitsize * 3 + 3);
+		g2.setColor(Color.white);
+		g2.drawString("100$", x, y + gl.unitsize * 3);
+		
+		//spitzhacke
+		x = gl.unitsize * 12;
+		y = gl.unitsize * 4;
+		if (befehl == 3) {
+			y -= 20;
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		if (gl.keyI.spitzhacke < 1) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+		}
+		else {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		}
+		g2.drawImage(spitzhacke, x, y, gl.unitsize * 2, gl.unitsize * 2, null);
+		g2.drawString("Gratis", x + 3, y + gl.unitsize * 3 + 3);
+		g2.setColor(Color.white);
+		g2.drawString("Gratis", x, y + gl.unitsize * 3);
+		
+		//verlassen-button
+		x = gl.unitsize * 6;
+		y = gl.unitsize * 11;
+		
+		if (befehl == 4) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		g2.drawString("Verlassen", x + 3, y + 3);
+		g2.setColor(Color.white);
+		g2.drawString("Verlassen", x, y);
+		if (befehl == 4) {
+			x -= 40; 
+			g2.setColor(Color.gray);
+			g2.drawString(">", x + 3, y + 3);
+			g2.setColor(Color.white);
+			g2.drawString(">", x, y);
+		}
+		
+		//ausverkauft & nicht genug it-dollar anzeige
+		g2.setFont(arial20);
+		
+		x = gl.unitsize * 7 - 10;
+		y = gl.unitsize * 9;
+		if (ausverkauft) {
+			g2.setColor(Color.white);
+			g2.drawString("Ausverkauft", x + 1, y + 1);
+			g2.setColor(new Color(200,50,50));
+			g2.drawString("Ausverkauft", x, y);
+		}
+		
+		if (ausverkauft) {
+			gl.counter[5].count();
+		}
+		if (gl.counter[5].isDone()) {
+			gl.counter[5].resetCount();
+			ausverkauft = false;
+			
+		}
+		
+		x = gl.unitsize * 6;
+		y = gl.unitsize * 8;
+		if (keinGeld) {
+			g2.setColor(Color.white);
+			g2.drawString("Nicht genug IT-Dollar", x + 1, y + 1);
+			g2.setColor(new Color(200,50,50));
+			g2.drawString("Nicht genug IT-Dollar", x, y);
+		}
+		
+		if (keinGeld) {
+			gl.counter[6].count();
+		}
+		if (gl.counter[6].isDone()) {
+			gl.counter[6].resetCount();
+			keinGeld = false;
+			
+		}
+	}
+
 	private void getHealth(Graphics2D g2) {
 		if (gl.player.gethealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
@@ -173,7 +346,6 @@ public class UI {
 			gl.player.losthealth = false;
 			gl.counter[1].resetCount();
 		}
-		
 	}
 
 	private void drawWinscreen(Graphics2D g2) {
@@ -211,7 +383,6 @@ public class UI {
 			g2.drawString(text, x + 3, y + 3);
 			g2.setColor(Color.white);
 			g2.drawString(text, x, y);
-			
 		}
 		
 		//Lade Spiel
@@ -234,7 +405,6 @@ public class UI {
 			g2.drawString(text, x + 3, y + 3);
 			g2.setColor(Color.white);
 			g2.drawString(text, x, y);
-			
 		}
 		
 		//TODO punkte anzeigen
@@ -274,8 +444,7 @@ public class UI {
 			y+=30;
 		}
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
-		g2.drawString("press ENTER", 550, 500);
-		
+		g2.drawString("press ENTER", 550, 500);	
 	}
 
 	private void drawPlayerHealth(Graphics2D g2) {
@@ -298,6 +467,15 @@ public class UI {
 			
 		}
 		
+		//draw healing-potion anzahl
+		g2.setFont(arial30);
+		g2.drawImage(healing_potion, gl.unitsize - 25, gl.unitsize * 8 + 20, 32, 32, null);
+		g2.setColor(Color.black);
+		g2.drawString("x " + gl.player.healing_potion, gl.unitsize + 17, gl.unitsize * 9 + 2);
+		g2.setColor(Color.white);
+		g2.drawString("x " + gl.player.healing_potion, gl.unitsize + 15, gl.unitsize * 9);
+		
+		//draw poison status
 		if (gl.player.poison) {
 			g2.drawImage(poison, gl.unitsize * 3 + 30, gl.unitsize * 10 + 30, gl.unitsize / 2, gl.unitsize / 2, null);
 			gl.counter[3].count();

@@ -120,6 +120,12 @@ public class ObjektSetter {
 		gl.npc[2].dialogIndex = 4;
 		gl.npc[2].name = "momo";
 		
+		gl.npc[3] =  new Npc(gl);	
+		gl.npc[3].posX = 17 * gl.unitsize;
+		gl.npc[3].posY = 18 * gl.unitsize + 20;
+		gl.npc[3].dialogIndex = 7;
+		gl.npc[3].name = "haendler";
+		
 		try {
 			gl.npc[1].image = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
 			gl.npc[2].image = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
@@ -143,6 +149,16 @@ public class ObjektSetter {
 		gl.monster[2].posY = 60 * gl.unitsize;
 		
 		
+		//monster am schmied
+		gl.monster[3] = new Monster_Snake(gl);
+		gl.monster[3].posX = 13 * gl.unitsize;
+		gl.monster[3].posY = 20 * gl.unitsize;
+		
+		gl.monster[4] = new Monster_Snake(gl);
+		gl.monster[4].posX = 18 * gl.unitsize;
+		gl.monster[4].posY = 20 * gl.unitsize;
+		
+		
 	}
 	
 	public void setCounter() {
@@ -163,5 +179,13 @@ public class ObjektSetter {
 		//monster immunity counter
 		gl.counter[4] = new Counter();
 		gl.counter[4].setCountermax(60);
+		
+		//ausverkauf
+		gl.counter[5] = new Counter();
+		gl.counter[5].setCountermax(90);
+		
+		//kein geld
+		gl.counter[6] = new Counter();
+		gl.counter[6].setCountermax(90);
 	}
  }

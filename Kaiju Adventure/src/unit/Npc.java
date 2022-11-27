@@ -32,12 +32,14 @@ public class Npc extends Unit{
 		dialog[5] = "Was wenn ich alleine machen will?";
 		dialog[6] = "*ich glaub er ist paranoid*";
 		
-		//Schmied
+		//haendler
 		dialog[7] = "Hilf mir diese Monster zu vertreiben!!!";
 		dialog[8] = "Ich danke dir reisender.\nIch hab schon befuerchtet das dies mein Ende sei\n"
 					+ "Ich wollte eigentlich nur im Wald etwas \nHolz hacken";
-		dialog[9] = "Falls es irgendwas gibt was ich fuer dich tun kann, \ndann sag es mir. \nIch moechte mich"
-					+ "revanchieren. Ich bin ein schmied, weist du?";
+		dialog[9] = "Als dank eroeffne ich meinen Laden etwas frueher heute. \n"
+					+ "Erwarte aber bloss keinen Rabatt nur weil du mich \ngerettet hast. "
+					+ "Immerhin herrscht \nInflation wegen Herr Tenbusch.";
+		dialog[10] = "Was kann ich für dich tun?";
 	}
 
 	public void getNpcpng() {

@@ -144,9 +144,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setMonster();
 		oSetter.setCounter();
 		
-		
-		gameState = titlestate;
-		
+		gameState = shopState;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -204,7 +202,7 @@ public class GameLoop extends JPanel implements Runnable {
 	//stoppt audio
 	public void stopMusik() {
 		
-		sound.stop();
+		sound.pause();
 	}
 	
 	//startet audio
@@ -212,5 +210,12 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		sound.setFile(i);
 		sound.play();
+	}
+	
+	public void resumeMusik(int i) {
+		sound.setFile(i);
+		sound.resume();
+		sound.loop();
+		
 	}
 }

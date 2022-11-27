@@ -219,6 +219,7 @@ public class CollisionC {
 						if (unit.name == "snake") {
 							gl.player.poison = true;
 						}
+						gl.soundEffekt(4);
 					}
 			}
 			break;
@@ -233,6 +234,7 @@ public class CollisionC {
 						if (unit.name == "snake") {
 							gl.player.poison = true;
 						}
+						gl.soundEffekt(4);
 					}
 			}
 			break;
@@ -247,6 +249,7 @@ public class CollisionC {
 						if (unit.name == "snake") {
 							gl.player.poison = true;
 						}
+						gl.soundEffekt(4);
 					}
 			}
 			break;
@@ -261,6 +264,7 @@ public class CollisionC {
 						if (unit.name == "snake") {
 							gl.player.poison = true;
 						}
+						gl.soundEffekt(4);
 					}
 			}
 			break;

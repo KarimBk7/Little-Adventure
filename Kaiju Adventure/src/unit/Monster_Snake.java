@@ -16,7 +16,7 @@ public class Monster_Snake extends Unit{
 		
 		name = "snake";
 		richtung = "down";
-		speed = 2;
+		speed = 1;
 		maxHealth = 4;
 		health = maxHealth;
 		isCollision = true;
