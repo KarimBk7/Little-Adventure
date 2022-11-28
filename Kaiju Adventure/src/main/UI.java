@@ -108,6 +108,9 @@ public class UI {
 				if (gl.player.hatSchaufel == true) {
 					g2.drawImage(schaufel, 25, 85, gl.unitsize, gl.unitsize, null);
 				}
+				if (gl.player.hatSpitzhacke == true) {
+					g2.drawImage(spitzhacke, 25, 135, gl.unitsize, gl.unitsize, null);
+				}
 				
 				//it-dollar anzeigen
 				g2.setColor(Color.black);

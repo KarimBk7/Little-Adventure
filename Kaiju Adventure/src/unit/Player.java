@@ -3,7 +3,6 @@ package unit;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -64,7 +63,7 @@ public class Player extends Unit{
 		posY = 62 * gl.unitsize; 
 		
 		//Spieler- & Animationsgeschwindigkeit
-		defaultspeed = 10;
+		defaultspeed = 5;
 		speed = defaultspeed; 
 		strenght = 1;
 		richtung = "down";
@@ -76,7 +75,7 @@ public class Player extends Unit{
 	}
 	
 	public void getPlayerpng() {
-		ScaleTool sTool = new ScaleTool();
+			ScaleTool sTool = new ScaleTool();
 			//movement bilder
 			up = sTool.setupImage("pl_up", gl.unitsize, gl.unitsize);
 			up1 = sTool.setupImage("pl_up1", gl.unitsize, gl.unitsize);
@@ -105,6 +104,7 @@ public class Player extends Unit{
 	
 	public void update ()  {
 		
+		//wenn spiler kein leben mehr hat
 		if (health < 1) {
 			//gl.stopMusik();
 			gl.soundEffekt(5);
@@ -116,6 +116,7 @@ public class Player extends Unit{
 		int objindex;
 		int monsterindex;
 		
+		//immunity
 		if (immunity) {
 			 gl.counter[2].count();
 		}
@@ -123,6 +124,7 @@ public class Player extends Unit{
 			gl.counter[2].resetCount();
 			immunity = false;
 		}
+		
 		
 		if (attacking) {
 			attacking();
@@ -560,8 +562,6 @@ public class Player extends Unit{
 		
 		g2.drawImage(image, tempCamX, tempCamY, null);
 		
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));	
 	}
-	
 }

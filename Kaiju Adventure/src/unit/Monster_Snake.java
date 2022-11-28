@@ -20,6 +20,7 @@ public class Monster_Snake extends Unit{
 		maxHealth = 4;
 		health = maxHealth;
 		isCollision = true;
+		animationspeed = 120;
 		
 		hitbox.x = 3;
 		hitbox.y = 8;
@@ -34,14 +35,14 @@ public class Monster_Snake extends Unit{
 	public void getImage() {
 		
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right.png"));
+			up1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_up1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_up2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_down1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_down2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
