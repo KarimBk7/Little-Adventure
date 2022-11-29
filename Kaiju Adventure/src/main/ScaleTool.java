@@ -17,12 +17,12 @@ public class ScaleTool {
 		return scaleImage;
 	}
 	
-	public BufferedImage setupImage(String namepng, int width, int heigh) {
+	public BufferedImage setupImage(String packagename, String namepng, int width, int heigh) {
 		
 		BufferedImage image = null;
 		
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/player/" + namepng + ".png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/" + packagename + "/" + namepng + ".png"));
 			image = scaleImage(image, width, heigh);
 		} catch (Exception e) {
 			// TODO: handle exception

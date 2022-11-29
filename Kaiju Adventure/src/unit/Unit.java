@@ -47,7 +47,7 @@ public class Unit {
 		if (immunity) {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
 		}
-		g2.drawImage(image, scX, scY,gl.unitsize, gl.unitsize, null);
+		g2.drawImage(image, scX, scY, null);
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 	}
 

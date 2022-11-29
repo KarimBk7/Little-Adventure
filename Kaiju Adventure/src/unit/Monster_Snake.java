@@ -1,14 +1,13 @@
 package unit;
 
-import java.io.IOException;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
 import main.GameLoop;
+import main.ScaleTool;
 
 public class Monster_Snake extends Unit{
 	
+	ScaleTool sTool = new ScaleTool();
 	public int actioncounter = 0;
 
 	public Monster_Snake(GameLoop gl) {
@@ -33,19 +32,14 @@ public class Monster_Snake extends Unit{
 	}
 	
 	public void getImage() {
-		
-		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_up1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_up2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_down1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_down2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_left2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/monster/snake_right2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			up1 = sTool.setupImage("monster", "snake_up1", gl.unitsize, gl.unitsize);
+			up2 = sTool.setupImage("monster", "snake_up2", gl.unitsize, gl.unitsize);
+			down1 = sTool.setupImage("monster", "snake_down1", gl.unitsize, gl.unitsize);
+			down2 = sTool.setupImage("monster", "snake_down2", gl.unitsize, gl.unitsize);
+			left1 = sTool.setupImage("monster", "snake_left1", gl.unitsize, gl.unitsize);
+			left2 = sTool.setupImage("monster", "snake_left2", gl.unitsize, gl.unitsize);
+			right1 = sTool.setupImage("monster", "snake_right1", gl.unitsize, gl.unitsize);
+			right2 = sTool.setupImage("monster", "snake_right2", gl.unitsize, gl.unitsize);
 	}
 
 	public void setAction() {

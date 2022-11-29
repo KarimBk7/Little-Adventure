@@ -1,18 +1,14 @@
 package objekt;
 
-import javax.imageio.ImageIO;
-
 import main.GameLoop;
+import main.ScaleTool;
 
 public class Grabstein extends Objekt{
 
-	public Grabstein() {
+	ScaleTool sTool = new ScaleTool();
+	public Grabstein(GameLoop gl) {
 		name = "Grabstein";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/Objekt/grabstein.png"));
-		} catch (Exception e) {
-			
-		}
+		image = sTool.setupImage("objekt", "grabstein", gl.unitsize, gl.unitsize * 2);
 		hitbox.height = 96;
 		isCollision = true;
 	}

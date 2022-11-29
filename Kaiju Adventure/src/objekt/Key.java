@@ -1,15 +1,13 @@
 package objekt;
 
-import javax.imageio.ImageIO;
+import main.GameLoop;
+import main.ScaleTool;
 
 public class Key extends Objekt{
 
-	public Key () {
+	ScaleTool sTool = new ScaleTool();
+	public Key (GameLoop gl) {
 		name = "Key";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objekt/key.png"));
-		} catch (Exception e) {
-			
-		}
+		image = sTool.setupImage("objekt", "key", gl.unitsize, gl.unitsize);
 	}
 }

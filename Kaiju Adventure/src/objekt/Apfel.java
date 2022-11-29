@@ -1,17 +1,14 @@
 package objekt;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import main.GameLoop;
+import main.ScaleTool;
 
 public class Apfel extends Objekt{
-
-	public Apfel() {
+	
+	ScaleTool sTool = new ScaleTool();
+	public Apfel(GameLoop gl) {
 		name = "apfel";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objekt/apfel.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		image = sTool.setupImage("objekt", "apfel", gl.unitsize, gl.unitsize);
+	
 	}
 }

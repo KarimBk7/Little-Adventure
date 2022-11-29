@@ -20,7 +20,7 @@ public class UI {
 	Graphics2D g2;
 	GameLoop gl;
 	Font arial40,arial30, arial20;
-	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, prologimg, wasd, enter, poison, slowness, itdollar,
+	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, herzleer1, prologimg, wasd, enter, e, poison, slowness, itdollar,
 				  healing_potion, strenght_potion, speed_potion;
 	
 	public boolean prologabgespielt = false;
@@ -28,7 +28,7 @@ public class UI {
 	public boolean messageOn = false;
 	public String message = "";
 	public String currentDialog = "";
-	int counter, countermax;
+	public int counter, countermax;
 	public int befehl = 0;
 	
 	//shop
@@ -40,19 +40,19 @@ public class UI {
 		arial40 = new Font("Arial", Font.PLAIN, 40);
 		arial30 = new Font("Arial", Font.PLAIN, 30);
 		arial20 = new Font("Arial", Font.PLAIN, 20);
-		Key key = new Key();
+		Key key = new Key(gl);
 		this.key = key.image;
 		
-		Apfel apfel = new Apfel();
+		Apfel apfel = new Apfel(gl);
 		this.apfel = apfel.image;
 		
-		Heart heart = new Heart(gl);
-		herz = heart.image;
-		herzleer = heart.image2;
-		
 		try {
+			herz = ImageIO.read(getClass().getResourceAsStream("/objekt/herz.png"));
+			herzleer = ImageIO.read(getClass().getResourceAsStream("/objekt/herzleer.png")); 
+			herzleer1 = ImageIO.read(getClass().getResourceAsStream("/objekt/herzleer1.png")); 
 			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
 			wasd = ImageIO.read(getClass().getResourceAsStream("/steuerung/wasd.png"));
+			e = ImageIO.read(getClass().getResourceAsStream("/steuerung/e.png"));
 			enter = ImageIO.read(getClass().getResourceAsStream("/steuerung/enter.png"));
 			poison = ImageIO.read(getClass().getResourceAsStream("/effekt/poison.png"));
 			itdollar = ImageIO.read(getClass().getResourceAsStream("/objekt/itdollar.png"));
@@ -84,9 +84,9 @@ public class UI {
 				//pause hinweis
 				g2.setFont(arial20);
 				g2.setColor(Color.black);
-				g2.drawString("pause(p)", 15, 20);
+				g2.drawString("pause/Steuerung (p)", 18, 23);
 				g2.setColor(Color.white);
-				g2.drawString("pause(p)", 16, 21);
+				g2.drawString("pause/Steuerung (p)", 16, 21);
 				
 				//zeigt Schlüssel-anzahl
 				g2.setFont(arial40);
@@ -130,7 +130,7 @@ public class UI {
 				drawDialogFenster(g2);
 				counter++;
 				//wie lang die message bleibt
-				if (counter > countermax) {
+				if (counter >= countermax) {
 					messageOn = false;
 					counter = 0;
 				}
@@ -368,7 +368,7 @@ public class UI {
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
 		String text = "Neu Starten";
-		int x = gl.unitsize * 5 + 20;
+		int x = gl.unitsize * 5 + 25;
 		int y = gl.unitsize * 6;
 		if (befehl == 0) {
 			g2.setColor(Color.cyan);
@@ -457,6 +457,7 @@ public class UI {
 		int i = 0;
 		
 			g2.drawImage(herzleer, x, y + 20, gl.unitsize * 3, gl.unitsize * 3, null);
+			g2.drawImage(herzleer1, x + 147, y + 20, gl.unitsize * 3, gl.unitsize * 3, null);
 			i++; 
 		
 		//draw lebenseinheiten
@@ -480,7 +481,7 @@ public class UI {
 		
 		//draw poison status
 		if (gl.player.poison) {
-			g2.drawImage(poison, gl.unitsize * 3 + 30, gl.unitsize * 10 + 30, gl.unitsize / 2, gl.unitsize / 2, null);
+			g2.drawImage(poison, gl.unitsize * 3 + 180, gl.unitsize * 10 + 30, gl.unitsize / 2, gl.unitsize / 2, null);
 			gl.counter[3].count();
 		}
 		if (gl.counter[3].isDone()) {
@@ -649,11 +650,19 @@ public class UI {
 		g2.setColor(Color.white);
 		g2.drawString("Bewegen:", gl.unitsize, gl.unitsize * 9 + 20);
 		g2.drawImage(wasd, gl.unitsize, gl.unitsize * 9, gl.unitsize * 3, gl.unitsize * 3, null);
+		
+		g2.setColor(Color.gray);
+		g2.drawString("Heilen:", gl.unitsize * 7 + 2, gl.unitsize * 9 + 22);
+		g2.setColor(Color.white);
+		g2.drawString("Heilen:", gl.unitsize * 7, gl.unitsize * 9 + 20);
+		g2.drawImage(e, gl.unitsize * 6 + 30, gl.unitsize * 9 + 15, gl.unitsize * 3, gl.unitsize * 3, null);
 
 		g2.setColor(Color.gray);
 		g2.drawString("Interargieren:", gl.unitsize * 11 + 27, gl.unitsize * 9 + 22);
+		g2.drawString("Kaempfen /", gl.unitsize * 11 + 27, gl.unitsize * 8 + 37);
 		g2.setColor(Color.white);
 		g2.drawString("Interargieren:", gl.unitsize * 11 + 25, gl.unitsize * 9 + 20);
+		g2.drawString("Kaempfen /", gl.unitsize * 11 + 25, gl.unitsize * 8 + 35);
 		g2.drawImage(enter, gl.unitsize * 12, gl.unitsize * 8 + 35, gl.unitsize * 4, gl.unitsize * 4, null);
 		
 		//Weiter Spielen

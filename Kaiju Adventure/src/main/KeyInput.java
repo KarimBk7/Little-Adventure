@@ -45,6 +45,7 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.soundEffekt(11);
 				enterPressed = true;
 				//Spiel Starte
 				if (gl.ui.befehl == 0) {
@@ -84,11 +85,12 @@ public class KeyInput implements KeyListener {
 				}
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.soundEffekt(11);
 				enterPressed = true;
-				//Spiel Starte
+				//neu starten
 				if (gl.ui.befehl == 0) {
 					
-					//TODO	
+					//TODO neu start button	
 				}
 				else if (gl.ui.befehl == 1){
 					gl.ui.befehl = 0;
@@ -108,6 +110,7 @@ public class KeyInput implements KeyListener {
 				gl.gameState = gl.playState;
 				//TODO gl.playMusik(0);
 			}
+			gl.soundEffekt(11);
 		}
 		
 		//Wenn Spielbildschirm
@@ -129,7 +132,7 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_P) {
 					gl.gameState = gl.pauseState;
-					gl.stopMusik();
+					// TODO gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -218,6 +221,7 @@ public class KeyInput implements KeyListener {
 					}
 				}
 				if (gl.ui.befehl == 4) {
+					gl.soundEffekt(11);
 					gl.gameState = gl.playState;
 				}
 			}
@@ -240,6 +244,7 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_ENTER) { 
+				gl.soundEffekt(11);
 				if (gl.ui.befehl == 0) {
 					gl.gameState = gl.playState;
 					//TODO gl.resumeMusik(0);
@@ -255,6 +260,7 @@ public class KeyInput implements KeyListener {
 		else if (gl.gameState == gl.dialogState) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
+				gl.soundEffekt(11);
 			}
 		}
 	}

@@ -57,13 +57,14 @@ public class GameLoop extends JPanel implements Runnable {
 	//Gamestate
 	public int gameState;
 	public int titlestate = 0;
-	public int prologstate = 1;
-	public int playState = 2;
-	public int pauseState = 3;
-	public int dialogState = 4; 
-	public int shopState = 5;
-	public int winstate = 6;
-	public int losestate = 7;
+	public int ladespielstate = 1;
+	public int prologstate = 2;
+	public int playState = 3;
+	public int pauseState = 4;
+	public int dialogState = 5; 
+	public int shopState = 6;
+	public int winstate = 7;
+	public int losestate = 8;
 	
 	
 	public Thread gameThread;

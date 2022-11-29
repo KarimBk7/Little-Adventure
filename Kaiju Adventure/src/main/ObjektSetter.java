@@ -15,7 +15,7 @@ import unit.Npc;
 public class ObjektSetter {
 
 	GameLoop gl;
-	
+	ScaleTool sTool = new ScaleTool();
 	public ObjektSetter(GameLoop gl) {
 		this.gl = gl;
 	}
@@ -38,19 +38,19 @@ public class ObjektSetter {
 		gl.obj[2].posX = 61 * gl.unitsize;
 		gl.obj[2].posY = 55 * gl.unitsize;
 		
-		//Haus Schmiede
+		//Haus Haendler
 		gl.obj[3] = new House(gl);
 		gl.obj[3].posX = 16 * gl.unitsize;
 		gl.obj[3].posY = 14 * gl.unitsize;
 		
 		//Key unter der erde
-		gl.obj[4] = new Key();						
+		gl.obj[4] = new Key(gl);						
 		
 		//loch am See
 		gl.obj[5] = new Objekt("loch",53 * gl.unitsize,41 * gl.unitsize);			
 		
 		//Grabstein am see
-		gl.obj[6] = new Grabstein();
+		gl.obj[6] = new Grabstein(gl);
 		gl.obj[6].posX = 45 * gl.unitsize;
 		gl.obj[6].posY = 37 * gl.unitsize;
 		
@@ -59,7 +59,7 @@ public class ObjektSetter {
 		gl.obj[7].posX = 39 * gl.unitsize;
 		gl.obj[7].posY = 28 * gl.unitsize;
 		
-		gl.obj[8] = new Key();
+		gl.obj[8] = new Key(gl);
 		
 		//Dach übers der Burg von Tenbusch
 		gl.obj[9] = new House(gl);
@@ -74,33 +74,40 @@ public class ObjektSetter {
 		gl.obj[10].posY = 59 * gl.unitsize - 35;
 		
 		//Apfel
-		gl.obj[11] = new Apfel();
+		gl.obj[11] = new Apfel(gl);
 		gl.obj[11].posX = 58 * gl.unitsize;
 		gl.obj[11].posY = 13 * gl.unitsize;
 		
-		gl.obj[12] = new Apfel();
+		gl.obj[12] = new Apfel(gl);
 		gl.obj[12].posX = 59 * gl.unitsize;
 		gl.obj[12].posY = 17 * gl.unitsize;
 		
-		gl.obj[13] = new Apfel();
+		gl.obj[13] = new Apfel(gl);
 		gl.obj[13].posX = 61 * gl.unitsize;
 		gl.obj[13].posY = 15 * gl.unitsize;
 		
 		//pier am see
 		gl.obj[14] = new Objekt("pier",55 * gl.unitsize, 31 * gl.unitsize);
 		
+		//zaun am haendler
 		gl.obj[15] = new ClosedDoor(gl);
 		gl.obj[15].posX = 17 * gl.unitsize;
 		gl.obj[15].posY = 24 * gl.unitsize;
 		gl.obj[15].name = "zaun";
-		try {
-			gl.obj[9].image = ImageIO.read(getClass().getResourceAsStream("/objekt/dach.png"));
-			gl.obj[10].image = ImageIO.read(getClass().getResourceAsStream("/objekt/closedchest.png"));
-			gl.obj[14].image = ImageIO.read(getClass().getResourceAsStream("/objekt/pier.png"));
-			gl.obj[15].image = ImageIO.read(getClass().getResourceAsStream("/objekt/zauntuer.png"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		//tuer zum westen
+		gl.obj[16] = new ClosedDoor(gl);
+		gl.obj[16].posX = 29 * gl.unitsize;
+		gl.obj[16].posY = 49 * gl.unitsize;
+		gl.obj[16].name = "closeddoor1";
+		
+		//get und scale .png
+		gl.obj[3].image = sTool.setupImage("objekt", "hous1", gl.buildingsize, gl.buildingsize);
+		gl.obj[9].image = sTool.setupImage("objekt", "dach", gl.unitsize * 20, gl.unitsize * 20);
+		gl.obj[10].image = sTool.setupImage("objekt", "closedchest", gl.unitsize, gl.unitsize);
+		gl.obj[14].image = sTool.setupImage("objekt", "pier", gl.unitsize * 2, gl.unitsize * 3);
+		gl.obj[15].image = sTool.setupImage("objekt", "zauntuer", gl.unitsize * 2, gl.unitsize * 2);
+		gl.obj[16].image = sTool.setupImage("objekt", "closeddoor1", gl.unitsize * 2, gl.unitsize * 2);
 	}
 	
 	//setzt positionen von npc
@@ -126,18 +133,15 @@ public class ObjektSetter {
 		gl.npc[2].dialogIndex = 4;
 		gl.npc[2].name = "momo";
 		
+		//haendler
 		gl.npc[3] =  new Npc(gl);	
 		gl.npc[3].posX = 17 * gl.unitsize;
 		gl.npc[3].posY = 18 * gl.unitsize + 20;
 		gl.npc[3].dialogIndex = 7;
 		gl.npc[3].name = "haendler";
 		
-		try {
-			gl.npc[1].image = ImageIO.read(getClass().getResourceAsStream("/npc/angler.png"));
-			gl.npc[2].image = ImageIO.read(getClass().getResourceAsStream("/npc/momo.png"));
-		} catch (Exception e) {
-				
-		}
+		gl.npc[1].image = sTool.setupImage("npc", "angler", gl.unitsize, gl.unitsize);
+		gl.npc[2].image = sTool.setupImage("npc", "momo", gl.unitsize, gl.unitsize);
 	}
 	
 	public void setMonster() {

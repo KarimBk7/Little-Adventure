@@ -23,8 +23,9 @@ public class Sound {
 		soundURL[6] = getClass().getResource("/sound/win.wav");
 		soundURL[7] = getClass().getResource("/sound/upgrade.wav");
 		soundURL[8] = getClass().getResource("/sound/ausverkauft.wav");
-		soundURL[9] = getClass().getResource("/sound/open.wav");
+		soundURL[9] = getClass().getResource("/sound/open2.wav");
 		soundURL[10] = getClass().getResource("/sound/block.wav");
+		soundURL[11] = getClass().getResource("/sound/menunavigate2.wav");
 	}
 	
 	public void setFile(int i) {

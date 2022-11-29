@@ -1,17 +1,16 @@
 package unit;
 
-import javax.imageio.ImageIO;
-
 import main.GameLoop;
+import main.ScaleTool;
 
 public class Npc extends Unit{
 
+	ScaleTool sTool = new ScaleTool();
 	public Npc(GameLoop gl) {
 		super(gl);
-		
+		image = sTool.setupImage("npc", "brandon", gl.unitsize, gl.unitsize);
 		richtung = "down";
 		isCollision = true;
-		getNpcpng();
 		setDialog();
 	}
 	
@@ -40,15 +39,6 @@ public class Npc extends Unit{
 					+ "Erwarte aber bloss keinen Rabatt nur weil du mich \ngerettet hast. "
 					+ "Immerhin herrscht \nInflation wegen Herr Tenbusch.";
 		dialog[10] = "Was kann ich für dich tun?";
-	}
-
-	public void getNpcpng() {
-		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/npc/brandon.png"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void speak() {

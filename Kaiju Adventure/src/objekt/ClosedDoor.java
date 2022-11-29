@@ -1,19 +1,14 @@
 package objekt;
 
-import javax.imageio.ImageIO;
-
 import main.GameLoop;
+import main.ScaleTool;
 
 public class ClosedDoor extends Objekt{
 
-		
+		ScaleTool sTool = new ScaleTool();
 		public ClosedDoor(GameLoop gl) {
 			name = "closeddoor";
-			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/Objekt/closeddoor.png"));
-			} catch (Exception e) {
-				
-			}
+			image = sTool.setupImage("objekt", "closeddoor", gl.unitsize * 2, gl.unitsize * 2);
 			isCollision = true;
 			hitbox.width = gl.unitsize * 2;
 			hitbox.height = gl.unitsize * 2;
