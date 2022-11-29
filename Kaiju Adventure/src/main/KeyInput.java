@@ -109,8 +109,8 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
 				//TODO gl.playMusik(0);
+				gl.soundEffekt(11);
 			}
-			gl.soundEffekt(11);
 		}
 		
 		//Wenn Spielbildschirm

@@ -8,7 +8,6 @@ import main.ScaleTool;
 public class Monster_Snake extends Unit{
 	
 	ScaleTool sTool = new ScaleTool();
-	public int actioncounter = 0;
 
 	public Monster_Snake(GameLoop gl) {
 		super(gl);

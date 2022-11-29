@@ -26,6 +26,7 @@ public class Sound {
 		soundURL[9] = getClass().getResource("/sound/open2.wav");
 		soundURL[10] = getClass().getResource("/sound/block.wav");
 		soundURL[11] = getClass().getResource("/sound/menunavigate2.wav");
+		soundURL[12] = getClass().getResource("/sound/swordswing.wav");
 	}
 	
 	public void setFile(int i) {
@@ -42,7 +43,7 @@ public class Sound {
 	//start
 	public void play() {
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(-30.0f);
+		gainControl.setValue(-20.0f);
 		clip.start();
 	}
 	

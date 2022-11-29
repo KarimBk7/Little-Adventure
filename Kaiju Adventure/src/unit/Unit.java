@@ -23,6 +23,7 @@ public class Unit {
 	public String richtung, laufen;
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
+	public int actioncounter = 0;
 	
 	//Attribute für Collision
 	public Rectangle hitbox = new Rectangle(8, 16, 32, 32);

@@ -26,11 +26,11 @@ public class Player extends Unit {
 	boolean attacking = false;
 
 	// inventar
-	public int amountKey = 0;
+	public int amountKey = 2;
 	public int amountApfel = 0;
-	public int schmiedquest = 0;
+	public int haendlerquest = 0;
 	public boolean hatSchaufel = false;
-	public boolean hatSpitzhacke = false;
+	public boolean hatSpitzhacke = true;
 	public int itDollar = 0;
 	public int itDollargesamt = 0;
 	public int healing_potion = 0;
@@ -281,7 +281,7 @@ public class Player extends Unit {
 				gl.soundEffekt(3);
 				if (gl.monster[i].health < 1) {
 					if (i == 3 || i == 4) {
-						schmiedquest++;
+						haendlerquest++;
 					}
 					gl.monster[i] = null;
 					itDollar += 100;
@@ -332,6 +332,16 @@ public class Player extends Unit {
 						gl.obj[i] = null;
 					}
 					break;
+					
+				case "fels":
+					if (hatSpitzhacke == true) {
+						gl.ui.showMessage("Felsen zerstoert", 60);
+						gl.obj[i] = null;
+						gl.soundEffekt(3);
+						gl.obj[8].posX = 8 * gl.unitsize;
+						gl.obj[8].posY = 71 * gl.unitsize;
+					}
+					break;
 
 				// Schlüssel einsammeln
 				case "Key":
@@ -345,11 +355,14 @@ public class Player extends Unit {
 				case "apfel":
 					gl.obj[i] = null;
 					amountApfel++;
+					gl.soundEffekt(2);
 					break;
 
 				// zaun beim haendler
 				case "zaun":
-					gl.soundEffekt(9);
+					if (gl.obj[i].isCollision == true) {
+						gl.soundEffekt(9);
+					}
 					gl.obj[i].image = sTool.setupImage("objekt", "zaunopen", gl.unitsize * 2, gl.unitsize * 2);
 					gl.obj[i].isCollision = false;
 					break;
@@ -357,10 +370,12 @@ public class Player extends Unit {
 				// tuer zum westen
 				case "closeddoor1":
 					if (amountKey > 0) {
-						gl.soundEffekt(9);
+						if (gl.obj[i].isCollision == true) {
+							gl.soundEffekt(9);
+						}
 						gl.obj[i].image = sTool.setupImage("objekt", "opendoor1", gl.unitsize * 2, gl.unitsize * 2);
 						gl.obj[i].isCollision = false;
-						gl.ui.showMessage("Tuer geoeffnet!! Ab in den gefaehrlichen westen.", 240);
+						gl.ui.showMessage("*Tuer geoeffnet!!* \n Ab in den gefaehrlichen westen.", 240);
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 1 Schluessel benoetige", 120);
 						gl.soundEffekt(10);
@@ -370,17 +385,20 @@ public class Player extends Unit {
 				// Tür öffnen
 				case "closeddoor":
 					if (amountKey > 1) {
-						gl.soundEffekt(9);
+						if (gl.obj[i].isCollision == true) {
+							gl.soundEffekt(9);
+						}
 						gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 						gl.obj[i].isCollision = false;
 						gl.obj[9] = null;
-						gl.ui.showMessage("Tuer geoeffnet! \nMoege der Kampf gegen Tenbusch\nbeginnen!!!", 240);
+						gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
 						gl.soundEffekt(10);
 					}
 					break;
 				}
+				keyI.enterPressed = false;
 			} 
 		}
 	}
@@ -412,6 +430,7 @@ public class Player extends Unit {
 						gl.npc[i].dialogIndex = 2;
 					}
 					break;
+					
 				case "momo":
 					if (gl.npc[i].dialogIndex == 4) {
 						gl.gameState = gl.dialogState;
@@ -427,21 +446,22 @@ public class Player extends Unit {
 						gl.npc[i].dialogIndex = 4;
 					}
 					break;
+					
 				case "haendler":
-					if (schmiedquest < 1) {
+					if (haendlerquest < 1) {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 					}
-					if (schmiedquest > 1 && gl.npc[i].dialogIndex == 7) {
+					if (haendlerquest > 1 && gl.npc[i].dialogIndex == 7) {
 						gl.npc[i].dialogIndex++;
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.npc[i].dialogIndex++;
-					} else if (schmiedquest > 1 && gl.npc[i].dialogIndex == 9) {
+					} else if (haendlerquest > 1 && gl.npc[i].dialogIndex == 9) {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.npc[i].dialogIndex++;
-					} else if (schmiedquest > 1) {
+					} else if (haendlerquest > 1) {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.ui.befehl = 0;
@@ -456,6 +476,7 @@ public class Player extends Unit {
 		else {
 			if (gl.keyI.enterPressed == true && gl.cc.checkObjekt(this, true) == 99) {
 				attacking = true;
+				gl.soundEffekt(12);
 			}
 		}
 	}

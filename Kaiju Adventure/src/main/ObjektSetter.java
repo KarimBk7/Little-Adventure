@@ -11,6 +11,7 @@ import objekt.Key;
 import objekt.Schaufel;
 import unit.Monster_Snake;
 import unit.Npc;
+import unit.Tenbusch;
 
 public class ObjektSetter {
 
@@ -59,6 +60,7 @@ public class ObjektSetter {
 		gl.obj[7].posX = 39 * gl.unitsize;
 		gl.obj[7].posY = 28 * gl.unitsize;
 		
+		//key beim fels
 		gl.obj[8] = new Key(gl);
 		
 		//Dach übers der Burg von Tenbusch
@@ -101,6 +103,12 @@ public class ObjektSetter {
 		gl.obj[16].posY = 49 * gl.unitsize;
 		gl.obj[16].name = "closeddoor1";
 		
+		gl.obj[17] = new Objekt();
+		gl.obj[17].posX = 9 * gl.unitsize;
+		gl.obj[17].posY = 71 * gl.unitsize;
+		gl.obj[17].isCollision = true;
+		gl.obj[17].name = "fels";
+		
 		//get und scale .png
 		gl.obj[3].image = sTool.setupImage("objekt", "hous1", gl.buildingsize, gl.buildingsize);
 		gl.obj[9].image = sTool.setupImage("objekt", "dach", gl.unitsize * 20, gl.unitsize * 20);
@@ -108,6 +116,7 @@ public class ObjektSetter {
 		gl.obj[14].image = sTool.setupImage("objekt", "pier", gl.unitsize * 2, gl.unitsize * 3);
 		gl.obj[15].image = sTool.setupImage("objekt", "zauntuer", gl.unitsize * 2, gl.unitsize * 2);
 		gl.obj[16].image = sTool.setupImage("objekt", "closeddoor1", gl.unitsize * 2, gl.unitsize * 2);
+		gl.obj[17].image = sTool.setupImage("objekt", "felsen2", gl.unitsize, gl.unitsize);
 	}
 	
 	//setzt positionen von npc
@@ -168,7 +177,9 @@ public class ObjektSetter {
 		gl.monster[4].posX = 18 * gl.unitsize;
 		gl.monster[4].posY = 20 * gl.unitsize;
 		
-		
+		gl.monster[5] = new Tenbusch(gl);
+		gl.monster[5].posX = 38 * gl.unitsize;
+		gl.monster[5].posY = 45 * gl.unitsize;
 	}
 	
 	public void setCounter() {
@@ -197,6 +208,10 @@ public class ObjektSetter {
 		//kein geld
 		gl.counter[6] = new Counter();
 		gl.counter[6].setCountermax(90);
+		
+		//Tenbusch
+		gl.counter[6] = new Counter();
+		gl.counter[6].setCountermax(60);
 		
 	}
  }

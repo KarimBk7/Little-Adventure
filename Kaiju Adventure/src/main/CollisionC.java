@@ -274,4 +274,60 @@ public class CollisionC {
 		gl.player.hitbox.x = gl.player.hitboxX;
 		gl.player.hitbox.y = gl.player.hitboxY;
 	}	
+	
+public boolean checkPlayerBoss(Unit unit) {
+		
+		boolean focus = false;
+	
+		unit.hitbox.x = unit.posX + unit.hitbox.x;
+		unit.hitbox.y = unit.posY + unit.hitbox.y;
+		
+		gl.player.hitbox.x = gl.player.posX	+ gl.player.hitbox.x;
+		gl.player.hitbox.y = gl.player.posY + gl.player.hitbox.y;
+		
+		switch (unit.richtung) {
+		case "up":	
+			unit.hitbox.y -= unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;
+					if (gl.player.immunity == false) {
+						focus = true;
+					}
+			}
+			break;
+		case "down":
+			unit.hitbox.y += unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;	
+					if (gl.player.immunity == false) {
+						focus = true;
+					}
+			}
+			break;
+		case "left":
+			unit.hitbox.x -= unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;
+					if (gl.player.immunity == false) {
+						focus = true;
+					}
+			}
+			break;
+		case "right":
+			unit.hitbox.x += unit.speed;
+			if(unit.hitbox.intersects(gl.player.hitbox)) {
+					unit.isCollision = true;	
+					if (gl.player.immunity == false) {
+						focus = true;
+					}
+			}
+			break;
+		}
+		unit.hitbox.x = unit.hitboxX;
+		unit.hitbox.y = unit.hitboxY;
+		gl.player.hitbox.x = gl.player.hitboxX;
+		gl.player.hitbox.y = gl.player.hitboxY;
+		
+		return focus;
+	}	
 }
