@@ -1,0 +1,9 @@
+CREATE TABLE `t_inventar` (
+	`Item_id` VARCHAR(10) NOT NULL COLLATE 'latin1_swedish_ci',
+	`Item_name` VARCHAR(10) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`Item_anzahl` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`Item_id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;

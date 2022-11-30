@@ -78,7 +78,7 @@ public class UI {
 	public void draw(Graphics2D g2) {
 		
 		//wenn nicht titel- oder prologbildschirm
-		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate){
+		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate && gl.gameState != gl.ladespielstate){
 			//Spielt
 			if (gl.gameState == gl.playState) {
 				
@@ -157,6 +157,9 @@ public class UI {
 			else if(gl.gameState == gl.shopState) {
 				drawShop(g2);
 			}
+			else if (gl.gameState == gl.speicherspiel) {
+				drawSpielspeichern(g2);
+			}
 			
 		}
 		
@@ -168,7 +171,114 @@ public class UI {
 		else if(gl.gameState == gl.prologstate) {
 			drawProlog(g2);
 		}
+		else if (gl.gameState == gl.ladespielstate) {
+			drawLadeSpiel(g2);
+		}
 	}
+	
+	private void drawLadeSpiel(Graphics2D g2) {
+		//Hintergrund
+		g2.setColor(new Color(30,30,30));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		
+		int x = gl.unitsize * 4 + 25;
+		int y = gl.unitsize * 1;
+		int weite = gl.unitsize * 7;
+		int hoehe = gl.unitsize * 3;
+		g2.setStroke(new BasicStroke(5));
+		
+		//1te Spieldatei
+		g2.setColor(Color.black);
+		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+		if (befehl == 0) {g2.setColor(Color.cyan);}
+		else {g2.setColor(Color.white);}
+		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+		
+		
+		y = gl.unitsize * 4 + 20;
+		//2te Spieldatei
+		g2.setColor(Color.black);
+		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+		if (befehl == 1) {g2.setColor(Color.cyan);}
+		else {g2.setColor(Color.white);}
+		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+		
+		
+		y = gl.unitsize * 8 - 8;
+		//3te Spieldatei
+		g2.setColor(Color.black);
+		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+		if (befehl == 2) {g2.setColor(Color.cyan);}
+		else {g2.setColor(Color.white);}
+		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+		
+		x = gl.unitsize * 12;
+		y = gl.unitsize * 11 + 20;
+		g2.setFont(arial30);
+		if (befehl == 3) {
+			g2.setColor(Color.gray);
+			g2.drawString(">", x - 18, y + 2);
+			g2.setColor(Color.white);
+			g2.drawString(">", x - 20, y);
+			g2.setColor(Color.cyan);
+		}
+		else {g2.setColor(Color.gray);}
+		g2.drawString("Hauptmenue", x + 2, y + 2);
+		g2.setColor(Color.white);
+		g2.drawString("Hauptmenue", x, y);
+	}
+
+	private void drawSpielspeichern(Graphics2D g2) {
+		//Hintergrund
+				g2.setColor(new Color(0,0,0, 220));
+				g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+				
+				int x = gl.unitsize * 4 + 25;
+				int y = gl.unitsize * 1;
+				int weite = gl.unitsize * 7;
+				int hoehe = gl.unitsize * 3;
+				g2.setStroke(new BasicStroke(5));
+				
+				//1te Spieldatei
+				g2.setColor(Color.black);
+				g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+				if (befehl == 0) {g2.setColor(Color.cyan);}
+				else {g2.setColor(Color.white);}
+				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+				
+				
+				y = gl.unitsize * 4 + 20;
+				//2te Spieldatei
+				g2.setColor(Color.black);
+				g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+				if (befehl == 1) {g2.setColor(Color.cyan);}
+				else {g2.setColor(Color.white);}
+				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+				
+				
+				y = gl.unitsize * 8 - 8;
+				//3te Spieldatei
+				g2.setColor(Color.black);
+				g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
+				if (befehl == 2) {g2.setColor(Color.cyan);}
+				else {g2.setColor(Color.white);}
+				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
+				
+				x = gl.unitsize * 12;
+				y = gl.unitsize * 11 + 20;
+				g2.setFont(arial30);
+				if (befehl == 3) {
+					g2.setColor(Color.gray);
+					g2.drawString(">", x - 18, y + 2);
+					g2.setColor(Color.white);
+					g2.drawString(">", x - 20, y);
+					g2.setColor(Color.cyan);
+				}
+				else {g2.setColor(Color.gray);}
+				g2.drawString("Zurueck", x + 2, y + 2);
+				g2.setColor(Color.white);
+				g2.drawString("Zurueck", x, y);
+			}
 	
 	private void drawShop(Graphics2D g2) {
 		g2.setColor(new Color(0,0,0,200));
@@ -640,7 +750,7 @@ public class UI {
 		
 		//Pause Text
 		int x = gl.screenweite / 2 - gl.unitsize * 2;
-		int y = gl.screenhoehe / 4;
+		int y = gl.screenhoehe / 4 - 50;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,70F));
 		g2.setColor(Color.white);
 		g2.drawString("Pause", x + 4, y + 4);
@@ -672,7 +782,7 @@ public class UI {
 		//Weiter Spielen
 		String text = "Weiter Spielen";
 		x = gl.unitsize * 5 + 25;
-		y = gl.screenhoehe / 2;
+		y = gl.unitsize * 4 + 20;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
 		if (befehl == 0) {
 			g2.setColor(Color.cyan);
@@ -692,10 +802,9 @@ public class UI {
 			g2.drawString(text, x, y);			
 		}
 		
-		//Zurück zum Hauptmenu
-		text = "Hauptmenu";
-		x = gl.unitsize * 6;
-		y = gl.screenhoehe / 2 + gl.unitsize;
+		text = "Spiel Speichern";
+		x = gl.unitsize * 5 + 10;
+		y = gl.screenhoehe / 2 - 15;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
 		if (befehl == 1) {
 			g2.setColor(Color.cyan);
@@ -707,6 +816,29 @@ public class UI {
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 		if (befehl == 1) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.black);
+			g2.drawString(text, x + 2, y + 2);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);			
+		}
+		
+		//Zurück zum Hauptmenu
+		text = "Hauptmenu";
+		x = gl.unitsize * 6;
+		y = gl.screenhoehe / 2 + gl.unitsize;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,40F));
+		if (befehl == 2) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawString(text, x + 2, y + 2);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 2) {
 			text = ">";
 			x -= 40; 
 			g2.setColor(Color.black);
