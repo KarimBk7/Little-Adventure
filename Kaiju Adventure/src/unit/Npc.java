@@ -38,7 +38,7 @@ public class Npc extends Unit{
 		dialog[9] = "Als dank eroeffne ich meinen Laden etwas frueher heute. \n"
 					+ "Erwarte aber bloss keinen Rabatt nur weil du mich \ngerettet hast. "
 					+ "Immerhin herrscht \nInflation wegen Herr Tenbusch.";
-		dialog[10] = "Was kann ich für dich tun?";
+		dialog[10] = "Was kann ich fuer dich tun?";
 	}
 	
 	public void speak() {

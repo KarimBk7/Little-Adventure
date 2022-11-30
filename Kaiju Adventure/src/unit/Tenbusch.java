@@ -70,16 +70,16 @@ public class Tenbusch extends Unit{
 		}
 		
 		
-		if (posX < gl.player.posX) {
+		if (posX + 50 < gl.player.posX) {
 			richtung = "right";
 		}
-		if (posX > gl.player.posX) {
+		else if (posX - 50 > gl.player.posX) {
 			richtung = "left";
 		}
-		if (posY + 72 < gl.player.posY) {
+		else if (posY + 72 < gl.player.posY) {
 			richtung = "down";
 		}
-		if (posY - 72 > gl.player.posY) {
+		else if (posY - 72 > gl.player.posY) {
 			richtung = "up";
 		}
 		
@@ -177,7 +177,6 @@ public class Tenbusch extends Unit{
 
 
 	private void attacking() {
-		spriteCounter++;
 
 		if (spriteCounter <= 15) {
 			spriteNum = 1;
@@ -215,11 +214,12 @@ public class Tenbusch extends Unit{
 			hitbox.width = hitboxWith;
 			hitbox.height = hitboxHeigh;
 		}
-		if (spriteCounter > 40) {
+		/**if (spriteCounter > 40) {
 			spriteNum = 1;
 			spriteCounter = 0;
 			attacking = false;
-		}
+		}*/
+		
 		
 	}
 

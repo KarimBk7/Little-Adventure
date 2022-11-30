@@ -89,10 +89,19 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//neu starten
 				if (gl.ui.befehl == 0) {
+					gl.player.neuStart();
+					gl.player.health = 4;
+					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
+						gl.counter[i].removeCount();
+					}
+					enterPressed = false;
+					gl.player.richtung = "right";
+					gl.gameState = gl.playState;
 					
-					//TODO neu start button	
+						
 				}
 				else if (gl.ui.befehl == 1){
+					gl.stopMusik();
 					gl.ui.befehl = 0;
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
 							gl.counter[i].removeCount();
@@ -108,7 +117,7 @@ public class KeyInput implements KeyListener {
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
-				//TODO gl.playMusik(0);
+				gl.playMusik(0);
 				gl.soundEffekt(11);
 			}
 		}
@@ -132,7 +141,7 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_P) {
 					gl.gameState = gl.pauseState;
-					// TODO gl.stopMusik();
+					gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -247,7 +256,7 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(11);
 				if (gl.ui.befehl == 0) {
 					gl.gameState = gl.playState;
-					//TODO gl.resumeMusik(0);
+					gl.resumeMusik(0);
 				}
 				else if(gl.ui.befehl == 1) {
 					gl.gameState = gl.titlestate;

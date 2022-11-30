@@ -13,6 +13,7 @@ public class Objekt {
 	public String name;
 	
 	public boolean isCollision = false;
+	public int status = 1;
 	public int posX, posY;
 	
 	public Rectangle hitbox = new Rectangle(0, 0, 48, 48);

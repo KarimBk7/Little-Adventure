@@ -21,7 +21,7 @@ public class UI {
 	GameLoop gl;
 	Font arial40,arial30, arial20;
 	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, herzleer1, prologimg, wasd, enter, e, poison, slowness, itdollar,
-				  healing_potion, strenght_potion, speed_potion;
+				  healing_potion, strenght_potion, speed_potion, tilebg;
 	
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
@@ -51,6 +51,7 @@ public class UI {
 			herzleer = ImageIO.read(getClass().getResourceAsStream("/objekt/herzleer.png")); 
 			herzleer1 = ImageIO.read(getClass().getResourceAsStream("/objekt/herzleer1.png")); 
 			prologimg = ImageIO.read(getClass().getResourceAsStream("/objekt/prolog_bg.png"));
+			tilebg = ImageIO.read(getClass().getResourceAsStream("/objekt/tilebg.png"));
 			wasd = ImageIO.read(getClass().getResourceAsStream("/steuerung/wasd.png"));
 			e = ImageIO.read(getClass().getResourceAsStream("/steuerung/e.png"));
 			enter = ImageIO.read(getClass().getResourceAsStream("/steuerung/enter.png"));
@@ -325,9 +326,9 @@ public class UI {
 		if (gl.player.gethealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 			g2.setColor(Color.white);
-			g2.drawString("+1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 38);
+			g2.drawString("+1", gl.screenweite / 2 - 10, gl.screenhoehe / 2 - 38);
 			g2.setColor(Color.cyan);
-			g2.drawString("+1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 40);
+			g2.drawString("+1", gl.screenweite / 2 - 10, gl.screenhoehe / 2 - 40);
 			gl.counter[0].count();
 		}
 		if (gl.counter[0].isDone()) {
@@ -340,9 +341,9 @@ public class UI {
 		if (gl.player.losthealth == true) {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
 			g2.setColor(Color.white);
-			g2.drawString("-1 Leben", gl.screenweite / 2 - 53, gl.screenhoehe / 2 - 28);
+			g2.drawString("-1", gl.screenweite / 2 - 10, gl.screenhoehe / 2 - 28);
 			g2.setColor(Color.red);
-			g2.drawString("-1 Leben", gl.screenweite / 2 - 55, gl.screenhoehe / 2 - 30);
+			g2.drawString("-1", gl.screenweite / 2 - 10, gl.screenhoehe / 2 - 30);
 			gl.counter[1].count();
 		}
 		if (gl.counter[1].isDone()) {
@@ -493,7 +494,10 @@ public class UI {
 	private void drawTitleScreen(Graphics2D g2) {
 		
 		//Hintergrund
+		g2.drawImage(tilebg, 0, 0, gl.screenweite, gl.screenhoehe, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 		//titel text
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,60F));

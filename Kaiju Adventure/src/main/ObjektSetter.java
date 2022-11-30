@@ -178,8 +178,6 @@ public class ObjektSetter {
 		gl.monster[4].posY = 20 * gl.unitsize;
 		
 		gl.monster[5] = new Tenbusch(gl);
-		gl.monster[5].posX = 38 * gl.unitsize;
-		gl.monster[5].posY = 45 * gl.unitsize;
 	}
 	
 	public void setCounter() {
