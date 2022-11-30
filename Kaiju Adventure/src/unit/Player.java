@@ -30,9 +30,9 @@ public class Player extends Unit {
 	public int amountApfel = 0;
 	public int haendlerquest = 0;
 	public boolean hatSchaufel = false;
-	public boolean hatSpitzhacke = true;
+	public boolean hatSpitzhacke = false;
 	public int itDollar = 0;
-	public int itDollargesamt = 0;
+	public int exp = 0;
 	public int healing_potion = 0;
 
 	// statuseffekte
@@ -58,8 +58,8 @@ public class Player extends Unit {
 	public void setTest() {
 
 		// Spieler-Position bei Start
-		posX = 35 * gl.unitsize; // standard spawnpunkt x = 35
-		posY = 67 * gl.unitsize; // standard spawnpunkt x = 67
+		posX = 40 * gl.unitsize; // standard spawnpunkt x = 35
+		posY = 40 * gl.unitsize; // standard spawnpunkt y = 67
 
 		// Spieler- & Animationsgeschwindigkeit
 		defaultspeed = 8;
@@ -71,6 +71,11 @@ public class Player extends Unit {
 		// Spieler werte
 		maxHealth = 6;
 		health = maxHealth;
+	}
+	
+	public void neuStart() {
+		posX = 35 * gl.unitsize;
+		posY = 67 * gl.unitsize;
 	}
 
 	public void getPlayerpng() {
@@ -285,7 +290,7 @@ public class Player extends Unit {
 					}
 					gl.monster[i] = null;
 					itDollar += 100;
-					itDollargesamt += 100;
+					exp += 100;
 					;
 					gl.soundEffekt(2);
 					mosterKilled = true;
@@ -304,11 +309,12 @@ public class Player extends Unit {
 
 				// Kiste oeffnen
 				case "Schaufel":
-					if (gl.npc[0].dialogIndex == 1 && !hatSchaufel) {
+					if (gl.npc[0].dialogIndex == 1 && !hatSchaufel && gl.obj[i].status == 1) {
 						gl.soundEffekt(9);
 						gl.obj[i].image = sTool.setupImage("objekt", "openchest", gl.unitsize, gl.unitsize);
 						gl.ui.showMessage("Schaufel erhalten!", 90);
 						hatSchaufel = true;
+						gl.obj[i].status = 2;
 					} else if (!hatSchaufel) {
 						gl.soundEffekt(10);
 						gl.ui.showMessage("*verschlossen*", 60);
@@ -325,21 +331,23 @@ public class Player extends Unit {
 
 				// Haufen ausgraben
 				case "loch":
-					if (hatSchaufel == true) {
+					if (hatSchaufel == true && gl.obj[i].status == 1) {
 						gl.ui.showMessage("Schluessel ausgegraben!", 60);
 						gl.obj[4].posX = gl.obj[i].posX - gl.unitsize;
 						gl.obj[4].posY = gl.obj[i].posY;
-						gl.obj[i] = null;
+						gl.obj[i].status = 2;
 					}
 					break;
 					
 				case "fels":
-					if (hatSpitzhacke == true) {
+					if (hatSpitzhacke == true && gl.obj[i].status == 1) {
 						gl.ui.showMessage("Felsen zerstoert", 60);
-						gl.obj[i] = null;
 						gl.soundEffekt(3);
 						gl.obj[8].posX = 8 * gl.unitsize;
 						gl.obj[8].posY = 71 * gl.unitsize;
+						gl.obj[i].image = null;
+						gl.obj[i].isCollision = false;
+						gl.obj[i].status = 2;;
 					}
 					break;
 
@@ -353,15 +361,19 @@ public class Player extends Unit {
 
 				// Apfel einsammeln
 				case "apfel":
-					gl.obj[i] = null;
-					amountApfel++;
-					gl.soundEffekt(2);
+					if (gl.obj[i].status == 1) {
+						amountApfel++;
+						gl.soundEffekt(2);
+						gl.obj[i].status = 2;
+						gl.obj[i].image = null;
+					}
 					break;
 
 				// zaun beim haendler
 				case "zaun":
 					if (gl.obj[i].isCollision == true) {
 						gl.soundEffekt(9);
+						gl.obj[i].status = 2;
 					}
 					gl.obj[i].image = sTool.setupImage("objekt", "zaunopen", gl.unitsize * 2, gl.unitsize * 2);
 					gl.obj[i].isCollision = false;
@@ -372,6 +384,7 @@ public class Player extends Unit {
 					if (amountKey > 0) {
 						if (gl.obj[i].isCollision == true) {
 							gl.soundEffekt(9);
+							gl.obj[i].status = 2;
 						}
 						gl.obj[i].image = sTool.setupImage("objekt", "opendoor1", gl.unitsize * 2, gl.unitsize * 2);
 						gl.obj[i].isCollision = false;
@@ -387,10 +400,13 @@ public class Player extends Unit {
 					if (amountKey > 1) {
 						if (gl.obj[i].isCollision == true) {
 							gl.soundEffekt(9);
+							gl.obj[i].status = 2;
 						}
 						gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 						gl.obj[i].isCollision = false;
 						gl.obj[9] = null;
+						gl.monster[5].posX = 38 * gl.unitsize;
+						gl.monster[5].posY = 11 * gl.unitsize;
 						gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
@@ -448,11 +464,11 @@ public class Player extends Unit {
 					break;
 					
 				case "haendler":
-					if (haendlerquest < 1) {
+					if (haendlerquest < 2 && gl.npc[i].dialogIndex == 7) {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 					}
-					if (haendlerquest > 1 && gl.npc[i].dialogIndex == 7) {
+					else if (haendlerquest > 1 && gl.npc[i].dialogIndex == 7) {
 						gl.npc[i].dialogIndex++;
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
@@ -461,7 +477,7 @@ public class Player extends Unit {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.npc[i].dialogIndex++;
-					} else if (haendlerquest > 1) {
+					} else {
 						gl.gameState = gl.dialogState;
 						gl.npc[i].speak();
 						gl.ui.befehl = 0;
