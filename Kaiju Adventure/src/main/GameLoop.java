@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import objekt.Objekt;
+import sql.Datenabfrage;
 import surrounding.TileManager;
 import unit.Player;
 import unit.Unit;
@@ -58,14 +59,18 @@ public class GameLoop extends JPanel implements Runnable {
 	public int gameState;
 	public int titlestate = 0;
 	public int ladespielstate = 1;
-	public int prologstate = 2;
-	public int playState = 3;
-	public int pauseState = 4;
-	public int dialogState = 5; 
-	public int shopState = 6;
-	public int winstate = 7;
-	public int losestate = 8;
+	public int speicherspiel = 2;
+	public int prologstate = 3;
+	public int playState = 4;
+	public int pauseState = 5;
+	public int dialogState = 6; 
+	public int shopState = 7;
+	public int winstate = 8;
+	public int losestate = 9;
 	
+	
+	//Datenbanl mySQL
+	public Datenabfrage db = new Datenabfrage(this);
 	
 	public Thread gameThread;
 	
@@ -145,7 +150,7 @@ public class GameLoop extends JPanel implements Runnable {
 		oSetter.setMonster();
 		oSetter.setCounter();
 		
-		gameState = titlestate;
+		gameState = pauseState;
 	}
 	
 	public void paintComponent(Graphics g) {

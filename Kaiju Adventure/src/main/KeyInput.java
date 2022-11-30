@@ -56,16 +56,95 @@ public class KeyInput implements KeyListener {
 					else {
 						enterPressed = false;
 						gl.gameState = gl.playState;
-						//gl.playMusik(0);
+						//TODO gl.playMusik(0);
 					}
 				}
 				//Lade Spiel
 				if (gl.ui.befehl == 1) {
-					
+					gl.gameState = gl.ladespielstate;
 				}
 				//Beende Spiel
 				if (gl.ui.befehl == 2) {
 					System.exit(0);
+				}
+			}
+		}
+		
+		//Lade Spiel aus datenbank state
+		else if (gl.gameState == gl.ladespielstate) {
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 3;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 3) {
+					gl.ui.befehl = 0;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.soundEffekt(11);
+				
+				if (gl.ui.befehl == 0) {
+					//TODO
+				}
+				if (gl.ui.befehl == 1) {
+					//TODO
+				}
+				if (gl.ui.befehl == 2) {
+					//TODO
+				}	
+				if (gl.ui.befehl == 3) {
+					gl.gameState = gl.titlestate;
+				}
+			}
+		}
+		
+		else if (gl.gameState == gl.speicherspiel) {
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 3;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 3) {
+					gl.ui.befehl = 0;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.soundEffekt(11);
+				
+				if (gl.ui.befehl == 0) {
+					try {
+						gl.db.speichern(1);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (gl.ui.befehl == 1) {
+					try {
+						gl.db.speichern(2);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (gl.ui.befehl == 2) {
+					try {
+						gl.db.speichern(3);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				}	
+				if (gl.ui.befehl == 3) {
+					gl.gameState = gl.pauseState;
 				}
 			}
 		}
@@ -101,7 +180,7 @@ public class KeyInput implements KeyListener {
 						
 				}
 				else if (gl.ui.befehl == 1){
-					gl.stopMusik();
+					//TODO gl.stopMusik();
 					gl.ui.befehl = 0;
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
 							gl.counter[i].removeCount();
@@ -117,7 +196,7 @@ public class KeyInput implements KeyListener {
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.gameState = gl.playState;
-				gl.playMusik(0);
+				//TODO gl.playMusik(0);
 				gl.soundEffekt(11);
 			}
 		}
@@ -141,7 +220,7 @@ public class KeyInput implements KeyListener {
 			}
 			if (eingabe == KeyEvent.VK_P) {
 					gl.gameState = gl.pauseState;
-					gl.stopMusik();
+					//TODO gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -241,13 +320,13 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
 				if (gl.ui.befehl < 0) {
-					gl.ui.befehl = 1;
+					gl.ui.befehl = 2;
 				}
 				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_S) {
 				gl.ui.befehl++;
-				if (gl.ui.befehl > 1) {
+				if (gl.ui.befehl > 2) {
 					gl.ui.befehl = 0;
 				}
 				gl.soundEffekt(1);
@@ -256,9 +335,12 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(11);
 				if (gl.ui.befehl == 0) {
 					gl.gameState = gl.playState;
-					gl.resumeMusik(0);
+					//TODO gl.resumeMusik(0);
 				}
-				else if(gl.ui.befehl == 1) {
+				else if (gl.ui.befehl == 1) {
+					gl.gameState = gl.speicherspiel;
+				}
+				else if(gl.ui.befehl == 2) {
 					gl.gameState = gl.titlestate;
 					gl.ui.befehl = 0;
 				}
