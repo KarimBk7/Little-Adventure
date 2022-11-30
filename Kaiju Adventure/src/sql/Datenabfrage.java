@@ -1,5 +1,7 @@
 package sql;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import main.GameLoop;
 import objekt.Objekt;
 import unit.Unit;
@@ -7,6 +9,7 @@ import unit.Unit;
 public class Datenabfrage {
 
 	GameLoop gl;
+	ResultSet rs;
 	
 	//Spieler
 	private int posX;
@@ -41,8 +44,29 @@ public class Datenabfrage {
 		Interface.disconnect();
 	}
 	
-	public void laden() {
-		Interface.update("");
+	public void laden(int id) throws ClassNotFoundException {
+		
+		try {
+			Interface.connect();
+			
+			//lade Spieler attribute
+			rs = Interface.select("SELECT * FROM `t_spieler` WHERE Spiele_ID = " + id);
+			while (rs.next()) { 
+				System.out.println(rs.getInt(1) + " a " + rs.getInt(2) + " b " + rs.getInt(3) + " c " + rs.getInt(4) + " d " + rs.getInt(5));
+				gl.player.health = rs.getInt(1);
+				gl.player.posX = rs.getInt(2);
+				gl.player.posY = rs.getInt(3);
+				gl.player.strenght = rs.getInt(4);
+				gl.player.speed = rs.getInt(5);
+				
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Interface.disconnect();
 	}
 	
 	

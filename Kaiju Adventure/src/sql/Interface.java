@@ -3,7 +3,9 @@ package sql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Interface {
 
@@ -14,6 +16,7 @@ public class Interface {
 	private static final String passwort = "";
 	
 	private static Connection con;
+	private static ResultSet rs;
 	
 	public static boolean isConnect() {
 		return(con == null ? false : true);
@@ -31,6 +34,14 @@ public class Interface {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static ResultSet select(String qry) throws SQLException {
+		
+		Statement stmt = con.createStatement();
+		rs = stmt.executeQuery(qry);
+		
+		return rs;
 	}
 	
 	public static void disconnect() {

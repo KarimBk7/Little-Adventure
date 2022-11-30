@@ -90,13 +90,25 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(11);
 				
 				if (gl.ui.befehl == 0) {
-					//TODO
+					try {
+						gl.db.laden(1);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
 				}
 				if (gl.ui.befehl == 1) {
-					//TODO
+					try {
+						gl.db.laden(2);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
 				}
 				if (gl.ui.befehl == 2) {
-					//TODO
+					try {
+						gl.db.laden(3);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
 				}	
 				if (gl.ui.befehl == 3) {
 					gl.gameState = gl.titlestate;
@@ -104,6 +116,7 @@ public class KeyInput implements KeyListener {
 			}
 		}
 		
+		//speicherspiel
 		else if (gl.gameState == gl.speicherspiel) {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
