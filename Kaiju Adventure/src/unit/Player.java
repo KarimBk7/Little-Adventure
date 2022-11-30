@@ -401,13 +401,13 @@ public class Player extends Unit {
 						if (gl.obj[i].isCollision == true) {
 							gl.soundEffekt(9);
 							gl.obj[i].status = 2;
+							gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
+							gl.obj[i].isCollision = false;
+							gl.obj[9] = null;
+							gl.monster[5].posX = 38 * gl.unitsize;
+							gl.monster[5].posY = 11 * gl.unitsize;
+							gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);
 						}
-						gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
-						gl.obj[i].isCollision = false;
-						gl.obj[9] = null;
-						gl.monster[5].posX = 38 * gl.unitsize;
-						gl.monster[5].posY = 11 * gl.unitsize;
-						gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
 						gl.soundEffekt(10);
