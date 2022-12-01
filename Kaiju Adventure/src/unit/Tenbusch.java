@@ -37,16 +37,16 @@ public class Tenbusch extends Unit{
 		int scale = 3; 
 		
 		// movement bilder
-		up = sTool.setupImage("player", "pl_up", gl.unitsize * scale, gl.unitsize* scale);
-		up1 = sTool.setupImage("player", "pl_up1", gl.unitsize* scale, gl.unitsize* scale);
-		up2 = sTool.setupImage("player", "pl_up2", gl.unitsize* scale, gl.unitsize* scale);
-		down = sTool.setupImage("player", "pl_down", gl.unitsize* scale, gl.unitsize* scale);
-		down1 = sTool.setupImage("player", "pl_down1", gl.unitsize* scale, gl.unitsize* scale);
-		down2 = sTool.setupImage("player", "pl_down2", gl.unitsize* scale, gl.unitsize* scale);
-		left = sTool.setupImage("player", "pl_left", gl.unitsize* scale, gl.unitsize* scale);
+		
+		up1 = sTool.setupImage("tenbusch", "TenbuschUp1", gl.unitsize* scale, gl.unitsize* scale);
+		up2 = sTool.setupImage("tenbusch", "TenbuschUp2", gl.unitsize* scale, gl.unitsize* scale);
+		
+		down1 = sTool.setupImage("tenbusch", "TenbuschDown1", gl.unitsize* scale, gl.unitsize* scale);
+		down2 = sTool.setupImage("tenbusch", "TenbuschDown2", gl.unitsize* scale, gl.unitsize* scale);
+		
 		left1 = sTool.setupImage("player", "pl_left1", gl.unitsize* scale, gl.unitsize* scale);
 		left2 = sTool.setupImage("player", "pl_left2", gl.unitsize* scale, gl.unitsize* scale);
-		right = sTool.setupImage("player", "pl_right", gl.unitsize* scale, gl.unitsize* scale);
+		
 		right1 = sTool.setupImage("player", "pl_right1", gl.unitsize* scale, gl.unitsize* scale);
 		right2 = sTool.setupImage("player", "pl_right2", gl.unitsize* scale, gl.unitsize* scale);
 
