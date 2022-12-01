@@ -3,6 +3,8 @@ package sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import main.GameLoop;
+import main.ScaleTool;
+import objekt.Key;
 import objekt.Objekt;
 import unit.Unit;
 
@@ -10,6 +12,7 @@ public class Datenabfrage {
 
 	GameLoop gl;
 	ResultSet rs;
+	ScaleTool sTool;
 	
 	//Spieler
 	private int posX;
@@ -32,12 +35,10 @@ public class Datenabfrage {
 	private int shopSchnelligkeit;
 	private int shopSpitzhacke;
 	
-	//npc & objekte
-	Unit npc[];
-	Objekt obj[];
 	
 	public Datenabfrage(GameLoop gl){
 		this.gl = gl;
+		sTool = new ScaleTool();
 	}
 	
 	public void speichern(int id) throws ClassNotFoundException {
@@ -53,6 +54,36 @@ public class Datenabfrage {
 		
 		Interface.update("INSERT INTO `t_shop`(`Shop_id`, `Staerketrank`, `Schnelligkeitstrank`, `Spitzhacke_shop`) "
 				+ "VALUES ("+ id +","+ shopStaerke +","+ shopSchnelligkeit +","+ shopSpitzhacke +")");
+		
+		int i = 0;
+		int primarkey = 0;
+		while(gl.npc[i] != null) {
+			if (id == 2) {
+				primarkey = i + 4;
+			}
+			if (id == 3) {
+				primarkey = i + 8;
+			}
+			Interface.update("INSERT INTO `t_npc`(`Npc_id`, `Dialog_index`, `Spiele_id`) "
+					+ "VALUES ("+ primarkey +","+ gl.npc[i].dialogIndex +","+ id +")");
+			i++;
+			primarkey++;
+		}
+		
+		i = 0;
+		primarkey = 0;
+		while(gl.obj[i] != null) {
+			if (id == 2) {
+				primarkey = i + 18;
+			}
+			if (id == 3) {
+				primarkey = i + 36;
+			}
+			Interface.update("INSERT INTO `t_objekt`(`Objekt_id`, `Ob_Index`, `Status`, `Spiele_id`)"
+					+ " VALUES ("+ primarkey +","+ i +","+ gl.obj[i].status +","+ id +")");
+			i++;
+			primarkey++;
+		}
 		
 		Interface.disconnect();
 	}
@@ -85,6 +116,7 @@ public class Datenabfrage {
 				gl.player.hatSpitzhacke = rs.getBoolean(7);
 			}
 			
+			//lade shop-kapazität
 			rs = Interface.select("SELECT * FROM `t_shop` WHERE Shop_id = " + id);
 			while (rs.next()) { 
 				gl.keyI.strenght = rs.getInt(2);
@@ -92,6 +124,43 @@ public class Datenabfrage {
 				gl.keyI.spitzhacke = rs.getInt(4);
 				
 			}
+			
+			//lade npc-dialogindex
+			int i = 0;
+			int primarkey = 0;
+			while (gl.npc[i] != null) {
+				if (id == 2) {
+					primarkey = i + 4;
+				}
+				if (id == 3) {
+					primarkey = i + 8;
+				}
+				rs = Interface.select("SELECT * FROM `t_npc` WHERE Npc_id = " + primarkey + " AND Spiele_id = " + id);
+				while (rs.next()) { 
+					gl.npc[i].dialogIndex = rs.getInt(2);
+				}
+				i++;
+				primarkey++;
+			}
+			
+			//lade objekt-statuse
+			i = 0;
+			primarkey = 0;
+			while (gl.obj[i] != null) {
+				if (id == 2) {
+					primarkey = i + 18;
+				}
+				if (id == 3) {
+					primarkey = i + 36;
+				}
+				rs = Interface.select("SELECT * FROM `t_objekt` WHERE Objekt_id = " + primarkey + " AND Spiele_id = " + id);
+				while (rs.next()) { 
+					gl.obj[i].status = rs.getInt(3);
+				}
+				i++;
+				primarkey++;
+			}
+			updateObjekte();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,6 +172,7 @@ public class Datenabfrage {
 	
 	
 	public void getAllInformation() {
+
 		health = gl.player.health;
 		posX = gl.player.posX;
 		posY = gl.player.posY;
@@ -120,9 +190,82 @@ public class Datenabfrage {
 		shopStaerke = gl.keyI.strenght;
 		shopSchnelligkeit = gl.keyI.speed;
 		shopSpitzhacke = gl.keyI.spitzhacke;
-		
-		obj = gl.obj;
-		npc = gl.npc;
 	
+	}
+	
+	public void updateObjekte() {
+		
+		int i = 0;
+		while(gl.obj[i] != null) {
+			if (gl.obj[i].status == 2) {
+				
+				if (gl.obj[i].name == "closeddoor") {
+					gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = false;
+					gl.obj[9].image = null;
+					gl.monster[5].posX = 38 * gl.unitsize;
+					gl.monster[5].posY = 11 * gl.unitsize;
+				}
+				else if (gl.obj[i].name == "Schaufel") {
+					gl.obj[i].image = sTool.setupImage("objekt", "openchest", gl.unitsize, gl.unitsize);
+				}
+				else if (gl.obj[i].name == "loch") {
+					if (gl.obj[4].status == 1) {
+						gl.obj[4].posX = gl.obj[i].posX - gl.unitsize;
+						gl.obj[4].posY = gl.obj[i].posY;
+					}
+				}
+				else if (gl.obj[i].name == "apfel") {
+					gl.obj[i].image = null;
+				}
+				else if (gl.obj[i].name == "zaun") {
+					gl.obj[i].image = sTool.setupImage("objekt", "zaunopen", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = false;
+				}
+				else if (gl.obj[i].name == "closeddoor1") {
+					gl.obj[i].image = sTool.setupImage("objekt", "opendoor1", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = false;
+				}
+				else if (gl.obj[i].name == "fels") {
+					gl.obj[i].image = null;
+					gl.obj[i].isCollision = false;
+					if (gl.obj[8].status == 1) {
+						gl.obj[8].posX = gl.obj[i].posX - gl.unitsize;
+						gl.obj[8].posY = gl.obj[i].posY;
+					}
+				}
+			}
+			if (gl.obj[i].status == 1) {
+				
+				if (gl.obj[i].name == "closeddoor") {
+					gl.obj[i].image = sTool.setupImage("objekt", "closeddoor", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = true;
+					gl.obj[9].image = sTool.setupImage("objekt", "dach", gl.unitsize * 20, gl.unitsize * 20);
+				}
+				else if (gl.obj[i].name == "loch") {
+					gl.obj[4] = new Key(gl);
+				}
+				else if (gl.obj[i].name == "Schaufel") {
+					gl.obj[i].image = sTool.setupImage("objekt", "closedchest", gl.unitsize, gl.unitsize);
+				}
+				else if (gl.obj[i].name == "apfel") {
+					gl.obj[i].image = sTool.setupImage("objekt", "apfel", gl.unitsize, gl.unitsize);
+				}
+				else if (gl.obj[i].name == "zaun") {
+					gl.obj[i].image = sTool.setupImage("objekt", "zauntuer", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = true;
+				}
+				else if (gl.obj[i].name == "closeddoor1") {
+					gl.obj[i].image = sTool.setupImage("objekt", "closeddoor1", gl.unitsize * 2, gl.unitsize * 2);
+					gl.obj[i].isCollision = true;
+				}
+				else if (gl.obj[i].name == "fels") {
+					gl.obj[i].image = sTool.setupImage("objekt", "felsen2", gl.unitsize, gl.unitsize);
+					gl.obj[i].isCollision = true;
+					gl.obj[8] = new Key(gl);
+				}
+			}
+			i++;
+		}
 	}
 }

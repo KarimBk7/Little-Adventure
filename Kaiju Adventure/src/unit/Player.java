@@ -3,10 +3,6 @@ package unit;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import main.GameLoop;
 import main.KeyInput;
 import main.ScaleTool;
@@ -50,12 +46,12 @@ public class Player extends Unit {
 		hitboxX = hitbox.x;
 		hitboxY = hitbox.y;
 
-		setTest();
+		setDefault();
 		getPlayerpng();
 
 	}
 
-	public void setTest() {
+	public void setDefault() {
 
 		// Spieler-Position bei Start
 		posX = 40 * gl.unitsize; // standard spawnpunkt x = 35
@@ -76,6 +72,9 @@ public class Player extends Unit {
 	public void neuStart() {
 		posX = 35 * gl.unitsize;
 		posY = 67 * gl.unitsize;
+		health = 4;
+		richtung = "right";
+		gl.oSetter.resetBoss();
 	}
 
 	public void getPlayerpng() {
@@ -288,12 +287,15 @@ public class Player extends Unit {
 					if (i == 3 || i == 4) {
 						haendlerquest++;
 					}
+					else if (i == 5) {
+						gl.gameState = gl.winstate;
+						gl.soundEffekt(6);
+					}
 					gl.monster[i] = null;
 					itDollar += 100;
 					exp += 100;
-					;
 					gl.soundEffekt(2);
-					mosterKilled = true;
+					monsterKilled = true;
 				}
 			}
 		}
@@ -325,7 +327,7 @@ public class Player extends Unit {
 				case "Grabstein":
 					gl.ui.showMessage(
 							"Ich schaffte es nicht Tenbusch zu besiegen. \nIch vergrub einen Schluessel zu seiner Burg."
-									+ " \nDoch nur die Voegel die hoch fliegen koennen, \nkoennen den Hinweis sichten, um ihn zu finden. ",
+							+ " \nDoch nur die Voegel die hoch fliegen koennen, \nkoennen den Hinweis sichten, um ihn zu finden. ",
 							480);
 					break;
 
@@ -353,10 +355,13 @@ public class Player extends Unit {
 
 				// Schlüssel einsammeln
 				case "Key":
-					gl.obj[i] = null;
-					gl.soundEffekt(2);
-					amountKey++;
-					gl.ui.showMessage("Schluessel erhalten!", 60);
+					if (gl.obj[i].status == 1) {
+						gl.obj[i].image = null;
+						gl.soundEffekt(2);
+						amountKey++;
+						gl.ui.showMessage("Schluessel erhalten!", 60);
+						gl.obj[i].status = 2;
+					}
 					break;
 
 				// Apfel einsammeln
@@ -371,7 +376,7 @@ public class Player extends Unit {
 
 				// zaun beim haendler
 				case "zaun":
-					if (gl.obj[i].isCollision == true) {
+					if (gl.obj[i].isCollision == true && gl.obj[i].status == 1) {
 						gl.soundEffekt(9);
 						gl.obj[i].status = 2;
 					}
@@ -382,7 +387,7 @@ public class Player extends Unit {
 				// tuer zum westen
 				case "closeddoor1":
 					if (amountKey > 0) {
-						if (gl.obj[i].isCollision == true) {
+						if (gl.obj[i].isCollision == true && gl.obj[i].status == 1) {
 							gl.soundEffekt(9);
 							gl.obj[i].status = 2;
 						}
@@ -398,12 +403,12 @@ public class Player extends Unit {
 				// Tür öffnen
 				case "closeddoor":
 					if (amountKey > 1) {
-						if (gl.obj[i].isCollision == true) {
+						if (gl.obj[i].isCollision == true && gl.obj[i].status == 1) {
 							gl.soundEffekt(9);
 							gl.obj[i].status = 2;
 							gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 							gl.obj[i].isCollision = false;
-							gl.obj[9] = null;
+							gl.obj[9].image = null;
 							gl.monster[5].posX = 38 * gl.unitsize;
 							gl.monster[5].posY = 11 * gl.unitsize;
 							gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);

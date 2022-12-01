@@ -1,0 +1,60 @@
+DROP DATABASE if EXISTS kaiju_adventure;
+CREATE DATABASE kaiju_adventure;
+USE kaiju_adventure;
+CREATE TABLE t_inventar (
+    IT_Dollar INT,
+     Schluessel INT,
+     Apfel INT,
+     Heiltrank INT,
+     Erfahrung INT,
+     Schaufel BOOLEAN,
+     Spitzhacke BOOLEAN,
+     Spieler_id VARCHAR(10),
+     CONSTRAINT PK_T_Inventar PRIMARY KEY (Spieler_id)
+)
+ENGINE=INNODB;
+
+CREATE TABLE t_npc (
+     Npc_id VARCHAR(10),
+     Dialog_index INT,
+     Spiele_id INT,
+     CONSTRAINT PK_T_Npc PRIMARY KEY (Npc_id)
+)
+ENGINE=INNODB;
+
+CREATE TABLE t_objekt (
+     Objekt_id VARCHAR(10),
+     Ob_Index INT,
+     Status INT,
+     Spiele_id INT,
+     CONSTRAINT PK_T_Objekt PRIMARY KEY (Objekt_id)
+)
+ENGINE=INNODB;
+
+
+CREATE TABLE t_monster (
+     Monster_id VARCHAR(10),
+     Lebend BOOLEAN,
+     CONSTRAINT PK_T_Monster PRIMARY KEY (Monster_id)
+)
+ENGINE=INNODB;
+
+CREATE TABLE t_shop (
+     Shop_id VARCHAR(10),
+     Staerketrank INT,
+     Schnelligkeitstrank INT,
+     Spitzhacke_shop INT,
+     CONSTRAINT PK_T_Shop PRIMARY KEY (Shop_id)
+)
+ENGINE=INNODB;
+
+CREATE TABLE t_spieler (
+     Leben INT,
+     POSITION_X INT,
+     POSITION_Y INT,
+     Staerke INT,
+     Schnelligkeit INT,
+     Spiele_id INT,
+     CONSTRAINT PK_T_Spiele PRIMARY KEY (Spiele_id)
+)
+ENGINE=INNODB;

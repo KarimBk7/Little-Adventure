@@ -62,6 +62,7 @@ public class KeyInput implements KeyListener {
 				//Lade Spiel
 				if (gl.ui.befehl == 1) {
 					gl.gameState = gl.ladespielstate;
+					gl.ui.befehl = 0;
 				}
 				//Beende Spiel
 				if (gl.ui.befehl == 2) {
@@ -112,6 +113,7 @@ public class KeyInput implements KeyListener {
 				}	
 				if (gl.ui.befehl == 3) {
 					gl.gameState = gl.titlestate;
+					gl.ui.befehl = 0;
 				}
 			}
 		}
@@ -158,6 +160,7 @@ public class KeyInput implements KeyListener {
 				}	
 				if (gl.ui.befehl == 3) {
 					gl.gameState = gl.pauseState;
+					gl.ui.befehl = 0;
 				}
 			}
 		}
@@ -182,12 +185,10 @@ public class KeyInput implements KeyListener {
 				//neu starten
 				if (gl.ui.befehl == 0) {
 					gl.player.neuStart();
-					gl.player.health = 4;
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
 						gl.counter[i].removeCount();
 					}
 					enterPressed = false;
-					gl.player.richtung = "right";
 					gl.gameState = gl.playState;
 					
 						
@@ -199,7 +200,7 @@ public class KeyInput implements KeyListener {
 							gl.counter[i].removeCount();
 					}
 					gl.player.health = gl.player.maxHealth;
-					gl.player.setTest();
+					gl.player.setDefault();
 					gl.gameState = gl.titlestate;
 				}
 			}
@@ -352,6 +353,7 @@ public class KeyInput implements KeyListener {
 				}
 				else if (gl.ui.befehl == 1) {
 					gl.gameState = gl.speicherspiel;
+					gl.ui.befehl = 0;
 				}
 				else if(gl.ui.befehl == 2) {
 					gl.gameState = gl.titlestate;
