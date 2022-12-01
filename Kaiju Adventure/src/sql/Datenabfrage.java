@@ -27,6 +27,11 @@ public class Datenabfrage {
 	private int itDollar;
 	private int exp;
 	
+	//shop
+	private int shopStaerke;
+	private int shopSchnelligkeit;
+	private int shopSpitzhacke;
+	
 	//npc & objekte
 	Unit npc[];
 	Objekt obj[];
@@ -39,8 +44,16 @@ public class Datenabfrage {
 		getAllInformation();
 		
 		Interface.connect();
-		Interface.update("INSERT INTO `t_spieler`(`Leben`, `Position X`, `Position Y`, `Staerke`, `Schnelligkeit`,"
+		Interface.update("INSERT INTO `t_spieler`(`Leben`, `Position_X`, `Position_Y`, `Staerke`, `Schnelligkeit`,"
 		+ " `Spiele_ID`) VALUES ("+ health +","+ posX +","+ posY +","+ strenght +","+ speed +","+ id +")");
+		
+		Interface.update("INSERT INTO `t_inventar`(`IT_Dollar`, `Schluessel`, `Apfel`, `Heiltrank`, `Erfahrung`,"
+				+ " `Schaufel`, `Spitzhacke`, `Spieler_id`) VALUES ("+ itDollar +","+ keys +","+ apfel +","
+				+ ""+ heiltrank +","+ exp +","+ schaufel +","+ spitzhacke +","+ id +")");
+		
+		Interface.update("INSERT INTO `t_shop`(`Shop_id`, `Staerketrank`, `Schnelligkeitstrank`, `Spitzhacke_shop`) "
+				+ "VALUES ("+ id +","+ shopStaerke +","+ shopSchnelligkeit +","+ shopSpitzhacke +")");
+		
 		Interface.disconnect();
 	}
 	
@@ -58,10 +71,28 @@ public class Datenabfrage {
 				gl.player.posY = rs.getInt(3);
 				gl.player.strenght = rs.getInt(4);
 				gl.player.speed = rs.getInt(5);
-				
-				
+			}
+			
+			//ladet Inventar
+			rs = Interface.select("SELECT * FROM `t_inventar` WHERE Spieler_id = " + id);
+			while (rs.next()) { 
+				gl.player.itDollar = rs.getInt(1);
+				gl.player.amountKey = rs.getInt(2);
+				gl.player.amountApfel = rs.getInt(3);
+				gl.player.healing_potion = rs.getInt(4);
+				gl.player.exp = rs.getInt(5);
+				gl.player.hatSchaufel = rs.getBoolean(6);
+				gl.player.hatSpitzhacke = rs.getBoolean(7);
+			}
+			
+			rs = Interface.select("SELECT * FROM `t_shop` WHERE Shop_id = " + id);
+			while (rs.next()) { 
+				gl.keyI.strenght = rs.getInt(2);
+				gl.keyI.speed = rs.getInt(3);
+				gl.keyI.spitzhacke = rs.getInt(4);
 				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -84,7 +115,11 @@ public class Datenabfrage {
 		itDollar = gl.player.itDollar;
 		exp = gl.player.exp;
 		spitzhacke = gl.player.hatSpitzhacke;
-		schaufel = gl.player.hatSpitzhacke;
+		schaufel = gl.player.hatSchaufel;
+		
+		shopStaerke = gl.keyI.strenght;
+		shopSchnelligkeit = gl.keyI.speed;
+		shopSpitzhacke = gl.keyI.spitzhacke;
 		
 		obj = gl.obj;
 		npc = gl.npc;
