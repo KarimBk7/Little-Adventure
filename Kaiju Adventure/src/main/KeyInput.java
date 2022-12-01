@@ -165,6 +165,48 @@ public class KeyInput implements KeyListener {
 			}
 		}
 		
+		//winbildschirm
+		else if (gl.gameState == gl.winstate) {
+			if (eingabe == KeyEvent.VK_W) {
+				gl.ui.befehl--;
+				if (gl.ui.befehl < 0) {
+					gl.ui.befehl = 1;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_S) {
+				gl.ui.befehl++;
+				if (gl.ui.befehl > 1) {
+					gl.ui.befehl = 0;
+				}
+				gl.soundEffekt(1);
+			}
+			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.soundEffekt(11);
+				enterPressed = true;
+				//neu starten
+				if (gl.ui.befehl == 0) {
+					enterPressed = false;
+					gl.player.fullNeuStart();
+					gl.setupObjekt();
+					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
+						gl.counter[i].removeCount();
+					}
+						
+				}
+				else if (gl.ui.befehl == 1){
+					//TODO gl.stopMusik();
+					gl.ui.befehl = 0;
+					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
+							gl.counter[i].removeCount();
+					}
+					gl.player.health = gl.player.maxHealth;
+					gl.player.setDefault();
+					gl.gameState = gl.titlestate;
+				}
+			}
+		}
+		
 		//losebildschirm
 		else if(gl.gameState == gl.losestate) {
 			if (eingabe == KeyEvent.VK_W) {
