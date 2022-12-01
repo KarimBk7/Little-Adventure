@@ -181,10 +181,18 @@ public class UI {
 		g2.setColor(new Color(30,30,30));
 		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
 		
-		int x = gl.unitsize * 4 + 25;
-		int y = gl.unitsize * 1;
+		int x = gl.unitsize * 3 - 15;
+		int y = gl.screenhoehe / 4 - 50;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,70F));
+		g2.setColor(Color.white);
+		g2.drawString("Lade Spielstand", x + 4, y + 4);
+		g2.setColor(new Color(255,100,100));
+		g2.drawString("Lade Spielstand", x, y);
+		
+		x = gl.unitsize * 4 + 25;
+		y = gl.unitsize * 3 ;
 		int weite = gl.unitsize * 7;
-		int hoehe = gl.unitsize * 3;
+		int hoehe = gl.unitsize * 2 ;
 		g2.setStroke(new BasicStroke(5));
 		
 		//1te Spieldatei
@@ -195,7 +203,7 @@ public class UI {
 		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 		
 		
-		y = gl.unitsize * 4 + 20;
+		y = gl.unitsize * 5 + 20;
 		//2te Spieldatei
 		g2.setColor(Color.black);
 		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
@@ -233,10 +241,20 @@ public class UI {
 				g2.setColor(new Color(0,0,0, 220));
 				g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
 				
-				int x = gl.unitsize * 4 + 25;
-				int y = gl.unitsize * 1;
+				int x = gl.unitsize * 2 - 15;
+				int y = gl.screenhoehe / 4 - 50;
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN,70F));
+				g2.setColor(Color.white);
+				g2.drawString("Spielstand speichern", x + 4, y + 4);
+				g2.setColor(new Color(255,100,100));
+				g2.drawString("Spielstand speichern", x, y);
+				
+				
+				
+				x = gl.unitsize * 4 + 25;
+				y = gl.unitsize * 3;
 				int weite = gl.unitsize * 7;
-				int hoehe = gl.unitsize * 3;
+				int hoehe = gl.unitsize * 2;
 				g2.setStroke(new BasicStroke(5));
 				
 				//1te Spieldatei
@@ -247,7 +265,7 @@ public class UI {
 				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 				
 				
-				y = gl.unitsize * 4 + 20;
+				y = gl.unitsize * 5 + 20;
 				//2te Spieldatei
 				g2.setColor(Color.black);
 				g2.fillRoundRect(x, y, weite, hoehe, 35, 35);

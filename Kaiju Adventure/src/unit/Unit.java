@@ -33,7 +33,7 @@ public class Unit {
 	//Attribute für ingame-wert
 	public int maxHealth;
 	public int health;
-	public boolean losthealth, gethealth, immunity, mosterKilled = false;
+	public boolean losthealth, gethealth, immunity, monsterKilled = false;
 	
 	public Unit(GameLoop gl) {
 		this.gl = gl;

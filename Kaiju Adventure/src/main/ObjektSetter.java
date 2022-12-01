@@ -131,7 +131,7 @@ public class ObjektSetter {
 		//NPC am pier
 		gl.npc[1] =  new Npc(gl);	
 		gl.npc[1].posX = 55 * gl.unitsize;
-		gl.npc[1].posY = 31 * gl.unitsize;
+		gl.npc[1].posY = 34 * gl.unitsize;
 		gl.npc[1].dialogIndex = 2;
 		gl.npc[1].name = "angler";
 		
@@ -210,6 +210,24 @@ public class ObjektSetter {
 		//Tenbusch
 		gl.counter[6] = new Counter();
 		gl.counter[6].setCountermax(60);
+		
+	}
+	
+	public void resetBoss() {
+		gl.monster[5] = null;
+		gl.monster[5] = new Tenbusch(gl);
+		
+		gl.obj[7] = null;
+		gl.obj[7] = new ClosedDoor(gl);
+		gl.obj[7].posX = 39 * gl.unitsize;
+		gl.obj[7].posY = 28 * gl.unitsize;
+		
+		gl.obj[9] = null;
+		gl.obj[9] = new House(gl);
+		gl.obj[9].posX = 30 * gl.unitsize;
+		gl.obj[9].posY = 8 * gl.unitsize;
+		gl.obj[9].name = "dach";
+		gl.obj[9].image = sTool.setupImage("objekt", "dach", gl.unitsize * 20, gl.unitsize * 20);
 		
 	}
  }

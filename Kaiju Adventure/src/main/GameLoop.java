@@ -119,7 +119,7 @@ public class GameLoop extends JPanel implements Runnable {
 				System.out.println("FPS: " + drawCounter);
 				long endtime = System.nanoTime();
 				endtime -= starttim;
-				System.out.println("Nanosec: " + endtime);
+				//System.out.println("Nanosec: " + endtime);
 				drawCounter = 0;
 				timer = 0;
 			}
