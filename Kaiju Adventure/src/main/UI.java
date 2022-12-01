@@ -10,9 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import objekt.Apfel;
-import objekt.Heart;
 import objekt.Key;
-import objekt.Schaufel;
 
 public class UI {
 
