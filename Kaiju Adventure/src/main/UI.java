@@ -479,8 +479,57 @@ public class UI {
 	}
 
 	private void drawWinscreen(Graphics2D g2) {
-		// TODO Auto-generated method stub
+		g2.setColor(new Color(0,0,0,220));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,100F));
+		g2.setColor(Color.white);
+		g2.drawString("Mashallah", gl.unitsize * 3 + 24, gl.unitsize * 2 + 4);	
+		g2.setColor(new Color(246,236,22));
+		g2.drawString("Mashallah", gl.unitsize * 3 + 20, gl.unitsize * 2);
 		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+		String text = "Neues Spiel";
+		int x = gl.unitsize * 5 + 25;
+		int y = gl.unitsize * 6;
+		if (befehl == 0) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawString(text, x + 3, y + 3);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 0) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.gray);
+			g2.drawString(text, x + 3, y + 3);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+		}
+		
+		//Lade Spiel
+		text = "Hauptmenu";
+		x = gl.unitsize * 5 + 30;
+		y = gl.unitsize * 7;
+		if (befehl == 1) {
+			g2.setColor(Color.cyan);
+		}
+		else {
+			g2.setColor(Color.gray);
+		}
+		g2.drawString(text, x + 3, y + 3);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+		if (befehl == 1) {
+			text = ">";
+			x -= 40; 
+			g2.setColor(Color.gray);
+			g2.drawString(text, x + 3, y + 3);
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+		}
 	}
 
 	private void drawLosingscreen(Graphics2D g2) {
@@ -494,7 +543,7 @@ public class UI {
 		g2.drawString("Loser", gl.unitsize * 5, gl.unitsize * 2);
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
-		String text = "Neu Starten";
+		String text = "Neu Spawnen";
 		int x = gl.unitsize * 5 + 25;
 		int y = gl.unitsize * 6;
 		if (befehl == 0) {

@@ -76,6 +76,25 @@ public class Player extends Unit {
 		richtung = "right";
 		gl.oSetter.resetBoss();
 	}
+	
+	public void fullNeuStart() {
+		posX = 35 * gl.unitsize;
+		posY = 67 * gl.unitsize;
+		health = 4;
+		richtung = "right";
+		speed = defaultspeed;
+		strenght = 1;
+		richtung = "down";
+		
+		health = maxHealth;
+		amountApfel = 0;
+		amountKey = 0;
+		hatSchaufel = false;
+		hatSpitzhacke = false;
+		itDollar = 0;
+		exp = 0;
+		healing_potion = 0;
+	}
 
 	public void getPlayerpng() {
 		// movement bilder
