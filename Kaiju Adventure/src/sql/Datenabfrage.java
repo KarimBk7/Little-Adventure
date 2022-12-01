@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import main.GameLoop;
 import main.ScaleTool;
 import objekt.Key;
-import objekt.Objekt;
-import unit.Unit;
 
 public class Datenabfrage {
 
