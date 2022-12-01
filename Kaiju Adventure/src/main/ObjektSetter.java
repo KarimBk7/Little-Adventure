@@ -1,7 +1,5 @@
 package main;
 
-import javax.imageio.ImageIO;
-
 import objekt.Apfel;
 import objekt.ClosedDoor;
 import objekt.Grabstein;
