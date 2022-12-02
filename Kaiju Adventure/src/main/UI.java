@@ -22,7 +22,7 @@ public class UI {
 	Font arial40,arial30, arial20;
 	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, herzleer1, 
 				  prologimg, wasd, enter, e, poison, slowness, itdollar,
-				  healing_potion, strenght_potion, speed_potion, tilebg;
+				  healing_potion, strenght_potion, speed_potion, tilebg, hp;
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
 	public boolean messageOn = false;
@@ -67,6 +67,7 @@ public class UI {
 			speed_potion = ImageIO.read(getClass().getResourceAsStream("/effekt/speed_potion.png"));
 			schaufel = ImageIO.read(getClass().getResourceAsStream("/objekt/schaufel.png"));
 			spitzhacke = ImageIO.read(getClass().getResourceAsStream("/objekt/spitzhacke.png"));
+			hp = ImageIO.read(getClass().getResourceAsStream("/objekt/hp.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +84,7 @@ public class UI {
 	public void draw(Graphics2D g2) {
 		
 		//wenn nicht titel- oder prologbildschirm
-		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate && gl.gameState != gl.ladespielstate){
+		if(gl.gameState != gl.titlestate && gl.gameState != gl.prologstate && gl.gameState != gl.ladespielstate && gl.gameState != gl.epilogstate){
 			//Spielt
 			if (gl.gameState == gl.playState) {
 				
@@ -176,6 +177,9 @@ public class UI {
 		else if(gl.gameState == gl.prologstate) {
 			drawProlog(g2);
 		}
+		else if (gl.gameState == gl.epilogstate) {
+			drawEpilog(g2);
+		}
 		else if (gl.gameState == gl.ladespielstate) {
 			drawLadeSpiel(g2);
 		}
@@ -222,7 +226,8 @@ public class UI {
 		else {
 		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 		g2.drawString("x " + dbKey1, x + 270, y + 55);
-		g2.drawString("HP: " + dbhealth1, x + 100, y + 55);
+		g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbhealth1, x + 150, y + 55);
 		
 		}
 		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -252,7 +257,8 @@ public class UI {
 		else {
 		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 		g2.drawString("x " + dbKey2, x + 270, y + 55);
-		g2.drawString("HP: " + dbhealth2, x + 100, y + 55);
+		g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbhealth1, x + 150, y + 55);
 		
 		}
 		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -282,7 +288,8 @@ public class UI {
 		else {
 		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 		g2.drawString("x " + dbKey3, x + 270, y + 55);
-		g2.drawString("HP: " + dbhealth3, x + 100, y + 55);
+		g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbhealth1, x + 150, y + 55);
 		
 		}
 		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -351,7 +358,8 @@ public class UI {
 				else {
 				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + dbKey1, x + 270, y + 55);
-				g2.drawString("HP: " + dbhealth1, x + 100, y + 55);
+				g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbhealth1, x + 150, y + 55);
 				
 				}
 				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -374,7 +382,8 @@ public class UI {
 				else {
 				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + dbKey2, x + 270, y + 55);
-				g2.drawString("HP: " + dbhealth2, x + 100, y + 55);
+				g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbhealth1, x + 150, y + 55);
 				
 				}
 				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -396,7 +405,8 @@ public class UI {
 				else {
 				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + dbKey3, x + 270, y + 55);
-				g2.drawString("HP: " + dbhealth3, x + 100, y + 55);
+				g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbhealth1, x + 150, y + 55);
 				
 				}
 				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -418,7 +428,6 @@ public class UI {
 				g2.setColor(Color.white);
 				g2.drawString("Zurueck", x, y);
 			}
-	
 	
 	private void drawShop(Graphics2D g2) {
 		g2.setColor(new Color(0,0,0,200));
@@ -606,16 +615,19 @@ public class UI {
 		g2.setColor(new Color(0,0,0,220));
 		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,100F));
+		
+		int x = gl.unitsize * 5 - 15;
+		int y = gl.unitsize * 2;
 		g2.setColor(Color.white);
-		g2.drawString("Mashallah", gl.unitsize * 3 + 24, gl.unitsize * 2 + 4);	
+		g2.drawString("Victory", x + 4, y + 4);	
 		g2.setColor(new Color(246,236,22));
-		g2.drawString("Mashallah", gl.unitsize * 3 + 20, gl.unitsize * 2);
+		g2.drawString("Victory", x, y);
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
-		String text = "Neues Spiel";
-		int x = gl.unitsize * 5 + 25;
-		int y = gl.unitsize * 6;
-		if (befehl == 0) {
+		String text = "Weiter";
+		x = gl.unitsize * 6 + 25;
+		y = gl.unitsize * 10;
+		if (befehl == 1) {
 			g2.setColor(Color.cyan);
 		}
 		else {
@@ -624,7 +636,7 @@ public class UI {
 		g2.drawString(text, x + 3, y + 3);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
-		if (befehl == 0) {
+		if (befehl == 1) {
 			text = ">";
 			x -= 40; 
 			g2.setColor(Color.gray);
@@ -633,27 +645,21 @@ public class UI {
 			g2.drawString(text, x, y);
 		}
 		
-		//Lade Spiel
-		text = "Hauptmenu";
-		x = gl.unitsize * 5 + 30;
-		y = gl.unitsize * 7;
-		if (befehl == 1) {
-			g2.setColor(Color.cyan);
-		}
-		else {
-			g2.setColor(Color.gray);
-		}
-		g2.drawString(text, x + 3, y + 3);
+		
+		//draw gebrauchte zeit zum beenden des spiels
+		x = gl.unitsize * 5 + 20;
+		y = gl.unitsize * 5;
 		g2.setColor(Color.white);
-		g2.drawString(text, x, y);
-		if (befehl == 1) {
-			text = ">";
-			x -= 40; 
-			g2.setColor(Color.gray);
-			g2.drawString(text, x + 3, y + 3);
-			g2.setColor(Color.white);
-			g2.drawString(text, x, y);
-		}
+		g2.drawString("Spielzeit: " + gl.stopw.getMinutes() + ":" + gl.stopw.getSeconds(), x + 2, y + 2);
+		g2.setColor(Color.cyan);
+		g2.drawString("Spielzeit: " + gl.stopw.getMinutes() + ":" + gl.stopw.getSeconds(), x, y);
+		
+		x = gl.unitsize * 4 - 20;
+		y = gl.unitsize * 6;
+		g2.setColor(Color.white);
+		g2.drawString("Erfahrungspunkte: " + gl.player.exp, x + 2, y + 2);
+		g2.setColor(Color.cyan);
+		g2.drawString("Erfahrungspunkte: " + gl.player.exp, x, y);
 	}
 
 	private void drawLosingscreen(Graphics2D g2) {
@@ -750,6 +756,42 @@ public class UI {
 		g2.drawString("press ENTER", 550, 500);	
 	}
 
+	private void drawEpilog(Graphics2D g2) {
+		g2.drawImage(prologimg, 0, 0, gl.screenweite, gl.screenhoehe, null);
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRect(0, 0, gl.screenweite, gl.screenhoehe);
+		String text = "IT-Dollar.... Sie sind wieder in dem \n"
+					+ "Besitz der OSZ-IMT Schueler.\n"
+					+ "Kaiju hat es geschafft die boesen Machenschaften des \n"
+					+ "boesen Herr Tenbusch zu bezwingen, um jeden \n"
+					+ "Schueler seine IT-Dollar zurueck zu bringen. \n"
+					+ "Nun kann jeder seine IT-Dollar gegen Notenpunkte \neintauschen, "
+					+ "um das Abitur-Achievemant zu erreichen.";
+		
+		g2.setColor(Color.white);
+		int x = gl.unitsize;
+		int y = gl.unitsize * 3 + 30;
+		int weite = gl.unitsize * 14;
+		int hoehe = gl.unitsize * 5 + 15;
+		
+		g2.setColor(new Color(0,0,0,150));
+		g2.fillRoundRect(x - 5, y - 5, weite + 10, hoehe + 10, 35, 35);
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(4));
+		g2.drawRoundRect(x, y, weite, hoehe, 25, 25);
+		
+		x = gl.unitsize * 2 - 30;
+		y = gl.unitsize * 4 + 20;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25F));
+		for (String line : text.split("\n")) {
+			g2.drawString(line, x, y);
+			y+=30;
+		}
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20F));
+		g2.drawString("press ENTER", 550, 500);	
+	}
+	
+	
 	private void drawPlayerHealth(Graphics2D g2) {
 		//leere lebensbalken
 		int x = 20;
