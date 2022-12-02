@@ -54,8 +54,8 @@ public class Player extends Unit {
 	public void setDefault() {
 
 		// Spieler-Position bei Start
-		posX = 40 * gl.unitsize; // standard spawnpunkt x = 35
-		posY = 40 * gl.unitsize; // standard spawnpunkt y = 67
+		posX = 35 * gl.unitsize; //standard spawnpunkt x = 35
+		posY = 67 * gl.unitsize; //standard spawnpunkt y = 67
 
 		// Spieler- & Animationsgeschwindigkeit
 		defaultspeed = 4;
