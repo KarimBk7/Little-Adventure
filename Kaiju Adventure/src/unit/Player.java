@@ -22,7 +22,7 @@ public class Player extends Unit {
 	boolean attacking = false;
 
 	// inventar
-	public int amountKey = 2;
+	public int amountKey = 0;
 	public int amountApfel = 0;
 	public int haendlerquest = 0;
 	public boolean hatSchaufel = false;
@@ -58,7 +58,7 @@ public class Player extends Unit {
 		posY = 40 * gl.unitsize; // standard spawnpunkt y = 67
 
 		// Spieler- & Animationsgeschwindigkeit
-		defaultspeed = 8;
+		defaultspeed = 4;
 		speed = defaultspeed;
 		strenght = 1;
 		richtung = "down";
