@@ -48,7 +48,7 @@ public class Tenbusch extends Unit{
 		right2 = sTool.setupImage("player", "pl_right2", gl.unitsize* scale, gl.unitsize* scale);
 
 		// angriffsbilder
-		attackup1 = sTool.setupImage("player", "attackup1", gl.unitsize* scale, gl.unitsize* (scale + 2));
+		/*attackup1 = sTool.setupImage("player", "attackup1", gl.unitsize* scale, gl.unitsize* (scale + 2));
 		attackup2 = sTool.setupImage("player", "attackup2", gl.unitsize* scale, gl.unitsize * (scale + 2));
 		attackdown1 = sTool.setupImage("player", "attackdown1", gl.unitsize* scale, gl.unitsize * (scale + 2));
 		attackdown2 = sTool.setupImage("player", "attackdown2", gl.unitsize* scale, gl.unitsize * (scale + 2));
@@ -56,7 +56,7 @@ public class Tenbusch extends Unit{
 		attackleft2 = sTool.setupImage("player", "attackleft2", gl.unitsize * (scale + 2), gl.unitsize* scale);
 		attackright1 = sTool.setupImage("player", "attackright1", gl.unitsize * (scale + 2), gl.unitsize* scale);
 		attackright2 = sTool.setupImage("player", "attackright2", gl.unitsize * (scale + 2), gl.unitsize* scale);
-		
+		*/
 	}
 	
 	public void setAction() {
@@ -105,10 +105,10 @@ public class Tenbusch extends Unit{
 			else {
 				//tempCamY = camY - gl.unitsize;
 				if (spriteNum == 1) {
-					image = attackup1;
+					image = up1;
 				}
 				if (spriteNum == 2) {
-					image = attackup2;
+					image = up2;
 				}
 			}
 			
@@ -121,10 +121,10 @@ public class Tenbusch extends Unit{
 			}
 			else {
 				if (spriteNum == 1) {
-					image = attackdown1;
+					image = down1;
 				}
 				if (spriteNum == 2) {
-					image = attackdown2;
+					image = down2;
 				}
 			}
 			break;
@@ -137,10 +137,10 @@ public class Tenbusch extends Unit{
 			else {
 				//tempCamX = camX - gl.unitsize;
 				if (spriteNum == 1) {
-					image = attackleft1;
+					image = left1;
 				}
 				if (spriteNum == 2) {
-					image = attackleft2;
+					image = left2;
 				}
 			}
 			break;
@@ -152,10 +152,10 @@ public class Tenbusch extends Unit{
 			}
 			else {
 				if (spriteNum == 1) {
-					image = attackright1;
+					image = right1;
 				}
 				if (spriteNum == 2) {
-					image = attackright2;
+					image = right2;
 				}
 			}
 			break;
