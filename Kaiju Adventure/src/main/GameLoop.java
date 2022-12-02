@@ -54,7 +54,10 @@ public class GameLoop extends JPanel implements Runnable {
 	Sound sound = new Sound();
 	public UI ui = new UI(this);
 	public Counter counter []= new Counter[20]; 	
-		
+	
+	//Stoppuhr
+	public StopWatch stopw = new StopWatch();	
+	
 	//Gamestate
 	public int gameState;
 	public int titlestate = 0;
@@ -67,6 +70,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public int shopState = 7;
 	public int winstate = 8;
 	public int losestate = 9;
+	public int epilogstate = 10;
 	
 	
 	//Datenbanl mySQL

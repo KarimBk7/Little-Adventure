@@ -47,6 +47,8 @@ public class Datenabfrage {
 		
 		Interface.connect();
 		loeschSpielstand(id);
+		Interface.update("INSERT INTO `t_zeit`(`zeit_in_ms`, `Spiele_id`) VALUES ("+ gl.stopw.zeitGesamt +","+ id +")");
+		
 		Interface.update("INSERT INTO `t_spieler`(`Leben`, `Position_X`, `Position_Y`, `Staerke`, `Schnelligkeit`,"
 		+ " `Spiele_ID`) VALUES ("+ health +","+ posX +","+ posY +","+ strenght +","+ speed +","+ id +")");
 		
@@ -94,6 +96,14 @@ public class Datenabfrage {
 		
 		try {
 			Interface.connect();
+			
+			//ladet zeit in ms
+			rs = Interface.select("SELECT * FROM `t_zeit` WHERE Spiele_ID = " + id);
+			while (rs.next()) { 
+				gl.stopw.zeitGesamt = rs.getLong(1);
+				System.out.println(gl.stopw.zeitGesamt);
+				
+			}
 			
 			//lade Spieler attribute
 			rs = Interface.select("SELECT * FROM `t_spieler` WHERE Spiele_ID = " + id);
@@ -171,6 +181,7 @@ public class Datenabfrage {
 	}
 	
 	public void loeschSpielstand(int id) {
+		Interface.update("DELETE FROM `t_zeit` WHERE Spiele_id = " + id);
 		Interface.update("DELETE FROM `t_inventar` WHERE Spieler_id = " + id);
 		Interface.update("DELETE FROM `t_npc` WHERE Spiele_id = " + id);
 		Interface.update("DELETE FROM `t_objekt` WHERE Spiele_id = " + id);
@@ -203,61 +214,56 @@ public class Datenabfrage {
 	public void chechSpielstand() throws SQLException, ClassNotFoundException {
 		Interface.connect();
 		for(int i = 1; i < 4; i++) {
-		rs = Interface.select("SELECT Count(*) AS total FROM `t_spieler` WHERE Spiele_ID = " + i);
-		while (rs.next()) {
-			totalcount = rs.getInt(1);
-		}
-		if (totalcount == 0 && i == 1) {
-			gl.ui.dbvorhanden1 = false;
-		}
-		else if (totalcount == 0 && i == 2) {
-			gl.ui.dbvorhanden2 = false;
-		}
-		else if (totalcount == 0 && i == 3) {
-			gl.ui.dbvorhanden3 = false;
-		}
+			rs = Interface.select("SELECT Count(*) AS total FROM `t_spieler` WHERE Spiele_ID = " + i);
+			while (rs.next()) {
+				totalcount = rs.getInt(1);
+			}
+			if (totalcount == 0 && i == 1) {
+				gl.ui.dbvorhanden1 = false;
+			}
+			else if (totalcount == 0 && i == 2) {
+				gl.ui.dbvorhanden2 = false;
+			}
+			else if (totalcount == 0 && i == 3) {
+				gl.ui.dbvorhanden3 = false;
+			}
 		
-		if (totalcount == 1 && i == 1) {
-			gl.ui.dbvorhanden1 = true;
-			rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
-			while (rs.next()) { 
+			if (totalcount == 1 && i == 1) {
+				gl.ui.dbvorhanden1 = true;
+				rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
+				while (rs.next()) { 
 				gl.ui.dbKey1 = rs.getInt(1);	
 			}
-			rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
-			while (rs.next()) { 
-				gl.ui.dbhealth1 = rs.getInt(1);	
+				rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
+				while (rs.next()) { 
+					gl.ui.dbhealth1 = rs.getInt(1);	
+				}
+			}
+		
+			if (totalcount == 1 && i == 2) {
+				gl.ui.dbvorhanden2 = true;
+				rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
+				while (rs.next()) { 
+					gl.ui.dbKey2 = rs.getInt(1);	
+				}
+				rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
+				while (rs.next()) { 
+					gl.ui.dbhealth2 = rs.getInt(1);	
+				}
+			}
+		
+			if (totalcount == 1 && i == 3) {
+				gl.ui.dbvorhanden3 = true;
+				rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
+				while (rs.next()) { 
+					gl.ui.dbKey3 = rs.getInt(1);	
+				}
+				rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
+				while (rs.next()) { 
+					gl.ui.dbhealth3 = rs.getInt(1);	
+				}
 			}
 		}
-		
-		if (totalcount == 1 && i == 2) {
-			gl.ui.dbvorhanden2 = true;
-			rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
-			while (rs.next()) { 
-				gl.ui.dbKey2 = rs.getInt(1);	
-			}
-			rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
-			while (rs.next()) { 
-				gl.ui.dbhealth2 = rs.getInt(1);	
-			}
-		}
-		
-		if (totalcount == 1 && i == 3) {
-			gl.ui.dbvorhanden3 = true;
-			rs = Interface.select("SELECT `Schluessel` FROM `t_inventar` WHERE Spieler_id = " + i);
-			while (rs.next()) { 
-				gl.ui.dbKey3 = rs.getInt(1);	
-			}
-			rs = Interface.select("SELECT `Leben` FROM `t_spieler` WHERE Spiele_id = " + i);
-			while (rs.next()) { 
-				gl.ui.dbhealth3 = rs.getInt(1);	
-			}
-		}
-		
-		
-		
-		}
-		System.out.println(totalcount);
-		
 	}
 	
 	public void updateObjekte() {

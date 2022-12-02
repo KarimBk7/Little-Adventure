@@ -307,6 +307,8 @@ public class Player extends Unit {
 						haendlerquest++;
 					}
 					else if (i == 5) {
+						exp += 1000;
+						gl.stopw.stackTime();
 						gl.gameState = gl.winstate;
 						gl.soundEffekt(6);
 					}

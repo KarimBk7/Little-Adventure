@@ -55,6 +55,7 @@ public class KeyInput implements KeyListener {
 						gl.ui.prologabgespielt = true;
 					}
 					else {
+						gl.stopw.start();
 						enterPressed = false;
 						gl.gameState = gl.playState;
 						//TODO gl.playMusik(0);
@@ -244,25 +245,10 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.soundEffekt(11);
 				enterPressed = true;
-				//neu starten
-				if (gl.ui.befehl == 0) {
+				//epilog
+				if (gl.ui.befehl == 1) {
 					enterPressed = false;
-					gl.player.fullNeuStart();
-					gl.setupObjekt();
-					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
-						gl.counter[i].removeCount();
-					}
-						
-				}
-				else if (gl.ui.befehl == 1){
-					//TODO gl.stopMusik();
-					gl.ui.befehl = 0;
-					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
-							gl.counter[i].removeCount();
-					}
-					gl.player.health = gl.player.maxHealth;
-					gl.player.setDefault();
-					gl.gameState = gl.titlestate;
+					gl.gameState = gl.epilogstate;
 				}
 			}
 		}
@@ -286,6 +272,7 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//neu starten
 				if (gl.ui.befehl == 0) {
+					gl.stopw.start();
 					gl.player.neuStart();
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
 						gl.counter[i].removeCount();
@@ -311,8 +298,22 @@ public class KeyInput implements KeyListener {
 		//Wenn Prologbildschirm
 		else if (gl.gameState == gl.prologstate) {
 			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.stopw.start();
 				gl.gameState = gl.playState;
 				//TODO gl.playMusik(0);
+				gl.soundEffekt(11);
+			}
+		}
+		
+		//Wenn Epilogbildschirm
+		else if (gl.gameState == gl.epilogstate) {
+			if (eingabe == KeyEvent.VK_ENTER) {
+				gl.ui.befehl = 0;
+				for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
+						gl.counter[i].removeCount();
+				}
+				gl.player.setDefault();
+				gl.gameState = gl.titlestate;
 				gl.soundEffekt(11);
 			}
 		}
@@ -335,8 +336,9 @@ public class KeyInput implements KeyListener {
 				ePressed = true;
 			}
 			if (eingabe == KeyEvent.VK_P) {
-					gl.gameState = gl.pauseState;
-					//TODO gl.stopMusik();
+				gl.stopw.stackTime();	
+				gl.gameState = gl.pauseState;
+				//TODO gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -427,6 +429,7 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl == 4) {
 					gl.soundEffekt(11);
 					gl.gameState = gl.playState;
+					gl.ui.befehl = 0;
 				}
 			}
 		}
@@ -450,6 +453,7 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) { 
 				gl.soundEffekt(11);
 				if (gl.ui.befehl == 0) {
+					gl.stopw.start();
 					gl.gameState = gl.playState;
 					//TODO gl.resumeMusik(0);
 				}
