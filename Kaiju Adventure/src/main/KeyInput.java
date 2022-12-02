@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 
 public class KeyInput implements KeyListener {
 	
@@ -61,6 +62,11 @@ public class KeyInput implements KeyListener {
 				}
 				//Lade Spiel
 				if (gl.ui.befehl == 1) {
+					try {
+						gl.db.chechSpielstand();
+					} catch (ClassNotFoundException | SQLException e1) {
+						e1.printStackTrace();
+					}
 					gl.gameState = gl.ladespielstate;
 					gl.ui.befehl = 0;
 				}
@@ -88,9 +94,14 @@ public class KeyInput implements KeyListener {
 				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
-				gl.soundEffekt(11);
 				
 				if (gl.ui.befehl == 0) {
+					if (gl.ui.dbvorhanden1) {
+						gl.soundEffekt(7);
+					}
+					else {
+						gl.soundEffekt(11);
+					}
 					try {
 						gl.db.laden(1);
 					} catch (ClassNotFoundException e1) {
@@ -98,6 +109,12 @@ public class KeyInput implements KeyListener {
 					}
 				}
 				if (gl.ui.befehl == 1) {
+					if (gl.ui.dbvorhanden2) {
+						gl.soundEffekt(7);
+					}
+					else {
+						gl.soundEffekt(11);
+					}
 					try {
 						gl.db.laden(2);
 					} catch (ClassNotFoundException e1) {
@@ -105,6 +122,12 @@ public class KeyInput implements KeyListener {
 					}
 				}
 				if (gl.ui.befehl == 2) {
+					if (gl.ui.dbvorhanden3) {
+						gl.soundEffekt(7);
+					}
+					else {
+						gl.soundEffekt(11);
+					}
 					try {
 						gl.db.laden(3);
 					} catch (ClassNotFoundException e1) {
@@ -113,8 +136,36 @@ public class KeyInput implements KeyListener {
 				}	
 				if (gl.ui.befehl == 3) {
 					gl.gameState = gl.titlestate;
+					gl.soundEffekt(11);
 					gl.ui.befehl = 0;
 				}
+			}
+			if (eingabe == KeyEvent.VK_DELETE) {
+				if (gl.ui.befehl == 0) {
+					gl.db.loeschSpielstand(1);
+					try {
+						gl.db.chechSpielstand();
+					} catch (ClassNotFoundException | SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (gl.ui.befehl == 1) {
+					gl.db.loeschSpielstand(2);
+					try {
+						gl.db.chechSpielstand();
+					} catch (ClassNotFoundException | SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (gl.ui.befehl == 2) {
+					gl.db.loeschSpielstand(3);
+					try {
+						gl.db.chechSpielstand();
+					} catch (ClassNotFoundException | SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				gl.soundEffekt(11);
 			}
 		}
 		
@@ -140,21 +191,30 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl == 0) {
 					try {
 						gl.db.speichern(1);
+						gl.db.chechSpielstand();
 					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 				if (gl.ui.befehl == 1) {
 					try {
 						gl.db.speichern(2);
+						gl.db.chechSpielstand();
 					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 				if (gl.ui.befehl == 2) {
 					try {
 						gl.db.speichern(3);
+						gl.db.chechSpielstand();
 					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}	
@@ -394,6 +454,11 @@ public class KeyInput implements KeyListener {
 					//TODO gl.resumeMusik(0);
 				}
 				else if (gl.ui.befehl == 1) {
+					try {
+						gl.db.chechSpielstand();
+					} catch (ClassNotFoundException | SQLException e1) {
+						e1.printStackTrace();
+					}
 					gl.gameState = gl.speicherspiel;
 					gl.ui.befehl = 0;
 				}

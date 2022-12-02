@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.imageio.ImageIO;
 import objekt.Apfel;
 import objekt.Key;
@@ -18,9 +20,9 @@ public class UI {
 	Graphics2D g2;
 	GameLoop gl;
 	Font arial40,arial30, arial20;
-	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, herzleer1, prologimg, wasd, enter, e, poison, slowness, itdollar,
+	BufferedImage key, apfel, schaufel, spitzhacke, herz, herzleer, herzleer1, 
+				  prologimg, wasd, enter, e, poison, slowness, itdollar,
 				  healing_potion, strenght_potion, speed_potion, tilebg;
-	
 	public boolean prologabgespielt = false;
 	public boolean spielbeendet = false;
 	public boolean messageOn = false;
@@ -31,6 +33,11 @@ public class UI {
 	
 	//shop
 	public boolean ausverkauft, keinGeld = false;
+	
+	//datenbank spieldaten
+	public int dbKey1, dbKey2, dbKey3;
+	public int dbhealth1, dbhealth2, dbhealth3;
+	public boolean dbvorhanden1, dbvorhanden2, dbvorhanden3;
 	
 	//Konstruktor
 	public UI(GameLoop gl) {
@@ -192,33 +199,97 @@ public class UI {
 		int weite = gl.unitsize * 7;
 		int hoehe = gl.unitsize * 2 ;
 		g2.setStroke(new BasicStroke(5));
+		g2.setFont(arial30);
 		
 		//1te Spieldatei
 		g2.setColor(Color.black);
 		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
-		if (befehl == 0) {g2.setColor(Color.cyan);}
+		if (befehl == 0) {
+			g2.setFont(arial20);
+			g2.setColor(Color.white);
+			g2.drawString("(ENTER)", x + 349, y + 54);
+			g2.setFont(arial30);
+			g2.setColor(Color.cyan);
+			}
 		else {g2.setColor(Color.white);}
 		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 		
+		g2.setColor(Color.white);
+		if (!dbvorhanden1) {
+			g2.drawString("Leerer Spielstand", x + 80, y + 55);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+		}
+		else {
+		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbKey1, x + 270, y + 55);
+		g2.drawString("HP: " + dbhealth1, x + 100, y + 55);
 		
-		y = gl.unitsize * 5 + 20;
+		}
+		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+		
+		
 		//2te Spieldatei
+		y = gl.unitsize * 5 + 20;
 		g2.setColor(Color.black);
 		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
-		if (befehl == 1) {g2.setColor(Color.cyan);}
+		if (befehl == 1) {
+			g2.setFont(arial20);
+			g2.setColor(Color.white);
+			g2.drawString("(ENTER)", x + 349, y + 54);
+			g2.setFont(arial30);
+			g2.setColor(Color.cyan);
+			}
 		else {g2.setColor(Color.white);}
 		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 		
+		g2.setColor(Color.white);
+		if (!dbvorhanden2) {
+			g2.drawString("Leerer Spielstand", x + 80, y + 55);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+		}
+		else {
+		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbKey2, x + 270, y + 55);
+		g2.drawString("HP: " + dbhealth2, x + 100, y + 55);
 		
-		y = gl.unitsize * 8 - 8;
+		}
+		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+		
+		
 		//3te Spieldatei
+		y = gl.unitsize * 8 - 8;
 		g2.setColor(Color.black);
 		g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
-		if (befehl == 2) {g2.setColor(Color.cyan);}
+		if (befehl == 2) {
+			g2.setFont(arial20);
+			g2.setColor(Color.white);
+			g2.drawString("(ENTER)", x + 349, y + 54);
+			g2.setFont(arial30);
+			g2.setColor(Color.cyan);
+			}
 		else {g2.setColor(Color.white);}
 		g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 		
-		x = gl.unitsize * 12;
+		g2.setColor(Color.white);
+		if (!dbvorhanden3) {
+			g2.drawString("Leerer Spielstand", x + 80, y + 55);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+		}
+		else {
+		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+		g2.drawString("x " + dbKey3, x + 270, y + 55);
+		g2.drawString("HP: " + dbhealth3, x + 100, y + 55);
+		
+		}
+		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+		//zurueck hauptmenu
+		x = gl.unitsize * 6 + 20;
 		y = gl.unitsize * 11 + 20;
 		g2.setFont(arial30);
 		if (befehl == 3) {
@@ -232,8 +303,17 @@ public class UI {
 		g2.drawString("Hauptmenue", x + 2, y + 2);
 		g2.setColor(Color.white);
 		g2.drawString("Hauptmenue", x, y);
+		
+		
+		x = gl.unitsize - 30;
+		y = gl.unitsize * 11 + 20;
+		g2.setFont(arial20);
+		g2.setColor(Color.gray);
+		g2.drawString("Loeschen (ENTF)", x + 2, y + 2);
+		g2.setColor(Color.white);
+		g2.drawString("Loeschen (ENTF)", x, y);
 	}
-
+	
 	private void drawSpielspeichern(Graphics2D g2) {
 		//Hintergrund
 				g2.setColor(new Color(0,0,0, 220));
@@ -262,6 +342,21 @@ public class UI {
 				else {g2.setColor(Color.white);}
 				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 				
+				g2.setFont(arial30);
+				g2.setColor(Color.white);
+				if (!dbvorhanden1) {
+					g2.drawString("Leerer Spielstand", x + 80, y + 55);
+					g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+				}
+				else {
+				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbKey1, x + 270, y + 55);
+				g2.drawString("HP: " + dbhealth1, x + 100, y + 55);
+				
+				}
+				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+				
 				
 				y = gl.unitsize * 5 + 20;
 				//2te Spieldatei
@@ -271,15 +366,43 @@ public class UI {
 				else {g2.setColor(Color.white);}
 				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 				
+				g2.setColor(Color.white);
+				if (!dbvorhanden2) {
+					g2.drawString("Leerer Spielstand", x + 80, y + 55);
+					g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+				}
+				else {
+				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbKey2, x + 270, y + 55);
+				g2.drawString("HP: " + dbhealth2, x + 100, y + 55);
 				
-				y = gl.unitsize * 8 - 8;
+				}
+				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+				
 				//3te Spieldatei
+				y = gl.unitsize * 8 - 8;
 				g2.setColor(Color.black);
 				g2.fillRoundRect(x, y, weite, hoehe, 35, 35);
 				if (befehl == 2) {g2.setColor(Color.cyan);}
 				else {g2.setColor(Color.white);}
 				g2.drawRoundRect(x+10, y+10, weite-20, hoehe-20, 25, 25);
 				
+				g2.setColor(Color.white);
+				if (!dbvorhanden3) {
+					g2.drawString("Leerer Spielstand", x + 80, y + 55);
+					g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+				}
+				else {
+				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
+				g2.drawString("x " + dbKey3, x + 270, y + 55);
+				g2.drawString("HP: " + dbhealth3, x + 100, y + 55);
+				
+				}
+				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+				
+				//zurueck ins spiel
 				x = gl.unitsize * 12;
 				y = gl.unitsize * 11 + 20;
 				g2.setFont(arial30);
@@ -295,6 +418,7 @@ public class UI {
 				g2.setColor(Color.white);
 				g2.drawString("Zurueck", x, y);
 			}
+	
 	
 	private void drawShop(Graphics2D g2) {
 		g2.setColor(new Color(0,0,0,200));
