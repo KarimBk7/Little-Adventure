@@ -39,7 +39,7 @@ public class GameLoop extends JPanel implements Runnable {
 	//Keyinput
 	public KeyInput keyI = new KeyInput(this);
 	
-	//Units
+	//Units && Collisionchecker
 	public CollisionC cc = new CollisionC(this);
 	public Player player = new Player(this,keyI);
 	public Unit npc[] = new Unit[10];
@@ -51,11 +51,12 @@ public class GameLoop extends JPanel implements Runnable {
 	public ObjektSetter oSetter = new ObjektSetter(this);
 	
 	//sound & ui
-	Sound sound = new Sound();
+	Sound soundef = new Sound();
+	Sound music = new Sound();
 	public UI ui = new UI(this);
-	public Counter counter []= new Counter[20]; 	
 	
-	//Stoppuhr
+	//Counter & Stoppuhr
+	public Counter counter []= new Counter[20]; 	
 	public StopWatch stopw = new StopWatch();	
 	
 	//Gamestate
@@ -204,28 +205,28 @@ public class GameLoop extends JPanel implements Runnable {
 	//startet audio in loop
 	public void playMusik(int i) {
 		
-		sound.setFile(i);
-		sound.play();
-		sound.loop();
+		music.setFile(i);
+		music.play();
+		//sound.loop();
 	}
 	
 	//stoppt audio
 	public void stopMusik() {
 		
-		sound.pause();
+		music.pause();
 	}
 	
 	//startet audio
 	public void soundEffekt(int i) {
 		
-		sound.setFile(i);
-		sound.play();
+		soundef.setFile(i);
+		soundef.play();
 	}
 	
 	public void resumeMusik(int i) {
-		sound.setFile(i);
-		sound.resume();
-		sound.loop();
+		music.setFile(i);
+		music.resume();
+		music.loop();
 		
 	}
 }

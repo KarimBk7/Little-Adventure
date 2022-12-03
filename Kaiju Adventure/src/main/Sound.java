@@ -43,13 +43,13 @@ public class Sound {
 	//start
 	public void play() {
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(-20.0f);
+		gainControl.setValue(-30.0f);
 		clip.start();
 	}
 	
 	//loop
 	public void loop() {
-		clip.loop(clip.LOOP_CONTINUOUSLY);
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
 	//stop
@@ -61,7 +61,7 @@ public class Sound {
 	//pause
 	public void resume() {
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(-35.0f);
+		gainControl.setValue(-30.0f);
 		clip.setMicrosecondPosition(clipTime);
 		clip.start();
 		

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import main.GameLoop;
 import main.ScaleTool;
 import objekt.Key;
+import unit.Monster_Snake;
 
 public class Datenabfrage {
 
@@ -101,7 +102,6 @@ public class Datenabfrage {
 			rs = Interface.select("SELECT * FROM `t_zeit` WHERE Spiele_ID = " + id);
 			while (rs.next()) { 
 				gl.stopw.zeitGesamt = rs.getLong(1);
-				System.out.println(gl.stopw.zeitGesamt);
 				
 			}
 			
@@ -270,8 +270,8 @@ public class Datenabfrage {
 		
 		int i = 0;
 		while(gl.obj[i] != null) {
+			//wenn mit item interargiert wurde
 			if (gl.obj[i].status == 2) {
-				
 				if (gl.obj[i].name == "closeddoor") {
 					gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 					gl.obj[i].isCollision = false;
@@ -308,6 +308,8 @@ public class Datenabfrage {
 					}
 				}
 			}
+			
+			//wenn mit objekt noch nicht inerargiert wurde
 			if (gl.obj[i].status == 1) {
 				
 				if (gl.obj[i].name == "closeddoor") {
@@ -339,6 +341,21 @@ public class Datenabfrage {
 				}
 			}
 			i++;
+		}
+		
+		if (gl.npc[3].dialogIndex == 10) {
+			gl.monster[3] = null;
+			gl.monster[4] = null;
+		}
+		else {
+			//monster am schmied
+			gl.monster[3] = new Monster_Snake(gl);
+			gl.monster[3].posX = 13 * gl.unitsize;
+			gl.monster[3].posY = 20 * gl.unitsize;
+			
+			gl.monster[4] = new Monster_Snake(gl);
+			gl.monster[4].posX = 18 * gl.unitsize;
+			gl.monster[4].posY = 20 * gl.unitsize;
 		}
 	}
 }

@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.imageio.ImageIO;
 import objekt.Apfel;
 import objekt.Key;
@@ -258,7 +256,7 @@ public class UI {
 		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 		g2.drawString("x " + dbKey2, x + 270, y + 55);
 		g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
-		g2.drawString("x " + dbhealth1, x + 150, y + 55);
+		g2.drawString("x " + dbhealth2, x + 150, y + 55);
 		
 		}
 		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -289,7 +287,7 @@ public class UI {
 		g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 		g2.drawString("x " + dbKey3, x + 270, y + 55);
 		g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
-		g2.drawString("x " + dbhealth1, x + 150, y + 55);
+		g2.drawString("x " + dbhealth3, x + 150, y + 55);
 		
 		}
 		g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -383,7 +381,7 @@ public class UI {
 				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + dbKey2, x + 270, y + 55);
 				g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
-				g2.drawString("x " + dbhealth1, x + 150, y + 55);
+				g2.drawString("x " + dbhealth2, x + 150, y + 55);
 				
 				}
 				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -406,7 +404,7 @@ public class UI {
 				g2.drawImage(key, x + 220, y + 20, gl.unitsize, gl.unitsize, null);
 				g2.drawString("x " + dbKey3, x + 270, y + 55);
 				g2.drawImage(hp, x + 100, y + 20, gl.unitsize, gl.unitsize, null);
-				g2.drawString("x " + dbhealth1, x + 150, y + 55);
+				g2.drawString("x " + dbhealth3, x + 150, y + 55);
 				
 				}
 				g2.drawImage(gl.player.down, x + 10, y + 10, gl.unitsize + 20, gl.unitsize + 27, null);
@@ -674,7 +672,7 @@ public class UI {
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
 		String text = "Neu Spawnen";
-		int x = gl.unitsize * 5 + 25;
+		int x = gl.unitsize * 5 + 10;
 		int y = gl.unitsize * 6;
 		if (befehl == 0) {
 			g2.setColor(Color.cyan);
@@ -791,7 +789,6 @@ public class UI {
 		g2.drawString("press ENTER", 550, 500);	
 	}
 	
-	
 	private void drawPlayerHealth(Graphics2D g2) {
 		//leere lebensbalken
 		int x = 20;
@@ -879,11 +876,35 @@ public class UI {
 			
 		}
 		
+		//Starte Spiel
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+				text = "Neues Spiel";
+				x = gl.unitsize * 5 + 20;
+				y = gl.unitsize * 9;
+				if (befehl == 1) {
+					g2.setColor(Color.cyan);
+				}
+				else {
+					g2.setColor(Color.black);
+				}
+				g2.drawString(text, x + 4, y + 4);
+				g2.setColor(Color.white);
+				g2.drawString(text, x, y);
+				if (befehl == 1) {
+					text = ">";
+					x -= 40; 
+					g2.setColor(Color.black);
+					g2.drawString(text, x + 4, y + 4);
+					g2.setColor(Color.white);
+					g2.drawString(text, x, y);
+					
+				}
+		
 		//Lade Spiel
 		text = "Lade Spiel";
 		x = gl.unitsize * 5 + 30;
-		y = gl.unitsize * 9;
-		if (befehl == 1) {
+		y = gl.unitsize * 10;
+		if (befehl == 2) {
 			g2.setColor(Color.cyan);
 		}
 		else {
@@ -892,7 +913,7 @@ public class UI {
 		g2.drawString(text, x + 4, y + 4);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
-		if (befehl == 1) {
+		if (befehl == 2) {
 			text = ">";
 			x -= 40; 
 			g2.setColor(Color.black);
@@ -905,8 +926,8 @@ public class UI {
 		//Verlasse Speil
 		text = "Beenden";
 		x = gl.unitsize * 6;
-		y = gl.unitsize * 10;
-		if (befehl == 2) {
+		y = gl.unitsize * 11;
+		if (befehl == 3) {
 			g2.setColor(Color.cyan);
 		}
 		else {
@@ -915,7 +936,7 @@ public class UI {
 		g2.drawString(text, x + 4, y + 4);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
-		if (befehl == 2) {
+		if (befehl == 3) {
 			text = ">";
 			x -= 40; 
 			g2.setColor(Color.black);
