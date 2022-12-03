@@ -343,7 +343,7 @@ public class Datenabfrage {
 			i++;
 		}
 		
-		if (gl.npc[3].dialogIndex == 10) {
+		if (gl.npc[3].dialogIndex > 7) {
 			gl.monster[3] = null;
 			gl.monster[4] = null;
 		}
