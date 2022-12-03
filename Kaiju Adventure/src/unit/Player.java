@@ -127,7 +127,7 @@ public class Player extends Unit {
 
 		// wenn spiler kein leben mehr hat
 		if (health < 1) {
-			// gl.stopMusik();
+			gl.stopMusik();
 			gl.soundEffekt(5);
 			gl.ui.befehl = 0;
 			gl.gameState = gl.losestate;
@@ -307,6 +307,7 @@ public class Player extends Unit {
 						haendlerquest++;
 					}
 					else if (i == 5) {
+						gl.stopMusik();
 						exp += 1000;
 						gl.stopw.stackTime();
 						gl.gameState = gl.winstate;

@@ -34,13 +34,13 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_W) {
 				gl.ui.befehl--;
 				if (gl.ui.befehl < 0) {
-					gl.ui.befehl = 2;
+					gl.ui.befehl = 3;
 				}
 				gl.soundEffekt(1);
 			}
 			if (eingabe == KeyEvent.VK_S) {
 				gl.ui.befehl++;
-				if (gl.ui.befehl > 2) {
+				if (gl.ui.befehl > 3) {
 					gl.ui.befehl = 0;
 				}
 				gl.soundEffekt(1);
@@ -58,11 +58,15 @@ public class KeyInput implements KeyListener {
 						gl.stopw.start();
 						enterPressed = false;
 						gl.gameState = gl.playState;
-						//TODO gl.playMusik(0);
+						gl.playMusik(0);
 					}
 				}
-				//Lade Spiel
 				if (gl.ui.befehl == 1) {
+					gl.player.fullNeuStart();
+					gl.gameState = gl.prologstate;
+				}
+				//Lade Spiel
+				if (gl.ui.befehl == 2) {
 					try {
 						gl.db.chechSpielstand();
 					} catch (ClassNotFoundException | SQLException e1) {
@@ -72,7 +76,7 @@ public class KeyInput implements KeyListener {
 					gl.ui.befehl = 0;
 				}
 				//Beende Spiel
-				if (gl.ui.befehl == 2) {
+				if (gl.ui.befehl == 3) {
 					System.exit(0);
 				}
 			}
@@ -272,6 +276,7 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//neu starten
 				if (gl.ui.befehl == 0) {
+					gl.playMusik(0);
 					gl.stopw.start();
 					gl.player.neuStart();
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
@@ -283,7 +288,6 @@ public class KeyInput implements KeyListener {
 						
 				}
 				else if (gl.ui.befehl == 1){
-					//TODO gl.stopMusik();
 					gl.ui.befehl = 0;
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
 							gl.counter[i].removeCount();
@@ -300,7 +304,8 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.stopw.start();
 				gl.gameState = gl.playState;
-				//TODO gl.playMusik(0);
+				//TODO 
+				gl.playMusik(0);
 				gl.soundEffekt(11);
 			}
 		}
@@ -338,7 +343,8 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_P) {
 				gl.stopw.stackTime();	
 				gl.gameState = gl.pauseState;
-				//TODO gl.stopMusik();
+				//TODO 
+				gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
 				enterPressed = true;
@@ -455,7 +461,7 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl == 0) {
 					gl.stopw.start();
 					gl.gameState = gl.playState;
-					//TODO gl.resumeMusik(0);
+					gl.resumeMusik(0);
 				}
 				else if (gl.ui.befehl == 1) {
 					try {
