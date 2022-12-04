@@ -107,6 +107,13 @@ public class ObjektSetter {
 		gl.obj[17].isCollision = true;
 		gl.obj[17].name = "fels";
 		
+		//unsichtbarer schalter der tuer schließt
+		gl.obj[19] = new Objekt();
+		gl.obj[19].posX = 39 * gl.unitsize;
+		gl.obj[19].posY = 26 * gl.unitsize;
+		gl.obj[19].name = "sperren";
+		gl.obj[19].hitbox.width = 96;
+		
 		//get und scale .png
 		gl.obj[3].image = sTool.setupImage("objekt", "hous1", gl.buildingsize, gl.buildingsize);
 		gl.obj[9].image = sTool.setupImage("objekt", "dach", gl.unitsize * 20, gl.unitsize * 20);

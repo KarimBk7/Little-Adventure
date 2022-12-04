@@ -27,6 +27,7 @@ public class Sound {
 		soundURL[10] = getClass().getResource("/sound/block.wav");
 		soundURL[11] = getClass().getResource("/sound/menunavigate2.wav");
 		soundURL[12] = getClass().getResource("/sound/swordswing.wav");
+		soundURL[13] = getClass().getResource("/sound/bosstheme.wav");
 	}
 	
 	public void setFile(int i) {
