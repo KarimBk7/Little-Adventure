@@ -272,6 +272,8 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//neu starten
 				if (gl.ui.befehl == 0) {
+					gl.musikIndex = 0;
+					gl.obj[20].isCollision = false;
 					gl.playMusik(gl.musikIndex);
 					gl.stopw.start();
 					gl.player.neuStart();

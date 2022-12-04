@@ -19,7 +19,7 @@ public class Tenbusch extends Unit{
 		maxHealth = 15;
 		health = maxHealth;
 		isCollision = true;
-		animationspeed = 120;
+		animationspeed = 40;
 		
 		
 		hitbox.x = 24;
@@ -67,23 +67,36 @@ public class Tenbusch extends Unit{
 		}
 		
 		
-		if (posX + 50 < gl.player.posX) {
-			richtung = "right";
-		}
-		else if (posX - 50 > gl.player.posX) {
-			richtung = "left";
-		}
-		else if (posY + 72 < gl.player.posY) {
-			richtung = "down";
-		}
-		else if (posY - 72 > gl.player.posY) {
-			richtung = "up";
-		}
+		int distanceX = Math.abs(posX - gl.player.posX);
+		int distanceY = Math.abs(posY - gl.player.posY); 
+		int centerX = posX + 72;
+		int centerY = posY + 72;
+		int plCenterX = gl.player.posX + 24;
+		int plCenterY = gl.player.posY + 24;
+		int counter = 0;
+		int countermax  = 10;
 		
 	
+		if (distanceX < distanceY) {
+			if (centerY < plCenterY) {
+				richtung = "down";
+			}
+			if (centerY > plCenterY) {
+				richtung = "up";
+			}
+		}
+		else {
+			if (centerX < plCenterX) {
+				richtung = "right";
+			}
+			if (centerX > plCenterX) {
+				richtung = "left";
+			}
+		}
+		
 		
 		spriteCounter++;
-		if (spriteCounter > animationspeed) {								//geschwindigkeit der animation. je höher dest langsamer
+		if (spriteCounter > animationspeed) {				//geschwindigkeit der animation. je höher dest langsamer
 			if (spriteNum == 1) {
 				spriteNum = 2;
 			}
@@ -172,7 +185,6 @@ public class Tenbusch extends Unit{
 		
 	}
 
-
 	private void attacking() {
 
 		if (spriteCounter <= 15) {
@@ -219,7 +231,6 @@ public class Tenbusch extends Unit{
 		
 		
 	}
-
 
 	private void damageSpieler() {
 		// TODO Auto-generated method stub

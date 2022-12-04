@@ -18,7 +18,7 @@ public class Monster_Snake extends Unit{
 		maxHealth = 4;
 		health = maxHealth;
 		isCollision = true;
-		animationspeed = 120;
+		animationspeed = 40;
 		
 		hitbox.x = 3;
 		hitbox.y = 8;
