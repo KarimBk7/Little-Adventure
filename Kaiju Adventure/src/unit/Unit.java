@@ -79,7 +79,7 @@ public class Unit {
 		}
 		
 		spriteCounter++;
-		if (spriteCounter > 12) {
+		if (spriteCounter > animationspeed) {
 			if (spriteNum == 1) {
 				spriteNum = 2;
 			}
