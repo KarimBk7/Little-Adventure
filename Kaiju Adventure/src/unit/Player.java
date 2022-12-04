@@ -431,6 +431,7 @@ public class Player extends Unit {
 							gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 							gl.obj[i].isCollision = false;
 							gl.obj[9].image = null;
+							gl.ui.showMessage("*Tuer geoeffnet!!*", 60);
 						}
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
@@ -449,7 +450,7 @@ public class Player extends Unit {
 				gl.playMusik(gl.musikIndex);
 				gl.monster[5].posX = 38 * gl.unitsize;
 				gl.monster[5].posY = 11 * gl.unitsize;
-				gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 180);
+				gl.ui.showMessage("Moege der Kampf gegen Tenbusch beginnen!!!", 180);
 				gl.obj[20].isCollision = true;
 			}
 		}
