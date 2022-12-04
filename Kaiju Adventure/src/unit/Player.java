@@ -22,7 +22,7 @@ public class Player extends Unit {
 	boolean attacking = false;
 
 	// inventar
-	public int amountKey = 0;
+	public int amountKey = 2;
 	public int amountApfel = 0;
 	public int haendlerquest = 0;
 	public boolean hatSchaufel = false;
@@ -88,7 +88,7 @@ public class Player extends Unit {
 		
 		health = maxHealth;
 		amountApfel = 0;
-		amountKey = 0;
+		amountKey = 2;
 		hatSchaufel = false;
 		hatSpitzhacke = false;
 		itDollar = 0;
@@ -443,6 +443,14 @@ public class Player extends Unit {
 				}
 				keyI.enterPressed = false;
 			} 
+			if (gl.obj[i].name == "sperren" && gl.obj[7].isCollision == false) {
+				gl.obj[7].isCollision = true;
+				gl.obj[7].image = sTool.setupImage("objekt", "closeddoor", gl.unitsize * 2, gl.unitsize * 2);
+				gl.soundEffekt(9);
+				gl.stopMusik();
+				gl.musikIndex = 13;
+				gl.playMusik(gl.musikIndex);
+			}
 		}
 	}
 

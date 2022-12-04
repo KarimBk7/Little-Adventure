@@ -16,7 +16,7 @@ public class Tenbusch extends Unit{
 		name = "tenbusch";
 		richtung = "down";
 		speed = 1;
-		maxHealth = 5;
+		maxHealth = 15;
 		health = maxHealth;
 		isCollision = true;
 		animationspeed = 120;

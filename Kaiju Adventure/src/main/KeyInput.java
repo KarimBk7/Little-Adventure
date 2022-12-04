@@ -58,7 +58,7 @@ public class KeyInput implements KeyListener {
 						gl.stopw.start();
 						enterPressed = false;
 						gl.gameState = gl.playState;
-						gl.playMusik(0);
+						gl.playMusik(gl.musikIndex);
 					}
 				}
 				if (gl.ui.befehl == 1) {
@@ -276,7 +276,7 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//neu starten
 				if (gl.ui.befehl == 0) {
-					gl.playMusik(0);
+					gl.playMusik(gl.musikIndex);
 					gl.stopw.start();
 					gl.player.neuStart();
 					for (int i = 0; i < gl.counter.length && gl.counter[i] != null; i++) {
@@ -304,8 +304,7 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_ENTER) {
 				gl.stopw.start();
 				gl.gameState = gl.playState;
-				//TODO 
-				gl.playMusik(0);
+				gl.playMusik(gl.musikIndex);
 				gl.soundEffekt(11);
 			}
 		}
@@ -343,7 +342,6 @@ public class KeyInput implements KeyListener {
 			if (eingabe == KeyEvent.VK_P) {
 				gl.stopw.stackTime();	
 				gl.gameState = gl.pauseState;
-				//TODO 
 				gl.stopMusik();
 			}
 			if (eingabe == KeyEvent.VK_ENTER) {
@@ -461,7 +459,7 @@ public class KeyInput implements KeyListener {
 				if (gl.ui.befehl == 0) {
 					gl.stopw.start();
 					gl.gameState = gl.playState;
-					gl.resumeMusik(0);
+					gl.resumeMusik(gl.musikIndex);
 				}
 				else if (gl.ui.befehl == 1) {
 					try {

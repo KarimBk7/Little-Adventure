@@ -51,6 +51,7 @@ public class GameLoop extends JPanel implements Runnable {
 	public ObjektSetter oSetter = new ObjektSetter(this);
 	
 	//sound & ui
+	public int musikIndex = 0;
 	Sound soundef = new Sound();
 	Sound music = new Sound();
 	public UI ui = new UI(this);
