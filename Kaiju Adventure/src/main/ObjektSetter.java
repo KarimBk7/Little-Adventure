@@ -109,10 +109,17 @@ public class ObjektSetter {
 		
 		//unsichtbarer schalter der tuer schließt
 		gl.obj[19] = new Objekt();
-		gl.obj[19].posX = 39 * gl.unitsize;
-		gl.obj[19].posY = 26 * gl.unitsize;
+		gl.obj[19].posX = 37 * gl.unitsize;
+		gl.obj[19].posY = 24 * gl.unitsize;
 		gl.obj[19].name = "sperren";
-		gl.obj[19].hitbox.width = 96;
+		gl.obj[19].hitbox.width = gl.unitsize * 6;
+		
+		//unsichtbare wand beim boss
+		gl.obj[20] = new Objekt();
+		gl.obj[20].posX = 39 * gl.unitsize;
+		gl.obj[20].posY = 26 * gl.unitsize - 5;
+		gl.obj[20].isCollision = false;
+		gl.obj[20].hitbox.width = gl.unitsize * 2;
 		
 		//get und scale .png
 		gl.obj[3].image = sTool.setupImage("objekt", "hous1", gl.buildingsize, gl.buildingsize);

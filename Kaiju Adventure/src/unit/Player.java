@@ -22,7 +22,7 @@ public class Player extends Unit {
 	boolean attacking = false;
 
 	// inventar
-	public int amountKey = 2;
+	public int amountKey = 0;
 	public int amountApfel = 0;
 	public int haendlerquest = 0;
 	public boolean hatSchaufel = false;
@@ -88,7 +88,7 @@ public class Player extends Unit {
 		
 		health = maxHealth;
 		amountApfel = 0;
-		amountKey = 2;
+		amountKey = 0;
 		hatSchaufel = false;
 		hatSpitzhacke = false;
 		itDollar = 0;
@@ -431,9 +431,6 @@ public class Player extends Unit {
 							gl.obj[i].image = sTool.setupImage("objekt", "opendoor", gl.unitsize * 2, gl.unitsize * 2);
 							gl.obj[i].isCollision = false;
 							gl.obj[9].image = null;
-							gl.monster[5].posX = 38 * gl.unitsize;
-							gl.monster[5].posY = 11 * gl.unitsize;
-							gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 240);
 						}
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 2 Schluessel benoetige", 120);
@@ -450,6 +447,10 @@ public class Player extends Unit {
 				gl.stopMusik();
 				gl.musikIndex = 13;
 				gl.playMusik(gl.musikIndex);
+				gl.monster[5].posX = 38 * gl.unitsize;
+				gl.monster[5].posY = 11 * gl.unitsize;
+				gl.ui.showMessage("*Tuer geoeffnet!!* \nMoege der Kampf gegen Tenbusch beginnen!!!", 180);
+				gl.obj[20].isCollision = true;
 			}
 		}
 	}
