@@ -50,11 +50,7 @@ public class KeyInput implements KeyListener {
 				enterPressed = true;
 				//Spiel Starte
 				if (gl.ui.befehl == 0) {
-					if (gl.ui.prologabgespielt == false) {
-						gl.gameState = gl.prologstate;
-						gl.ui.prologabgespielt = true;
-					}
-					else {
+					if (gl.stopw.zeitGesamt > 0) {
 						gl.stopw.start();
 						enterPressed = false;
 						gl.gameState = gl.playState;

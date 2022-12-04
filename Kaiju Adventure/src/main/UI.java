@@ -854,6 +854,9 @@ public class UI {
 		//Menu
 		//Starte Spiel
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+		if (gl.stopw.zeitGesamt < 1) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+		}
 		text = "Starte Spiel";
 		x = gl.unitsize * 5 + 20;
 		y = gl.unitsize * 8;
@@ -877,6 +880,7 @@ public class UI {
 		}
 		
 		//Starte Spiel
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 				g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
 				text = "Neues Spiel";
 				x = gl.unitsize * 5 + 20;
