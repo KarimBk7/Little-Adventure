@@ -58,3 +58,10 @@ CREATE TABLE t_spieler (
      CONSTRAINT PK_T_Spiele PRIMARY KEY (Spiele_id)
 )
 ENGINE=INNODB;
+
+CREATE TABLE t_zeit (
+     zeit_in_ms LONG,
+     Spiele_id INT,
+     CONSTRAINT PK_T_Spiele PRIMARY KEY (Spiele_id)
+)
+ENGINE=INNODB;

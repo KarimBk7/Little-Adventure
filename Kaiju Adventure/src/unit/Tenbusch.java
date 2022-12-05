@@ -42,10 +42,10 @@ public class Tenbusch extends Unit{
 		up2 = sTool.setupImage("tenbusch", "TenbuschUp2", gl.unitsize* scale, gl.unitsize* scale);
 		down1 = sTool.setupImage("tenbusch", "TenbuschDown1", gl.unitsize* scale, gl.unitsize* scale);
 		down2 = sTool.setupImage("tenbusch", "TenbuschDown2", gl.unitsize* scale, gl.unitsize* scale);
-		left1 = sTool.setupImage("player", "pl_left1", gl.unitsize* scale, gl.unitsize* scale);
-		left2 = sTool.setupImage("player", "pl_left2", gl.unitsize* scale, gl.unitsize* scale);
-		right1 = sTool.setupImage("player", "pl_right1", gl.unitsize* scale, gl.unitsize* scale);
-		right2 = sTool.setupImage("player", "pl_right2", gl.unitsize* scale, gl.unitsize* scale);
+		left1 = sTool.setupImage("tenbusch", "TenbuschLeft1", gl.unitsize* scale, gl.unitsize* scale);
+		left2 = sTool.setupImage("tenbusch", "TenbuschLeft2", gl.unitsize* scale, gl.unitsize* scale);
+		right1 = sTool.setupImage("tenbusch", "TenbuschRight1", gl.unitsize* scale, gl.unitsize* scale);
+		right2 = sTool.setupImage("tenbusch", "TenbuschRight2", gl.unitsize* scale, gl.unitsize* scale);
 
 		// angriffsbilder
 		/*attackup1 = sTool.setupImage("player", "attackup1", gl.unitsize* scale, gl.unitsize* (scale + 2));
