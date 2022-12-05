@@ -412,10 +412,10 @@ public class Player extends Unit {
 						if (gl.obj[i].isCollision == true && gl.obj[i].status == 1) {
 							gl.soundEffekt(9);
 							gl.obj[i].status = 2;
+							gl.obj[i].image = sTool.setupImage("objekt", "opendoor1", gl.unitsize * 2, gl.unitsize * 2);
+							gl.obj[i].isCollision = false;
+							gl.ui.showMessage("*Tuer geoeffnet!!* \n Ab in den gefaehrlichen westen.", 240);
 						}
-						gl.obj[i].image = sTool.setupImage("objekt", "opendoor1", gl.unitsize * 2, gl.unitsize * 2);
-						gl.obj[i].isCollision = false;
-						gl.ui.showMessage("*Tuer geoeffnet!!* \n Ab in den gefaehrlichen westen.", 240);
 					} else {
 						gl.ui.showMessage("*verschlossen* \nSieht so aus als ob ich 1 Schluessel benoetige", 120);
 						gl.soundEffekt(10);
