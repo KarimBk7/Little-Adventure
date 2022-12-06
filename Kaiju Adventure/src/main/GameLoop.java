@@ -208,7 +208,7 @@ public class GameLoop extends JPanel implements Runnable {
 		
 		music.setFile(i);
 		music.play();
-		//sound.loop();
+		music.loop();
 	}
 	
 	//stoppt audio
