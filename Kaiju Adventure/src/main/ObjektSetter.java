@@ -161,7 +161,7 @@ public class ObjektSetter {
 		gl.npc[3].dialogIndex = 7;
 		gl.npc[3].name = "haendler";
 		
-		gl.npc[1].image = sTool.setupImage("npc", "angler", gl.unitsize, gl.unitsize);
+		gl.npc[1].image = sTool.setupImage("npc", "siad", gl.unitsize, gl.unitsize);
 		gl.npc[2].image = sTool.setupImage("npc", "momo", gl.unitsize, gl.unitsize);
 		gl.npc[3].image = sTool.setupImage("npc", "seitensifir", gl.unitsize, gl.unitsize);
 	}
