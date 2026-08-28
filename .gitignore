@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+
+# Fertige Windows-Version: bewusst eingecheckt, damit das Spiel ohne
+# Installation und ohne vorhandenes Java gestartet werden kann.
+!release/
+!release/**

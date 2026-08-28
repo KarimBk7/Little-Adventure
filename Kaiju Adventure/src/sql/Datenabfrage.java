@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import main.GameLoop;
 import main.ScaleTool;
 import objekt.Key;
+import persistenz.DateiSpeicher;
+import persistenz.Spielstand;
+import persistenz.SpielstandSpeicher;
 import unit.Monster_Snake;
 
 public class Datenabfrage {
@@ -36,6 +39,10 @@ public class Datenabfrage {
 	private int shopSchnelligkeit;
 	private int shopSpitzhacke;
 	
+	//Fallback, falls keine MySQL-Datenbank vorhanden ist
+	private SpielstandSpeicher dateispeicher;
+	private Boolean mysqlGeprueft;
+	
 	
 	
 	public Datenabfrage(GameLoop gl){
@@ -45,6 +52,11 @@ public class Datenabfrage {
 	
 	public void speichern(int id) throws ClassNotFoundException {
 		getAllInformation();
+		
+		if (!mysqlAktiv()) {
+			dateien().speichern(id, alsSpielstand());
+			return;
+		}
 		
 		Interface.connect();
 		loeschSpielstand(id);
@@ -94,6 +106,11 @@ public class Datenabfrage {
 	}
 	
 	public void laden(int id) throws ClassNotFoundException {
+		
+		if (!mysqlAktiv()) {
+			uebernehmen(dateien().laden(id));
+			return;
+		}
 		
 		try {
 			Interface.connect();
@@ -181,6 +198,11 @@ public class Datenabfrage {
 	}
 	
 	public void loeschSpielstand(int id) {
+		
+		if (!mysqlAktiv()) {
+			dateien().loeschen(id);
+			return;
+		}
 		Interface.update("DELETE FROM `t_zeit` WHERE Spiele_id = " + id);
 		Interface.update("DELETE FROM `t_inventar` WHERE Spieler_id = " + id);
 		Interface.update("DELETE FROM `t_npc` WHERE Spiele_id = " + id);
@@ -212,6 +234,11 @@ public class Datenabfrage {
 	}
 	
 	public void chechSpielstand() throws SQLException, ClassNotFoundException {
+		
+		if (!mysqlAktiv()) {
+			checkDateien();
+			return;
+		}
 		Interface.connect();
 		for(int i = 1; i < 4; i++) {
 			rs = Interface.select("SELECT Count(*) AS total FROM `t_spieler` WHERE Spiele_ID = " + i);
@@ -356,6 +383,154 @@ public class Datenabfrage {
 			gl.monster[4] = new Monster_Snake(gl);
 			gl.monster[4].posX = 18 * gl.unitsize;
 			gl.monster[4].posY = 20 * gl.unitsize;
+		}
+	}
+	
+	//---- Weiche MySQL / lokale Dateien ---------------------------------
+	
+	//einmalig pruefen, ob eine MySQL-Datenbank nutzbar ist
+	private boolean mysqlAktiv() {
+		
+		if (mysqlGeprueft == null) {
+			mysqlGeprueft = Interface.verfuegbar();
+			System.out.println("[Spielstand] " + (mysqlGeprueft ? "MySQL" : "lokale Dateien"));
+		}
+		return mysqlGeprueft;
+	}
+	
+	private SpielstandSpeicher dateien() {
+		
+		if (dateispeicher == null) {
+			dateispeicher = new DateiSpeicher();
+		}
+		return dateispeicher;
+	}
+	
+	//baut aus den von getAllInformation() eingesammelten Werten einen Spielstand
+	private Spielstand alsSpielstand() {
+		
+		Spielstand st = new Spielstand();
+		
+		st.zeitGesamt = gl.stopw.zeitGesamt;
+		
+		st.health = health;
+		st.posX = posX;
+		st.posY = posY;
+		st.strenght = strenght;
+		st.speed = speed;
+		
+		st.keys = keys;
+		st.apfel = apfel;
+		st.heiltrank = heiltrank;
+		st.itDollar = itDollar;
+		st.exp = exp;
+		st.schaufel = schaufel;
+		st.spitzhacke = spitzhacke;
+		
+		st.shopStaerke = shopStaerke;
+		st.shopSchnelligkeit = shopSchnelligkeit;
+		st.shopSpitzhacke = shopSpitzhacke;
+		
+		int anzahlNpc = 0;
+		while (gl.npc[anzahlNpc] != null) {
+			anzahlNpc++;
+		}
+		st.npcDialogIndex = new int[anzahlNpc];
+		for (int i = 0; i < anzahlNpc; i++) {
+			st.npcDialogIndex[i] = gl.npc[i].dialogIndex;
+		}
+		
+		int anzahlObj = 0;
+		while (gl.obj[anzahlObj] != null) {
+			anzahlObj++;
+		}
+		st.objStatus = new int[anzahlObj];
+		for (int i = 0; i < anzahlObj; i++) {
+			st.objStatus[i] = gl.obj[i].status;
+		}
+		
+		return st;
+	}
+	
+	//spielt einen aus der Datei gelesenen Spielstand ein
+	private void uebernehmen(Spielstand st) {
+		
+		if (st != null) {
+			
+			gl.stopw.zeitGesamt = st.zeitGesamt;
+			
+			gl.player.health = st.health;
+			gl.player.posX = st.posX;
+			gl.player.posY = st.posY;
+			gl.player.strenght = st.strenght;
+			gl.player.speed = st.speed;
+			
+			gl.player.itDollar = st.itDollar;
+			gl.player.amountKey = st.keys;
+			gl.player.amountApfel = st.apfel;
+			gl.player.healing_potion = st.heiltrank;
+			gl.player.exp = st.exp;
+			gl.player.hatSchaufel = st.schaufel;
+			gl.player.hatSpitzhacke = st.spitzhacke;
+			
+			gl.keyI.strenght = st.shopStaerke;
+			gl.keyI.speed = st.shopSchnelligkeit;
+			gl.keyI.spitzhacke = st.shopSpitzhacke;
+			
+			int i = 0;
+			while (gl.npc[i] != null) {
+				if (i < st.npcDialogIndex.length) {
+					gl.npc[i].dialogIndex = st.npcDialogIndex[i];
+				}
+				i++;
+			}
+			
+			i = 0;
+			while (gl.obj[i] != null) {
+				if (i < st.objStatus.length) {
+					gl.obj[i].status = st.objStatus[i];
+				}
+				i++;
+			}
+		}
+		
+		updateObjekte();
+	}
+	
+	//Gegenstueck zu chechSpielstand() fuer den Dateispeicher
+	private void checkDateien() {
+		
+		for(int i = 1; i < 4; i++) {
+			
+			Spielstand st = dateien().laden(i);
+			
+			if (st == null && i == 1) {
+				gl.ui.dbvorhanden1 = false;
+			}
+			else if (st == null && i == 2) {
+				gl.ui.dbvorhanden2 = false;
+			}
+			else if (st == null && i == 3) {
+				gl.ui.dbvorhanden3 = false;
+			}
+			
+			if (st != null && i == 1) {
+				gl.ui.dbvorhanden1 = true;
+				gl.ui.dbKey1 = st.keys;
+				gl.ui.dbhealth1 = st.health;
+			}
+			
+			if (st != null && i == 2) {
+				gl.ui.dbvorhanden2 = true;
+				gl.ui.dbKey2 = st.keys;
+				gl.ui.dbhealth2 = st.health;
+			}
+			
+			if (st != null && i == 3) {
+				gl.ui.dbvorhanden3 = true;
+				gl.ui.dbKey3 = st.keys;
+				gl.ui.dbhealth3 = st.health;
+			}
 		}
 	}
 }

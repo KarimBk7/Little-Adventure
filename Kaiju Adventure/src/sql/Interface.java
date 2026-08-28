@@ -66,4 +66,21 @@ public class Interface {
 		}
 	}
 	
+	//prueft, ob MySQL ueberhaupt nutzbar ist (Treiber im Klassenpfad + Server erreichbar).
+	//Wenn nicht, weicht Datenabfrage auf den lokalen Dateispeicher aus.
+	public static boolean verfuegbar() {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+
+		try {
+			connect();
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+		return isConnect();
+	}
 }
