@@ -23,7 +23,7 @@ public class Npc extends Unit{
 					+ "Erwarte aber nicht zu viel.";
 		
 		//Angler
-		dialog[2] = "Nachdem ich einen Fisch geangelt hab hol ich \nmir ein paar Aepfel vom Wald für meinen \n"
+		dialog[2] = "Nachdem ich einen Fisch geangelt hab hol ich \nmir ein paar Aepfel vom Wald fÃ¼r meinen \n"
 					+ "Doppel-Apfel-Tabak.";
 		dialog[3] = "Hab gehoert das es welche etwas noerdlich von hier gibt.";
 		
