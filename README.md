@@ -81,5 +81,5 @@ The code, the build script and the documentation are [MIT](LICENSE).
 
 The artwork and sound in `Kaiju Adventure/ressources/` are **not**: they were
 made by the project team and remain theirs (all rights reserved). They are
-included so the game can be built and played. To reuse them in your own work,
-ask the team.
+included so the game can be built and played — to reuse them, ask the team.
+Details in [NOTICE.md](NOTICE.md).

@@ -19,19 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Scope: code only
-----------------
-
-The MIT license above covers the source code, the build script and the
-documentation of this repository.
-
-It does NOT cover the artwork and sound in `Kaiju Adventure/ressources/`
-(sprites, tilesets, character art, sound effects, music) or the copies of
-those files inside `release/` and `docs/`. Those were made by the project
-team, not by me, and remain theirs: © the Kaiju Adventure project team, all
-rights reserved. They are included here so the game can be built and played,
-and they are shown in my portfolio with the team's permission. If you want to
-reuse them in your own work, ask them, not me.
